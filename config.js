@@ -10,7 +10,8 @@ module.exports = {
   pages: {
     home: '/',
     blog: 'blog',
-    howto: 'howto',
+    buy: 'buy',
+    sell: 'sell',
     resume: 'resume',
     tag: 'tags',
   },

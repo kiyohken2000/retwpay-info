@@ -33,22 +33,27 @@ export default () => {
           <ul className={style.nav}>
             <li className={style.navItem}>
               <Link to="/" onClick={toggleMenu} activeClassName={style.anchorActive}>
-                Home
+                トップ
               </Link>
             </li>
             <li className={style.navItem}>
-              <Link to="/howto" onClick={toggleMenu} activeClassName={style.anchorActive}>
-                How to use
+              <Link to="/buy" onClick={toggleMenu} activeClassName={style.anchorActive}>
+                買い方
+              </Link>
+            </li>
+            <li className={style.navItem}>
+              <Link to="/sell" onClick={toggleMenu} activeClassName={style.anchorActive}>
+                売り方
               </Link>
             </li>
             <li className={style.navItem}>
               <Link to="/blog" onClick={toggleMenu} activeClassName={style.anchorActive}>
-                Blog
+                ブログ
               </Link>
             </li>
             <li className={style.navItem}>
               <Link to="/tags" onClick={toggleMenu} activeClassName={style.anchorActive}>
-                Tags
+                タグ
               </Link>
             </li>
           </ul>
