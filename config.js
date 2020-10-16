@@ -1,11 +1,11 @@
 module.exports = {
   pathPrefix: '',
-  siteUrl: 'https://rolwinreevan.com',
-  siteTitle: 'Rolwin Reevan',
-  siteDescription: 'Logbook of a software developer',
-  author: 'Rolwin Reevan',
+  siteUrl: 'https://retwpay-corp.web.app/',
+  siteTitle: 'Retwpay',
+  siteDescription: 'Retweet Flea Market App',
+  author: 'votepurchase',
   postsForArchivePage: 3,
-  defaultLanguage: 'en',
+  defaultLanguage: 'ja',
   disqusScript: process.env.DISQUS_SCRIPT || 'https://rolwinreevan.disqus.com/embed.js',
   pages: {
     home: '/',
