@@ -22,8 +22,6 @@ const DomContent = () => (
       <div className={`${style.boxName} centerAlign`}>
       </div>
       <div className="centerAlign box">
-        <span>Mobile Apps</span>
-        <img src="https://tools-qr-production.s3.amazonaws.com/output/apple-toolbox/10c8fe44a9234a659dbecf8ebb21c7fe/8061f084-f710-4bc5-ba63-218df92b338b.png" width="80%" height="80%"></img>
         <li className={`${style.contactBlockItem}`}>
           <a href="https://apps.apple.com/jp/app/retwpay/id1505869896?l=ja" download target="_blank"><img src="../appstore.png"/></a>
         </li>
