@@ -36,10 +36,10 @@ const AboutMe = () => {
         </p>
         
         <Row gutter={[16,16]}>
-          <Col xs={24} sm={24} md={12} lg={8} span={8}>
+          <Col xs={24} sm={24} md={24} lg={8} span={8} xl={10}>
             <img src="../cashless.png"/>
           </Col>
-          <Col xs={24} sm={24} md={12} lg={8} span={8} offset={4}>
+          <Col xs={24} sm={24} md={24} lg={8} span={8} xl={10}>
             <img src="../twitter_logo.png"width="auto" height="80%"/>
           </Col>
         </Row>
