@@ -20,14 +20,13 @@ const DomContent = () => (
     <div className={style.profileAvatar} />
     <div className={`${style.name} centerAlign`}>
       <div className={`${style.boxName} centerAlign`}>
+        <h2>
+          <span>Retwpay</span>
+        </h2>
       </div>
       <div className="centerAlign box">
-        <li className={`${style.contactBlockItem}`}>
-          <a href="https://apps.apple.com/jp/app/retwpay/id1505869896?l=ja" download target="_blank"><img src="../appstore.png"/></a>
-        </li>
-        <li className={`${style.contactBlockItem}`}>
-          <a href="https://play.google.com/store/apps/details?id=net.votepurchase.retwpayapp" download target="_blank"><img src="../googleplay.png"/></a>
-        </li>
+          <a href="https://apps.apple.com/jp/app/retwpay/id1505869896?l=ja" download target="_blank"><img src="../appstore.png"/ ></a>
+          <a href="https://play.google.com/store/apps/details?id=net.votepurchase.retwpayapp" download target="_blank"><img src="../googleplay.png" width="100%" height="auto"/></a>
       </div>
       <div className="centerAlign box">
         <span>and</span>
