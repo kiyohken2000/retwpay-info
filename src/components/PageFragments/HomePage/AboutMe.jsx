@@ -24,7 +24,7 @@ const AboutMe = () => {
     <>
       <div>
         <SEO
-          title="About"
+          title="トップ"
           description={description}
           path=""
           keywords={['Rolwin', 'Reevan', 'Monteiro', 'FullStack developer', 'Javascript', 'ReactJS', 'NodeJS', 'Gatsby']}
