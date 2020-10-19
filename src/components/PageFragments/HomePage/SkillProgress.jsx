@@ -4,7 +4,7 @@ import { Row, Col } from 'antd';
 const SkillsProgress = () => (
   <div>
     <h2>アプリ利用イメージ</h2>
-    <Row gutter={[1,1]}>
+    <Row gutter={[1,1]} justify="center">
       <Col xs={24} sm={24} md={12} lg={6} xl={6}>
         <img src="../ss1.png" width="auto" height="60%"/>
       </Col>
