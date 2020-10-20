@@ -51,11 +51,6 @@ export default () => {
                 ブログ
               </Link>
             </li>
-            <li className={style.navItem}>
-              <Link to="/tags" onClick={toggleMenu} activeClassName={style.anchorActive}>
-                タグ
-              </Link>
-            </li>
           </ul>
         </div>
       </Layout>

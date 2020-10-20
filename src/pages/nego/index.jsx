@@ -9,12 +9,9 @@ const Nego = () => (
     <Layout className="container">
       <SEO
         title="交渉イメージ"
-        description="Hello folks Rolwin here. You can contact me through the contact form on this page.
-                    Please feel free to contact me, don't be shy guys, just remember Rolwin is always open to talk about web
-                    technologies especially Javascript techstacks. Currently I'm a part of Gatsby organization on github.
-                    Find me on github - rolwin100."
-        path="/buy"
-        keywords={['Rolwin', 'Reevan', 'Monteiro', 'FullStack developer', 'Javascript', 'ReactJS', 'NodeJS', 'Gatsby', 'technology']}
+        description="Retwpay"
+        path="/nego"
+        keywords={['Retwpay', 'Twitter']}
       />
       <Header />
       <SidebarWrapper>
