@@ -10,6 +10,8 @@ import style from './sidebar.module.less';
 import { useWindowSize } from '../../../utils/hooks';
 import Config from '../../../../config';
 
+import { Link } from 'gatsby';
+
 const { Content } = Layout;
 const {
   facebook, github, instagram, twitter,
@@ -17,7 +19,7 @@ const {
 
 const DomContent = () => (
   <aside>
-    <div className={style.profileAvatar} />
+    <Link to="/"><div className={style.profileAvatar} /></Link>
     <div className={`${style.name} centerAlign`}>
       <div className={`${style.boxName} centerAlign`}>
         <h2>

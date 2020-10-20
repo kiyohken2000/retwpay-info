@@ -1,23 +1,15 @@
 import React from 'react';
-import { Row, Col } from 'antd';
+import Grid from '@material-ui/core/Grid';
 
 const SkillsProgress = () => (
   <div>
     <h2>アプリ利用イメージ</h2>
-    <Row gutter={[1,1]} justify="center">
-      <Col xs={24} sm={24} md={12} lg={6} xl={6}>
-        <img src="../ss1.png" width="auto" height="60%"/>
-      </Col>
-      <Col xs={24} sm={24} md={12} lg={6} xl={6}>
-        <img src="../ss2.png" width="auto" height="60%"/>
-      </Col>
-      <Col xs={24} sm={24} md={12} lg={6} xl={6}>
-        <img src="../ss3.png" width="auto" height="60%"/>
-      </Col>
-      <Col xs={24} sm={24} md={12} lg={6} xl={6}>
-        <img src="../ss4.png" width="auto" height="60%"/>
-      </Col>
-    </Row>
+    <Grid container>
+      <Grid item sm={5} md={3}><img src="../ss1.png" width="60%" height="auto"/></Grid>
+      <Grid item sm={5} md={3}><img src="../ss2.png" width="60%" height="auto"/></Grid>
+      <Grid item sm={5} md={3}><img src="../ss3.png" width="60%" height="auto"/></Grid>
+      <Grid item sm={5} md={3}><img src="../ss4.png" width="60%" height="auto"/></Grid>
+    </Grid>
   </div>
 );
 

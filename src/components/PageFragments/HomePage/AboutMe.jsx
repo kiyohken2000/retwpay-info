@@ -2,6 +2,7 @@ import React from 'react';
 import { Row, Col } from 'antd';
 import AboutTile from '../../AbouTile';
 import { stripTags, domHtml } from '../../../utils/stripTags';
+import Grid from '@material-ui/core/Grid';
 
 import SEO from '../../Seo';
 
@@ -35,14 +36,10 @@ const AboutMe = () => {
         <p dangerouslySetInnerHTML={domHtml(pageText.paraOne)} />
         </p>
         <h3><mark>Amazonギフト券</mark>、<mark>LINE pay</mark>、<mark>PayPay</mark>、<mark>Kyash</mark>、<mark>Pring</mark>のいずれかと<mark>Twitter</mark>だけですぐに使えます。</h3>
-        <Row gutter={[16,16]}>
-          <Col xs={24} sm={24} md={24} lg={8} span={8} xl={10}>
-            <img src="../cashless.png" width="auto" height="80%"/>
-          </Col>
-          <Col xs={24} sm={24} md={24} lg={8} span={8} xl={10}>
-            <img src="../twitter_logo.png"width="auto" height="70%"/>
-          </Col>
-        </Row>
+        <Grid container justify="space-between">
+          <Grid item sm={6} md={6}><img src="../cashless.png" width="63%" height="auto"/></Grid>
+          <Grid item sm={6} md={6}><img src="../twitter_logo.png" width="63%" height="auto"/></Grid>
+          </Grid>
         <h2>6つの特長</h2>
       </div>
       <Row gutter={[20, 20]}>
