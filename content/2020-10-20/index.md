@@ -1,14 +1,38 @@
 ---
-title: 2020/10/20 title blog
+title: Retwpayの紹介ページを作りました
 tags: [  ]
 date: 2020-10-20
 path: blog/2020-10-20
-cover: ./img.jpg
-excerpt: excerpt excerpt excerpt
+cover: ./images.png
+excerpt: I made an introduction page for the Retwpay app.
 ---
 
-2020 10 20
+もともとWordpressのウェブアプリとしてRetwpayを作ったのでサービスの紹介ページもワードプレス内に作っていました。
+
+![こんな感じのWordpress](./20201021.png)
+
+宣伝するときも[<u>votepurchase.net</u>](https://votepurchase.net)をリンクしてたのですが、いかんせんWordpress丸出しでダサい。
+
+テーマを変更することも考えたのですが2020年にWordpressテーマのカスタマイズに手を出すのも時代遅れなので、最新流行を使って本サイトを作りました。
+
+使用した技術は
+
+- <mark>GatsbyJS</mark>
+- <mark>Firebase Hosting</mark>
 
 <br/>
+ReactベースのSSGで2020年激熱なGatsbyJSを、サーバーレス時代らしくFirebaseにホスティングする、これだね。
 
-<h2>Heading H2</h2>
+Wordpressの重いビジュアルエディタではなく、ローカルのマークダウンで記事をサクサク書いていけるのは良い。
+
+あと地味に気に入ってるのがWappalyzerの技術アイコンがReactになるところ。Reactアイコンはスタイリッシュで良い。
+
+![Reactの技術アイコン](./img1.png)
+![Wordpressの技術アイコン](./img3.png)
+![Wappalyzerで見るとこんな感じ](./img2.jpg)
+
+GatsbyのアイコンはイマイチかっこよくないけどReactのアイコンは良い。
+
+というわけでこのブログまぁまぁ更新していけたらいいなと思っています。
+
+<mark>Retwpayアプリをよろしくお願いします</mark>
