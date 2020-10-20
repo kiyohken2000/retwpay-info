@@ -3,6 +3,9 @@ import { Layout, Row, Col } from 'antd';
 import Header from '../../components/PageLayout/Header';
 import SidebarWrapper from '../../components/PageLayout/Sidebar';
 import SEO from '../../components/Seo';
+import Intro from '../../components/Intro';
+import BuyRequest from '../../components/requestbuy';
+import BuyProfile from '../../components/buyprofile';
 
 const Buy = () => (
   <Layout className="outerPadding">
@@ -22,13 +25,27 @@ const Buy = () => (
           <h1 className="titleSeparate">リツイートの買い方</h1>
         </div>
         <div className="marginTopTitle">
-        <ul>
-          <li>RTを買いたい</li>
-            <ul>
-              <li>RTを売りたいユーザーリストからRTを依頼する</li>
-              <li>プロフィールを作ってRTを売りたいユーザーからの請負連絡を待つ</li>
-            </ul>
-        </ul>
+          <h3>リツイートの買い方には二通りの方法があります</h3>
+          <ol>
+            <li><h4>リツイートを売りたいユーザーのリストからRTを依頼する</h4></li>
+            <li><h4>プロフィールを作ってRTを売りたいユーザーからの請負連絡を待つ</h4></li>
+          </ol>
+        <hr/>
+
+        <details>
+          <summary><b>はじめに</b></summary>
+            <Intro />
+        </details>
+
+        <details>
+          <summary><b>1.リツイートを売りたいユーザーのリストからRTを依頼する</b></summary>
+            <BuyRequest />
+        </details>
+
+        <details>
+          <summary><b>2.プロフィールを作ってRTを売りたいユーザーからの請負連絡を待つ</b></summary>
+            <BuyProfile />
+        </details>
         </div>
       </SidebarWrapper>
     </Layout>
