@@ -21,28 +21,30 @@ const Sell = () => (
       <div className="marginTopTitle">
         <h1 className="titleSeparate">リツイートの売り方</h1>
       </div>
+      <details>
+          <summary><b>はじめに</b></summary>
+          <br/>
+            <Intro />
+        </details>
       <div className="marginTopTitle">
           <h3>リツイートの売り方には二通りの方法があります</h3>
           <ol>
-            <li><h4>リツイートを買いたいユーザーのリストからRTの請負を伝える</h4></li>
-            <li><h4>プロフィールを作ってRTを買いたいユーザーからの依頼を待つ</h4></li>
+            <li>
+              <details>
+                <summary><b>リツイートを買いたいユーザーのリストからRTの請負を伝える</b></summary>
+                <br/>
+                  <SellRequest />
+              </details>
+            </li>
+
+            <li>
+              <details>
+                <summary><b>プロフィールを作ってRTを買いたいユーザーからの依頼を待つ</b></summary>
+                <br/>
+                  <SellProfile />
+              </details>
+            </li>
           </ol>
-        <hr/>
-
-        <details>
-          <summary><b>はじめに</b></summary>
-            <Intro />
-        </details>
-
-        <details>
-          <summary><b>1.リツイートを買いたいユーザーのリストからRTの請負を伝える</b></summary>
-            <SellRequest />
-        </details>
-
-        <details>
-          <summary><b>2.プロフィールを作ってRTを買いたいユーザーからの依頼を待つ</b></summary>
-            <SellProfile />
-        </details>
         </div>
       </SidebarWrapper>
     </Layout>

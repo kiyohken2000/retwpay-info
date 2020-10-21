@@ -12,10 +12,12 @@ import 'prismjs/themes/prism-solarizedlight.css';
 import './highlight-syntax.less';
 import style from './post.module.less';
 
+import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
+
 const Post = ({ data }) => {
   const { html, frontmatter } = data.markdownRemark;
   const {
-    title, cover: { childImageSharp: { fluid } }, excerpt, path,
+    title, cover: { childImageSharp: { fluid } }, excerpt, path, date,
   } = frontmatter;
 
   const canonicalUrl = Utils.resolvePageUrl(
@@ -39,6 +41,8 @@ const Post = ({ data }) => {
             <div className={style.bannerImgContainer}>
               <Img className={style.bannerImg} fluid={fluid} title={excerpt} alt={title} />
             </div>
+            <CalendarTodayIcon/><h3>{date}</h3>
+            <p>{excerpt}</p>
             <article className={style.blogArticle} dangerouslySetInnerHTML={{ __html: html }} />
           </div>
         </SidebarWrapper>
@@ -54,7 +58,7 @@ export const pageQuery = graphql`
       timeToRead
       frontmatter {
         title
-        date(formatString: "DD MMM YYYY")
+        date(formatString: "YYYY-MM-DD")
         tags
         path
         excerpt
