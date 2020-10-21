@@ -38,7 +38,7 @@ const AboutMe = () => {
         <h3><mark>Amazonギフト券</mark>、<mark>LINE pay</mark>、<mark>PayPay</mark>、<mark>Kyash</mark>、<mark>Pring</mark>のいずれかと<mark>Twitter</mark>だけですぐに使えます。</h3>
         <Grid container justify="space-between">
           <Grid item sm={6} md={6}><img src="../cashless.png" width="63%" height="auto"/></Grid>
-          <Grid item sm={6} md={6}><img src="../twitter_logo.png" width="63%" height="auto"/></Grid>
+          <Grid item sm={6} md={6}><img src="../twitter_logo.png" width="45%" height="auto"/></Grid>
           </Grid>
         <h2>6つの特長</h2>
       </div>
