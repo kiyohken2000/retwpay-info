@@ -13,7 +13,7 @@ AMDファンボーイなのでメインストリーム向けCPUはだいたい�
 
 - Athlon64 3500+
 - Athlon64 X2 4200+
-- Phenom 9500BE
+- Phenom 9500
 - PhenomII 940BE
 - PhenomII 965BE
 - PhenomII 1090T
