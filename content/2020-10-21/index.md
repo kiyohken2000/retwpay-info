@@ -13,7 +13,7 @@ AMDファンボーイなのでメインストリーム向けCPUはだいたい�
 
 - Athlon64 3500+
 - Athlon64 X2 4200+
-- Phenom 9500 BE
+- Phenom 9500BE
 - PhenomII 940BE
 - PhenomII 965BE
 - PhenomII 1090T
@@ -68,7 +68,7 @@ AMDファンボーイなのでメインストリーム向けCPUはだいたい�
 
 ![一通りWindowsのセットアップが完了](./img16.jpg)
 
-Cinebenchのスコアが150点くらい上がってるけどAGESAコードが更新されたからか虎徹効果かはわからない。SamsungのPCIe4　NVMe SSD速い。
+Cinebenchのスコアが150点くらい上がってるけどAGESAコードが更新されたからか虎徹効果かはわからない。SamsungのPCIe4 NVMe SSD速い。
 
 よろしければRyzen 9 5950X買えるように祈ってください。
 
