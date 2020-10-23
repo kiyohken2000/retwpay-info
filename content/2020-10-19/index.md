@@ -15,9 +15,9 @@ excerpt: In a world where Elephants Dance and Paranoid Survive.
 
 EPYCの採用はOISTのみならず、たとえばパブリッククラウド市場では、AWS、Azure、Google Cloud、IBM Cloud、Oracle Cloudといったメガクラウド各社や、スパコン/HPC分野ではオークリッジ国立研究所の"Frontier"、ローレンス・リバモア国立研究所の"El Capitan"、San Diego Supercomputer Centerの"Expanse"、CDNではCloudflareなど多くの企業や研究機関に拡大しています。
 
-![AMD EPYC 7702の仕様](./img1.png)
->*AMD EPYC 7702の仕様*   
-><small>藤井聡太二冠の自作パソコンで50万円のCPUとして話題になったRyzen Threadripper 3990XはクロックやPCIeレーン数の違いはありますがEPYC 7702のコンシューマー版です。</small>
+![AMD EPYC 7702の仕様](./img1.png) 
+
+<small>藤井聡太二冠の自作パソコンで50万円のCPUとして話題になったRyzen Threadripper 3990XはクロックやPCIeレーン数の違いはありますがEPYC 7702のコンシューマー版です。</small>
 
 ### AMD CEO Lisa Su博士がRobert N. Noyce Awardを獲得
 
@@ -29,9 +29,8 @@ EPYCの採用はOISTのみならず、たとえばパブリッククラウド市
 
 Lisa Su博士は今回のRobert N. Noyce Awardの他に、2019年だけでも"The World’s Best CEO of 2019"、"The Best-Performing CEOs in the World"、"The Bloomberg 50"と数多くのアワードを獲得しています。
 
-![AMD CEO Lisa Su in June 2015](./img2.jpg)
+![AMD CEO Lisa Su in June 2015](./img2.jpg) 
 
->*AMD CEO Lisa Su in June 2015*   
 <small>AMDの創業年と同じ1969年生まれの彼女はAMDのCEOとしては創業者のJerry Sandersに続く二人目のRobert N. Noyce Awardの受賞者になりました。</small>
 
 ### 時代を塗り替えるAMD
@@ -50,13 +49,12 @@ IntelはCPUを64bitに対応させ、4GB以上のメモリを扱えるように�
 
 従来高性能な半導体は大きく、高価でした。これは半導体チップ内は高速に通信できるが、チップの外の配線は遅いため、なるべくワンチップ内にあらゆる機能や性能を詰め込んで高性能化しようという考えに基づきます。
 
-これをJim Kellerは小さくて安いCPUをたくさん作り、遅いチップ同士の配線でもパフォーマンスが落ちない工夫をした上でつなげようという発想にスイッチしました。小さいコアを配線でつなげているだけなので、Zen2と呼ばれる最新のRyzenは64コアというお化けとなりました。
+これをJim Kellerは小さくて安いCPUをたくさん作り、遅いチップ同士の配線でもパフォーマンスが落ちない工夫をした上でつなげようという発想にスイッチしました。小さなダイを配線でつなげているだけなので、Zen2と呼ばれる最新のRyzenは64コアというお化けとなりました。
 
 大きくて原価の高いIntelはこれに追従できません。64コアというCPUをモノリシックなダイで作るとあまりにも巨大で高額になり商売にならないからです。
 
 ![Jim Keller PHOTOGRAPH BY INTEL](./img3.png)
-
->*Jim Keller PHOTOGRAPH BY INTEL*   
+  
 <small>AMDでZenアーキテクチャを開発した後の2016年、Teslaに移籍しElon Muskの野望を支えました。2018年、二度目のAMD時代の同僚でInelのSVPとなっていたRaja Koduriに誘われIntelに移籍しました。マイクロアーキテクチャとプロセス技術の両面で行き詰るIntelで三次元積層チップの開発に携わった後、2020年に同社を去りました。行く先々で業界を変革するプロセッサーを作る彼を西部劇の用心棒に例える向きもあります。</small>
 
 ##### Dr. Lisa Su
