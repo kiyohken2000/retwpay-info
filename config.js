@@ -1,6 +1,6 @@
 module.exports = {
   pathPrefix: '',
-  siteUrl: 'https://retwpay-corp.web.app/',
+  siteUrl: 'https://retwpay.ml/',
   siteTitle: 'Retwpay',
   siteDescription: 'Retweet Flea Market App',
   author: 'votepurchase',
