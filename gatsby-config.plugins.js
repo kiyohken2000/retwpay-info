@@ -16,8 +16,8 @@ module.exports = [
   {
     resolve: 'gatsby-plugin-manifest',
     options: {
-      name: 'Rolwin Reevan',
-      short_name: 'Rolwin Reevan',
+      name: 'Retwpay',
+      short_name: 'Retwpay',
       start_url: '/',
       background_color: '#304CFD',
       theme_color: '#304CFD',
@@ -44,7 +44,7 @@ module.exports = [
             maxWidth: 1000,
             quality: 80,
             showCaptions: true,
-            linkImagesToOriginal: false,
+            linkImagesToOriginal: true,
           },
         },
         {
