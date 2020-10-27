@@ -23,7 +23,7 @@ Skylakeフラゲしたときから使ってる2133MHzの低速メモリをネイ
 
 ### 検証機材
 
-|     | [Ryzen9 3950X | Ryzen9 3900X|Core i7 6700K         |
+|     | Ryzen9 3950X | Ryzen9 3900X|Core i7 6700K         |
 |-----------|------------|------------|------------|
 | CPU      | Ryzen9 3950X      | Ryzen9 3900X      | Core i7 6700K       |
 | クーラー  | Scythe 羅刹 SCRT-1000     | Scythe 羅刹 SCRT-1000    | Scythe SCRT-1000   |
