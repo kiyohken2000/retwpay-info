@@ -9,7 +9,9 @@ excerpt: Embed previous and next post link
 
 ## ブログポストの最後に前後の記事へのリンクを追加しました
 
-### `今回追加したコード`
+***GatsbyJS***書くのがそこそこ楽しいので前後の記事へのリンクを付けました。
+
+### ``今回追加したコード``
 
 ### **gatsby-node.js**を変更
 
@@ -101,7 +103,7 @@ export default PostNav;
 #### 記事のテンプレートにコンポーネントを追加
 **src\templates\post\post.jsx**
 
-`コンポーネントをimportする`
+`作ったコンポーネントをimportする`
 ```javascript
 import PostNav from '../../components/prevnext'
 ```
@@ -113,13 +115,6 @@ const Post = ({ data, pageContext }) => {
   const {
     title, cover: { childImageSharp: { fluid } }, excerpt, path, date,
   } = frontmatter;
-
-  const canonicalUrl = Utils.resolvePageUrl(
-    Config.siteUrl,
-    Config.pathPrefix,
-    path,
-  );
-  return (
 ```
 
 `任意の箇所にコンポーネントを追加`
