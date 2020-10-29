@@ -13,8 +13,9 @@ import './highlight-syntax.less';
 import style from './post.module.less';
 
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
+import PostNav from '../../components/prevnext'
 
-const Post = ({ data }) => {
+const Post = ({ data, pageContext }) => {
   const { html, frontmatter } = data.markdownRemark;
   const {
     title, cover: { childImageSharp: { fluid } }, excerpt, path, date,
@@ -45,6 +46,7 @@ const Post = ({ data }) => {
             <p>{excerpt}</p>
             <article className={style.blogArticle} dangerouslySetInnerHTML={{ __html: html }} />
           </div>
+          <PostNav prev={pageContext.prev} next={pageContext.next}/>
         </SidebarWrapper>
       </Layout>
     </Layout>

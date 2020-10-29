@@ -18,6 +18,12 @@ exports.createPages = ({ actions, graphql }) => {
             }
             fileAbsolutePath
           }
+          next {
+            frontmatter { title path }
+          }
+          prev: previous {
+            frontmatter { title path }
+          }
         }
       }
     }    
@@ -65,6 +71,21 @@ exports.createPages = ({ actions, graphql }) => {
             tag,
           },
         });
+      });
+
+      allMarkdownRemark.edges.forEach(({node, next, prev}) => {
+        const {frontmatter} = node
+      
+        createPage({
+          path: `/${frontmatter.path}`,
+          component: path.resolve('src/templates/post/post.jsx'),
+          context: {
+            id: node.id,
+            postPath: frontmatter.path,
+            next,
+            prev,
+          },
+        })
       });
 
     return 1;
