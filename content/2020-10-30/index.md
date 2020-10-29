@@ -1,0 +1,130 @@
+---
+title: 前後の記事のリンクを追加しました
+tags: [  ]
+date: 2020-10-30
+path: blog/2020-10-30
+cover: ./img.jpg
+excerpt: Embed previous and next post link
+---
+
+## ブログポストの最後に前後の記事へのリンクを追加しました
+
+### `今回追加したコード`
+
+### **gatsby-node.js**を変更
+
+#### 記事取得部分
+```javascript
+return graphql(`
+    {
+      allMarkdownRemark(sort: {order: DESC, fields: [frontmatter___date]}) {
+        edges {
+          node {
+            frontmatter {
+              path
+              tags
+            }
+            fileAbsolutePath
+          }
+          /** ここから **/
+          next {
+            frontmatter { title path }
+          }
+          prev: previous {
+            frontmatter { title path }
+          }
+          /** ここまで追加 **/
+        }
+      }
+    }    
+  `).then((result) => {
+    if (result.errors) return Promise.reject(result.errors);
+```
+#### 受け渡し部分
+```javascript
+    /** ここから **/
+      allMarkdownRemark.edges.forEach(({node, next, prev}) => {
+        const {frontmatter} = node
+        createPage({
+          path: `/${frontmatter.path}`,
+          component: path.resolve('src/templates/post/post.jsx'),
+          context: {
+            id: node.id,
+            postPath: frontmatter.path,
+            next,
+            prev,
+          },
+        })
+      });
+    /** ここまで追加 **/
+```
+### リンク表示用のコンポーネントを新規作成
+**src\components\prevnext\index.jsx**
+
+```javascript
+import React from 'react';
+import { Link } from 'gatsby';
+import { Row, Col } from 'antd';
+
+const PostNav = ({prev, next}) => (
+  <div>
+    <Row>
+      {prev && (
+        <Col span={12}>
+          <div>
+            <span>次の記事</span>
+            <br/>
+            <Link to={`/${prev.frontmatter.path}`}>
+              {prev.frontmatter.title}
+            </Link>
+          </div>
+        </Col>
+        )}
+      {next && (
+        <Col span={12}>
+          <div>
+            <span>前の記事</span>
+            <br/>
+            <Link to={`/${next.frontmatter.path}`}>
+              {next.frontmatter.title}
+            </Link>
+          </div>
+        </Col>
+      )}
+    </Row>
+  </div>
+);
+
+export default PostNav;
+```
+
+#### 記事のテンプレートにコンポーネントを追加
+**src\templates\post\post.jsx**
+
+`コンポーネントをimportする`
+```javascript
+import PostNav from '../../components/prevnext'
+```
+`pageContextを追加`
+
+```javascript
+const Post = ({ data, pageContext }) => {
+  const { html, frontmatter } = data.markdownRemark;
+  const {
+    title, cover: { childImageSharp: { fluid } }, excerpt, path, date,
+  } = frontmatter;
+
+  const canonicalUrl = Utils.resolvePageUrl(
+    Config.siteUrl,
+    Config.pathPrefix,
+    path,
+  );
+  return (
+```
+
+`任意の箇所にコンポーネントを追加`
+```html
+   <PostNav prev={pageContext.prev} next={pageContext.next}/>
+```
+
+以上です。

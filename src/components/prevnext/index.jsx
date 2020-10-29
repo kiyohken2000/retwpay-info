@@ -1,5 +1,3 @@
-/* eslint-disable func-names */
-/* Vendor imports */
 import React from 'react';
 import { Link } from 'gatsby';
 import { Row, Col } from 'antd';
