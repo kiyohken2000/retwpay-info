@@ -23,14 +23,14 @@ Skylakeフラゲしたときから使ってる2133MHzの低速メモリをネイ
 
 ### 検証機材
 
-|     | Ryzen9 3950X | Ryzen9 3900X|Core i7 6700K         |
-|-----------|------------|------------|------------|
-| CPU      | Ryzen9 3950X      | Ryzen9 3900X      | Core i7 6700K       |
-| クーラー  | Scythe 羅刹 SCRT-1000     | Scythe 羅刹 SCRT-1000    | Scythe SCRT-1000   |
-| M/B | GIGABYTE B450 GAMING X    | GIGABYTE B450 GAMING X    | Asus Z170-A       |
-| MEM | **Crucial W4U3200CM-16G**    | TeamGroup DDR4 2133 8GB*2    | UMAX DDR4 2400 8GB*2       |
-| SSD | SamsungSSD960EVO 250GB<br/>CrucialMX100 256GB<br/>IntelSSD335 240GB    | SamsungSSD960EVO 250GB<br/>CrucialMX100 256GB<br/>IntelSSD335 240GB    | Intel SSD 320 120GB<br/>Crucial M500 120GB       |
-| VGA | 玄人志向 RD-R5-230-E1GB/G2    | 玄人志向 RD-R5-230-E1GB/G2    | 玄人志向 GeForce GT610       |
+|     | Ryzen9 3950X | Ryzen9 3900X|
+|-----------|------------|------------|
+| CPU      | Ryzen9 3950X      | Ryzen9 3900X      |
+| クーラー  | Scythe 羅刹 SCRT-1000     | Scythe 羅刹 SCRT-1000    |
+| M/B | GIGABYTE B450 GAMING X    | GIGABYTE B450 GAMING X    |
+| MEM | **Crucial W4U3200CM-16G**    | TeamGroup DDR4 2133 8GB*2    |
+| SSD | SamsungSSD960EVO 250GB<br/>CrucialMX100 256GB<br/>IntelSSD335 240GB    | SamsungSSD960EVO 250GB<br/>CrucialMX100 256GB<br/>IntelSSD335 240GB    |
+| VGA | 玄人志向 RD-R5-230-E1GB/G2    | 玄人志向 RD-R5-230-E1GB/G2    |
 
 ---
 
