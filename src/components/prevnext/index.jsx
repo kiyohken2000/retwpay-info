@@ -5,8 +5,8 @@ import { Row, Col } from 'antd';
 const PostNav = ({prev, next}) => (
   <div>
     <Row>
-      {prev && (
-        <Col span={12}>
+      <Col span={12}>
+        {prev && (
           <div>
             <span>次の記事</span>
             <br/>
@@ -14,10 +14,10 @@ const PostNav = ({prev, next}) => (
               {prev.frontmatter.title}
             </Link>
           </div>
-        </Col>
         )}
-      {next && (
-        <Col span={12}>
+      </Col>
+      <Col span={12}>
+        {next && (
           <div>
             <span>前の記事</span>
             <br/>
@@ -25,8 +25,16 @@ const PostNav = ({prev, next}) => (
               {next.frontmatter.title}
             </Link>
           </div>
-        </Col>
-      )}
+        )}
+      </Col>
+    </Row>
+    <br/>
+    <Row alignItems="center" justify="center">
+      <Col>
+        <Link to="/blog">
+          ブログトップ
+        </Link>
+      </Col>
     </Row>
   </div>
 );
