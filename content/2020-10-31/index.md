@@ -7,7 +7,9 @@ cover: ./img.png
 excerpt: BIOS update for Ryzen 5000
 ---
 
-<a href="../blog/2020-10-27"><u>以前の記事</u></a>で書いた通り11/5のVermeerことRyzen5000シリーズ発売に向けてマザーボードベンダーから最適化BIOSが提供されています。OSクリーンインストールしたばっかりだし面倒だと思ってたんですが、"**performance optimized on Ryzen 5000 series processors**"とあれば入れざるを得ないのでBIOS更新しました。
+
+
+[以前の記事](/blog/2020-10-27)で書いた通り11/5のVermeerことRyzen5000シリーズ発売に向けてマザーボードベンダーから最適化BIOSが提供されています。OSクリーンインストールしたばっかりだし面倒だと思ってたんですが、"**performance optimized on Ryzen 5000 series processors**"とあれば入れざるを得ないのでBIOS更新しました。
 
 Vermeer向けの最適化なので今使ってるMatisseには関係なさそうですが、アップデート前後でCinebenchR20を回してみました。
 
