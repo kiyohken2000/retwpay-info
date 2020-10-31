@@ -100,7 +100,7 @@ const PostNav = ({prev, next}) => (
 export default PostNav;
 ```
 
-#### 記事のテンプレートにコンポーネントを追加
+### 記事のテンプレートにコンポーネントを追加
 **src\templates\post\post.jsx**
 
 `作ったコンポーネントをimportする`
@@ -123,3 +123,5 @@ const Post = ({ data, pageContext }) => {
 ```
 
 以上です。
+
+---

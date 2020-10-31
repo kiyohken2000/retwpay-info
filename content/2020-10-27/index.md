@@ -12,3 +12,5 @@ excerpt: BIOS for Ryzen 5000
 ![](./img1.png)
 
 BIOS上げたりWindowsクリーンインストールしたりした翌週にWindows10の2020H2は出るわBIOSの更新は出るわ、タイミング悪いなー。でも"**performance optimized**"は対応せざるを得ない。面倒だけどBIOS上げようと思います。Windowsの更新はどうしようかな。今回はスルーかな。
+
+---

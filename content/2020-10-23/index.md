@@ -40,6 +40,8 @@ excerpt: My iPhone 12 Black arrived. I've confirmed that it works with Docomo's 
 ![緑茶の肖像 by iPhone12](./img8.jpg)
 
 
-#### CPUマニア的にはEUVで製造されたチップ(A14 Bionic)を使ってるという満足感があります。
+### CPUマニア的にはEUVで製造されたチップ(A14 Bionic)を使ってるという満足感があります。
 
 これまで所有しているデバイスで最も進んだプロセスはRyzen 9 3950X(TSMC N7 + GF 12LPP)かMacBookAir2020(Intel 10nm+)のどっちかなって感じでしたが。iPhone12を手に入れたことにより自分が持ってる最先端のチップはTSMC N5になりました。
+
+---
