@@ -15,8 +15,11 @@ import style from './post.module.less';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import PostNav from '../../components/prevnext'
 
+import { MDXRenderer } from "gatsby-plugin-mdx"
+import { MDXProvider } from "@mdx-js/react"
+
 const Post = ({ data, pageContext }) => {
-  const { html, frontmatter } = data.markdownRemark;
+  const { body, frontmatter } = data.mdx;
   const {
     title, cover: { childImageSharp: { fluid } }, excerpt, path, date,
   } = frontmatter;
@@ -44,7 +47,9 @@ const Post = ({ data, pageContext }) => {
             </div>
             <CalendarTodayIcon/><h3>{date}</h3>
             <p>{excerpt}</p>
-            <article className={style.blogArticle} dangerouslySetInnerHTML={{ __html: html }} />
+            <MDXProvider components={style.blogArticle}>
+              <MDXRenderer>{body}</MDXRenderer>
+            </MDXProvider>
           </div>
           <PostNav prev={pageContext.prev} next={pageContext.next}/>
         </SidebarWrapper>
@@ -55,9 +60,9 @@ const Post = ({ data, pageContext }) => {
 
 export const pageQuery = graphql`
   query($postPath: String!) {
-    markdownRemark(frontmatter: { path: { eq: $postPath } }) {
-      html
+    mdx(frontmatter: { path: { eq: $postPath } }) {
       timeToRead
+      body
       frontmatter {
         title
         date(formatString: "YYYY-MM-DD")
@@ -73,10 +78,10 @@ export const pageQuery = graphql`
         }
       }
     }
-    allMarkdownRemark(
+    allMdx(
       filter: {
         frontmatter: { path: { ne: $postPath } }
-        fileAbsolutePath: { regex: "/index.md$/" }
+        fileAbsolutePath: { regex: "/index.mdx/" }
       }
     ) {
       edges {

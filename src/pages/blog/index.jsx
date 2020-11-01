@@ -23,7 +23,7 @@ const Blog = ({ data }) => (
         </div>
         <Row gutter={[20, 20]}>
           {
-            data.allMarkdownRemark && data.allMarkdownRemark.edges.map((val, key) => (
+            data.allMdx && data.allMdx.edges.map((val, key) => (
               // eslint-disable-next-line react/no-array-index-key
               <Col key={key} xs={24} sm={24} md={12} lg={8}>
                 <PostCard data={val} />
@@ -38,7 +38,7 @@ const Blog = ({ data }) => (
 
 Blog.propTypes = {
   data: PropTypes.shape({
-    allMarkdownRemark: PropTypes.shape({
+    allMdx: PropTypes.shape({
       edges: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
     }).isRequired,
   }).isRequired,
@@ -46,9 +46,9 @@ Blog.propTypes = {
 
 export const query = graphql`
   {
-    allMarkdownRemark(
+    allMdx(
       sort: { fields: [frontmatter___date], order: DESC }
-      filter: { fileAbsolutePath: { regex: "/index.md$/" } }
+      filter: { fileAbsolutePath: { regex: "/index.mdx/" } }
     ) {
       edges {
         node {

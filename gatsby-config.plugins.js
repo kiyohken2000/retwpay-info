@@ -14,6 +14,30 @@ module.exports = [
     },
   },
   {
+    resolve: `gatsby-plugin-mdx`,
+    options: {
+        gatsbyRemarkPlugins: [
+            {
+                resolve: `gatsby-remark-images`,
+                options: {
+                  maxWidth: 650,
+                  quality: 80,
+                  showCaptions: true,
+                  linkImagesToOriginal: true,
+                },
+            },
+            {
+                resolve: "gatsby-remark-external-links",
+                options: {
+                  target: "_blank",
+                  rel: "nofollow"
+                },
+            },
+            'gatsby-remark-prismjs',
+        ],
+    },
+  },
+  {
     resolve: 'gatsby-plugin-manifest',
     options: {
       name: 'Retwpay',
@@ -32,29 +56,6 @@ module.exports = [
     options: {
       name: 'markdown-pages',
       path: `${__dirname}/content`,
-    },
-  },
-  {
-    resolve: 'gatsby-transformer-remark',
-    options: {
-      plugins: [
-        {
-          resolve: 'gatsby-remark-images',
-          options: {
-            maxWidth: 650,
-            quality: 80,
-            showCaptions: true,
-            linkImagesToOriginal: true,
-          },
-        },
-        {
-          resolve: 'gatsby-remark-external-links',
-          options: {
-            rel: 'nofollow',
-          },
-        },
-        'gatsby-remark-prismjs',
-      ],
     },
   },
   {

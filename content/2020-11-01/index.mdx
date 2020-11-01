@@ -1,0 +1,509 @@
+---
+title: マークダウンで書いていたGatsbyをMDXに切り替えました
+tags: [  ]
+date: 2020-11-01
+path: blog/2020-11-01
+cover: ./img.png
+excerpt: Switched Gatsby blog from .md to .mdx
+---
+import { Link } from 'gatsby';
+import AndroidIcon from '@material-ui/icons/Android';
+import AppleIcon from '@material-ui/icons/Apple';
+
+本題に入る前に<Link to="/blog/2020-10-30">前回</Link>の補足。
+
+前回、記事の最後に前後の記事のリンクを入れるようにしましたが、最新と最古の記事でリンクを表示する場所がおかしかったのでスタイリングを直しました。ついでにブログ一覧へのリンクも追加しました。
+
+`変更後のコード`
+
+```javascript
+import React from 'react';
+import { Link } from 'gatsby';
+import { Row, Col } from 'antd';
+
+const PostNav = ({prev, next}) => (
+  <div>
+    <Row>
+      <Col span={12}>
+        {prev && (
+          <div>
+            <span>次の記事</span>
+            <br/>
+            <Link to={`/${prev.frontmatter.path}`}>
+              {prev.frontmatter.title}
+            </Link>
+          </div>
+        )}
+      </Col>
+      <Col span={12}>
+        {next && (
+          <div>
+            <span>前の記事</span>
+            <br/>
+            <Link to={`/${next.frontmatter.path}`}>
+              {next.frontmatter.title}
+            </Link>
+          </div>
+        )}
+      </Col>
+    </Row>
+    <br/>
+    <Row alignItems="center" justify="center">
+      <Col>
+        <Link to="/blog">
+          ブログトップ
+        </Link>
+      </Col>
+    </Row>
+  </div>
+);
+
+export default PostNav;
+
+```
+
+### 素のマークダウンで書いていたこのブログをMDXに変更しました
+
+これまでこのサイトのブログポストは.mdで書いていたのですが、せっかく"**blazing fast**🔥"なGatsbyなので、ポスト内でも```<Link>```タグを使いたくてMDXに切り替えることにしました。**MDX**はマークダウンの中でJavaScriptを書けるように拡張したファイル形式です。
+
+記事内にJavaScriptを書けるようになるので
+
+```javascript
+import { Link } from 'gatsby';
+```
+```html
+本題に入る前に<Link to="/blog/2020-10-30">前回</Link>の補足。
+```
+とか書くとちゃんと投稿内でそのJavaScriptが動きます。
+
+なので
+```javascript
+import AndroidIcon from '@material-ui/icons/Android';
+とか
+import AppleIcon from '@material-ui/icons/Apple';
+```
+と書くと記事内で
+
+<AndroidIcon/>
+<AppleIcon/>
+
+なんかのMaterial Iconが使えたりします。
+
+Material Iconを使うことはないと思いますが。Gatsbyの爆速の要である`<Link>`タグを投稿内でも使えるようにしたかったのです。公式自ら"**blazing fast**🔥"なんて言っちゃうくらい、確かにページ遷移が猛烈に速いですから。
+
+**`今回やったこと`**
+
+まずは公式ページの指示通りMDXプラグインをインストールしました。
+
+```shell
+yarn add gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
+```
+
+### **gatsby-config.plugins.js**を変更
+
+`変更前`
+```javascript
+{
+    resolve: 'gatsby-transformer-remark',
+    options: {
+      plugins: [
+        {
+          resolve: 'gatsby-remark-images',
+          options: {
+            maxWidth: 650,
+            quality: 80,
+            showCaptions: true,
+            linkImagesToOriginal: true,
+          },
+        },
+        {
+          resolve: 'gatsby-remark-external-links',
+          options: {
+            rel: 'nofollow',
+          },
+        },
+        'gatsby-remark-prismjs',
+      ],
+    },
+  },
+  ```
+  `変更後`
+  ```javascript
+  {
+    resolve: `gatsby-plugin-mdx`,
+    options: {
+        gatsbyRemarkPlugins: [
+            {
+                resolve: `gatsby-remark-images`,
+                options: {
+                  maxWidth: 650,
+                  quality: 80,
+                  showCaptions: true,
+                  linkImagesToOriginal: true,
+                },
+            },
+            {
+                resolve: "gatsby-remark-external-links",
+                options: {
+                  target: "_blank",
+                  rel: "nofollow"
+                },
+            },
+            'gatsby-remark-prismjs',
+        ],
+    },
+  },
+  ```
+
+  ### **gatsby-node.js**を変更
+
+  `変更前`
+```javascript
+const path = require('path');
+const config = require('./config');
+const utils = require('./src/utils/pageUtils');
+
+exports.createPages = ({ actions, graphql }) => {
+  const { createPage } = actions;
+
+  return graphql(`
+    {
+      allMarkdownRemark(sort: {order: DESC, fields: [frontmatter___date]}) {
+        edges {
+          node {
+            frontmatter {
+              path
+              tags
+            }
+            fileAbsolutePath
+          }
+          next {
+            frontmatter { title path }
+          }
+          prev: previous {
+            frontmatter { title path }
+          }
+        }
+      }
+    }    
+  `).then((result) => {
+    if (result.errors) return Promise.reject(result.errors);
+
+    const { allMarkdownRemark } = result.data;
+
+    /* Post pages */
+    allMarkdownRemark.edges.forEach(({ node }) => {
+      // Check path prefix of post
+      if (node.frontmatter.path.indexOf(config.pages.blog) !== 0) {
+        // eslint-disable-next-line no-throw-literal
+        throw `Invalid path prefix: ${node.frontmatter.path}`;
+      }
+
+      createPage({
+        path: node.frontmatter.path,
+        component: path.resolve('src/templates/post/post.jsx'),
+        context: {
+          postPath: node.frontmatter.path,
+          translations: utils.getRelatedTranslations(node, allMarkdownRemark.edges),
+        },
+      });
+    });
+    const regexForIndex = /index\.md$/;
+    // Posts in default language, excluded the translated versions
+    const defaultPosts = allMarkdownRemark.edges
+      .filter(({ node: { fileAbsolutePath } }) => fileAbsolutePath.match(regexForIndex));
+
+    /* Tag pages */
+    const allTags = [];
+    defaultPosts.forEach(({ node }) => {
+      node.frontmatter.tags.forEach((tag) => {
+        if (allTags.indexOf(tag) === -1) allTags.push(tag);
+      });
+    });
+
+    allTags
+      .forEach((tag) => {
+        createPage({
+          path: utils.resolvePageUrl(config.pages.tag, tag),
+          component: path.resolve('src/templates/tags/index.jsx'),
+          context: {
+            tag,
+          },
+        });
+      });
+
+      allMarkdownRemark.edges.forEach(({node, next, prev}) => {
+        const {frontmatter} = node
+      
+        createPage({
+          path: `/${frontmatter.path}`,
+          component: path.resolve('src/templates/post/post.jsx'),
+          context: {
+            id: node.id,
+            postPath: frontmatter.path,
+            next,
+            prev,
+          },
+        })
+      });
+
+    return 1;
+  });
+};
+```
+
+`変更後`
+```javascript
+const path = require('path');
+const config = require('./config');
+const utils = require('./src/utils/pageUtils');
+
+exports.createPages = ({ actions, graphql }) => {
+  const { createPage } = actions;
+
+  return graphql(`
+    {
+      allMdx(sort: {order: DESC, fields: [frontmatter___date]}) {
+        edges {
+          node {
+            frontmatter {
+              path
+              tags
+            }
+            fileAbsolutePath
+          }
+          next {
+            frontmatter { title path }
+          }
+          prev: previous {
+            frontmatter { title path }
+          }
+        }
+      }
+    }    
+  `).then((result) => {
+    if (result.errors) return Promise.reject(result.errors);
+
+    const { allMdx } = result.data;
+
+    /* Post pages */
+    allMdx.edges.forEach(({ node }) => {
+      // Check path prefix of post
+      if (node.frontmatter.path.indexOf(config.pages.blog) !== 0) {
+        // eslint-disable-next-line no-throw-literal
+        throw `Invalid path prefix: ${node.frontmatter.path}`;
+      }
+
+      createPage({
+        path: node.frontmatter.path,
+        component: path.resolve('src/templates/post/post.jsx'),
+        context: {
+          postPath: node.frontmatter.path,
+          translations: utils.getRelatedTranslations(node, allMdx.edges),
+        },
+      });
+    });
+    const regexForIndex = /index\.mdx/;
+    // Posts in default language, excluded the translated versions
+    const defaultPosts = allMdx.edges
+      .filter(({ node: { fileAbsolutePath } }) => fileAbsolutePath.match(regexForIndex));
+
+    /* Tag pages */
+    const allTags = [];
+    defaultPosts.forEach(({ node }) => {
+      node.frontmatter.tags.forEach((tag) => {
+        if (allTags.indexOf(tag) === -1) allTags.push(tag);
+      });
+    });
+
+    allTags
+      .forEach((tag) => {
+        createPage({
+          path: utils.resolvePageUrl(config.pages.tag, tag),
+          component: path.resolve('src/templates/tags/index.jsx'),
+          context: {
+            tag,
+          },
+        });
+      });
+
+      allMdx.edges.forEach(({node, next, prev}) => {
+        const {frontmatter} = node
+      
+        createPage({
+          path: `/${frontmatter.path}`,
+          component: path.resolve('src/templates/post/post.jsx'),
+          context: {
+            id: node.id,
+            postPath: frontmatter.path,
+            next,
+            prev,
+          },
+        })
+      });
+
+    return 1;
+  });
+};
+```
+
+全部載せたので冗長になりましたが、`allMarkdownRemark`を`allMDX`に、`index\.md$/;`を`index\.mdx/;`に変更しただけです。
+
+### 投稿一覧のテンプレートを変更
+
+**src/pages/blog/index.jsx**
+
+`変更前`
+```javascript
+data.allMarkdownRemark && data.allMarkdownRemark.edges.map((val, key) => (
+```
+```javascript
+Blog.propTypes = {
+  data: PropTypes.shape({
+    allMarkdownRemark: PropTypes.shape({
+      edges: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+    }).isRequired,
+  }).isRequired,
+};
+```
+```javascript
+export const query = graphql`
+  {
+    allMarkdownRemark(
+      sort: { fields: [frontmatter___date], order: DESC }
+      filter: { fileAbsolutePath: { regex: "/index.md$/" } }
+    ) {
+```
+
+`変更後`
+```javascript
+data.allMdx && data.allMdx.edges.map((val, key) => (
+```
+```javascript
+Blog.propTypes = {
+  data: PropTypes.shape({
+    allMdx: PropTypes.shape({
+      edges: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+    }).isRequired,
+  }).isRequired,
+};
+```
+```javascript
+export const query = graphql`
+  {
+    allMdx(
+      sort: { fields: [frontmatter___date], order: DESC }
+      filter: { fileAbsolutePath: { regex: "/index.mdx/" } }
+    ) {
+```
+
+これも、`allMarkdownRemark`を`allMDX`に、`index\.md$/;`を`index\.mdx/;`に変更しただけです。
+
+### 記事のテンプレートを変更
+
+**src/templates/post/post.jsx**
+
+MDXプラグインをインポート
+```javascript
+import { MDXRenderer } from "gatsby-plugin-mdx"
+import { MDXProvider } from "@mdx-js/react"
+```
+
+`変更前`
+```javascript
+const Post = ({ data, pageContext }) => {
+  const { html, frontmatter } = data.markdownRemark;
+  const {
+    title, cover: { childImageSharp: { fluid } }, excerpt, path, date,
+  } = frontmatter;
+```
+
+`変更後`
+```javascript
+const Post = ({ data, pageContext }) => {
+  const { body, frontmatter } = data.mdx;
+  const {
+    title, cover: { childImageSharp: { fluid } }, excerpt, path, date,
+  } = frontmatter;
+```
+
+本文表示箇所をMDX用に変更
+
+`変更前`
+```javascript
+<article className={style.blogArticle} dangerouslySetInnerHTML={{ __html: html }} />
+```
+
+`変更後`
+```javascript
+<MDXProvider components={style.blogArticle}>
+    <MDXRenderer>{body}</MDXRenderer>
+</MDXProvider>
+```
+
+graphql部分
+
+`変更前`
+```javascript
+export const pageQuery = graphql`
+  query($postPath: String!) {
+    markdownRemark(frontmatter: { path: { eq: $postPath } }) {
+      html
+      timeToRead
+      frontmatter {
+        title
+        date(formatString: "YYYY-MM-DD")
+        tags
+        path
+        excerpt
+        cover {
+          childImageSharp {
+            fluid(maxWidth: 1000) {
+              ...GatsbyImageSharpFluid_tracedSVG
+            }
+          }
+        }
+      }
+    }
+    allMarkdownRemark(
+      filter: {
+        frontmatter: { path: { ne: $postPath } }
+        fileAbsolutePath: { regex: "/index.md$/" }
+```
+
+`変更後`
+```javascript
+export const pageQuery = graphql`
+  query($postPath: String!) {
+    mdx(frontmatter: { path: { eq: $postPath } }) {
+      timeToRead
+      body
+      frontmatter {
+        title
+        date(formatString: "YYYY-MM-DD")
+        tags
+        path
+        excerpt
+        cover {
+          childImageSharp {
+            fluid(maxWidth: 1000) {
+              ...GatsbyImageSharpFluid_tracedSVG
+            }
+          }
+        }
+      }
+    }
+    allMdx(
+      filter: {
+        frontmatter: { path: { ne: $postPath } }
+        fileAbsolutePath: { regex: "/index.mdx/" }
+```
+
+これも、`allMarkdownRemark`を`allMDX`に、`index\.md$/;`を`index\.mdx/;`に変更しました。あとは本文表示用の`html`を`body`に変更しました。
+
+以上です。
+
+
+`gatsby plugin mdx`でググって出てくる日本語記事を読むと難しそうな感じですが、やってみると意外とあっさりできました。
+
+---

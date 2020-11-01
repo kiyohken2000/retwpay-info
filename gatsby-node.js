@@ -9,7 +9,7 @@ exports.createPages = ({ actions, graphql }) => {
 
   return graphql(`
     {
-      allMarkdownRemark(sort: {order: DESC, fields: [frontmatter___date]}) {
+      allMdx(sort: {order: DESC, fields: [frontmatter___date]}) {
         edges {
           node {
             frontmatter {
@@ -30,10 +30,10 @@ exports.createPages = ({ actions, graphql }) => {
   `).then((result) => {
     if (result.errors) return Promise.reject(result.errors);
 
-    const { allMarkdownRemark } = result.data;
+    const { allMdx } = result.data;
 
     /* Post pages */
-    allMarkdownRemark.edges.forEach(({ node }) => {
+    allMdx.edges.forEach(({ node }) => {
       // Check path prefix of post
       if (node.frontmatter.path.indexOf(config.pages.blog) !== 0) {
         // eslint-disable-next-line no-throw-literal
@@ -45,13 +45,13 @@ exports.createPages = ({ actions, graphql }) => {
         component: path.resolve('src/templates/post/post.jsx'),
         context: {
           postPath: node.frontmatter.path,
-          translations: utils.getRelatedTranslations(node, allMarkdownRemark.edges),
+          translations: utils.getRelatedTranslations(node, allMdx.edges),
         },
       });
     });
-    const regexForIndex = /index\.md$/;
+    const regexForIndex = /index\.mdx/;
     // Posts in default language, excluded the translated versions
-    const defaultPosts = allMarkdownRemark.edges
+    const defaultPosts = allMdx.edges
       .filter(({ node: { fileAbsolutePath } }) => fileAbsolutePath.match(regexForIndex));
 
     /* Tag pages */
@@ -73,7 +73,7 @@ exports.createPages = ({ actions, graphql }) => {
         });
       });
 
-      allMarkdownRemark.edges.forEach(({node, next, prev}) => {
+      allMdx.edges.forEach(({node, next, prev}) => {
         const {frontmatter} = node
       
         createPage({

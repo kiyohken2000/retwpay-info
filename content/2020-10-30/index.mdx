@@ -19,7 +19,7 @@ excerpt: Embed previous and next post link
 ```javascript
 return graphql(`
     {
-      allMarkdownRemark(sort: {order: DESC, fields: [frontmatter___date]}) {
+      allMdx(sort: {order: DESC, fields: [frontmatter___date]}) {
         edges {
           node {
             frontmatter {
@@ -45,7 +45,7 @@ return graphql(`
 #### 受け渡し部分
 ```javascript
     /** ここから **/
-      allMarkdownRemark.edges.forEach(({node, next, prev}) => {
+      allMdx.edges.forEach(({node, next, prev}) => {
         const {frontmatter} = node
         createPage({
           path: `/${frontmatter.path}`,

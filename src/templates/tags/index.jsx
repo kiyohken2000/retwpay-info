@@ -22,7 +22,7 @@ const TagPage = ({ data, pageContext }) => {
   const tagPagePath = Config.pages.tag;
   const tagImage = data.allFile.edges.find((edge) => edge.node.name === tag).node
     .childImageSharp.fluid;
-  const posts = data.allMarkdownRemark.edges;
+  const posts = data.allMdx.edges;
   return (
     <Layout className="outerPadding">
       <Layout className="container">
@@ -62,7 +62,7 @@ const TagPage = ({ data, pageContext }) => {
 
 TagPage.propTypes = {
   data: PropTypes.shape({
-    allMarkdownRemark: PropTypes.shape({
+    allMdx: PropTypes.shape({
       edges: PropTypes.arrayOf(PropTypes.object).isRequired,
     }).isRequired,
     allFile: PropTypes.shape({
@@ -85,10 +85,10 @@ TagPage.propTypes = {
 
 export const pageQuery = graphql`
   query($tag: String!) {
-    allMarkdownRemark(
+    allMdx(
       filter: {
         frontmatter: { tags: { in: [$tag] } }
-        fileAbsolutePath: { regex: "/index.md$/" }
+        fileAbsolutePath: { regex: "/index.mdx/" }
       }
       sort: { fields: [frontmatter___date], order: DESC }
     ) {
