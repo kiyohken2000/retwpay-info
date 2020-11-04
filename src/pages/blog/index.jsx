@@ -13,7 +13,7 @@ const Blog = ({ data }) => (
     <Layout className="container">
       <Header />
       <SEO
-        title="Blog"
+        title="ブログ"
         description="Retwpay"
         path="blog"
       />
