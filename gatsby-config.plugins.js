@@ -103,4 +103,56 @@ module.exports = [
       showSpinner: true,
     },
   },
+  {
+    resolve: `gatsby-plugin-feed`,
+    options: {
+      query: `
+        {
+          site {
+            siteMetadata {
+              title
+              description
+              siteUrl
+              site_url: siteUrl
+            }
+          }
+        }
+      `,
+      feeds: [
+        {
+          serialize: ({ query: { site, allMdx } }) => {
+            return allMdx.edges.map(edge => {
+              return Object.assign({}, edge.node.frontmatter, {
+                description: edge.node.excerpt,
+                date: edge.node.frontmatter.date,
+                url: site.siteMetadata.siteUrl + '/blog/' + edge.node.slug,
+                guid: site.siteMetadata.siteUrl + '/blog/' + edge.node.slug,
+              })
+            })
+          },
+          query: `
+            {
+              allMdx(
+                sort: { order: DESC, fields: [frontmatter___date] },
+              ) {
+                edges {
+                  node {
+                    excerpt
+                    slug
+                    frontmatter {
+                      title
+                      date(formatString: "YYYY-MM-DD")
+                    }
+                  }
+                }
+              }
+            }
+          `,
+          output: "/rss.xml",
+          title: "Retwpay BLOG",
+          match: "^/blog/",
+        },
+      ],
+    },
+  },
 ];
