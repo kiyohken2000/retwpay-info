@@ -1,0 +1,94 @@
+---
+title: RSSフィードを追加しました
+tags: [  ]
+date: 2020-11-06
+path: blog/2020-11-06
+cover: ./img.png
+excerpt: Add an RSS Feed to Gatsby MDX Blog
+---
+import { Link } from 'gatsby';
+
+タイトルの通りです。ブログのRSSフィードを追加しました。
+
+### RSSフィード生成用のプラグインをインストールします。
+
+```shell
+yarn add gatsby-plugin-feed
+```
+
+### **gatsby-plugin-feed**を使うためにgatsby-configを編集します。
+
+ドキュメント通りのgraphqlだとうまく動かなかったので**http://localhost:8000/___graphql**を見ながら微調整しました。`slug`じゃなくて`path`にしたり、URLが壊れないように`/`を追加したりしました。
+
+**gatsby-config.plugins.js**
+```javascript
+  {
+    resolve: `gatsby-plugin-feed`,
+    options: {
+      query: `
+        {
+          site {
+            siteMetadata {
+              title
+              description
+              siteUrl
+            }
+          }
+        }
+      `,
+      feeds: [
+        {
+          serialize: ({ query: { site, allMdx } }) => {
+            return allMdx.edges.map(edge => {
+              return Object.assign({}, edge.node.frontmatter, {
+                description: edge.node.excerpt,
+                data: edge.node.frontmatter.date,
+                url: site.siteMetadata.siteUrl + "/" + edge.node.frontmatter.path,
+                guid: site.siteMetadata.siteUrl + "/" + edge.node.frontmatter.path,
+                custom_elements: [{ 'content:encoded': edge.node.html }],
+              });
+            });
+          },
+          query: `
+          {
+            allMdx(
+              sort: { order: DESC, fields: [frontmatter___date] },
+            ) {
+              edges {
+                node {
+                  frontmatter {
+                    title
+                    date
+                    path
+                  }
+                  html
+                }
+              }
+            }
+          }
+          `,
+          output: '/rss.xml',
+          title: `Retwpay - Retweet Flea Market App Develop BLOG`,
+          site_url: `https://retwpay.ml/`,
+        },
+      ],
+    },
+  },
+```
+
+`gatsby develop`だと**rss.xml**の確認ができないので`gatsby build`してから`gatsby serve`して`http://localhost:9000/rss.xml`でRSSフィードが生成されてるか確認します。
+
+### 任意の位置にRSSフィードのリンクを設置します。
+
+**src/pages/blog/index.jsx**
+
+```javascript
+import RssFeedIcon from '@material-ui/icons/RssFeed';
+```
+```html
+<a href="/rss.xml" target="_blank"><h3>RSS Feed <RssFeedIcon /></h3></a>
+```
+
+以上です。
+
+---

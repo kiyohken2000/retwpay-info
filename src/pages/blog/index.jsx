@@ -8,6 +8,8 @@ import SidebarWrapper from '../../components/PageLayout/Sidebar';
 import PostCard from '../../components/PostCard';
 import SEO from '../../components/Seo';
 
+import RssFeedIcon from '@material-ui/icons/RssFeed';
+
 const Blog = ({ data }) => (
   <Layout className="outerPadding">
     <Layout className="container">
@@ -20,6 +22,7 @@ const Blog = ({ data }) => (
       <SidebarWrapper>
         <div className="marginTopTitle">
           <h1 className="titleSeparate">開発ブログ</h1>
+          <a href="/rss.xml" target="_blank"><h3>RSS Feed <RssFeedIcon /></h3></a>
         </div>
         <Row gutter={[20, 20]}>
           {

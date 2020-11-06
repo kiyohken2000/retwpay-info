@@ -95,15 +95,6 @@ module.exports = [
     },
   },
   {
-    resolve: 'gatsby-plugin-nprogress',
-    options: {
-      // Setting a color is optional.
-      color: 'black',
-      // Disable the loading spinner.
-      showSpinner: true,
-    },
-  },
-  {
     resolve: `gatsby-plugin-feed`,
     options: {
       query: `
@@ -113,7 +104,6 @@ module.exports = [
               title
               description
               siteUrl
-              site_url: siteUrl
             }
           }
         }
@@ -124,33 +114,34 @@ module.exports = [
             return allMdx.edges.map(edge => {
               return Object.assign({}, edge.node.frontmatter, {
                 description: edge.node.excerpt,
-                date: edge.node.frontmatter.date,
-                url: site.siteMetadata.siteUrl + '/blog/' + edge.node.slug,
-                guid: site.siteMetadata.siteUrl + '/blog/' + edge.node.slug,
-              })
-            })
+                data: edge.node.frontmatter.date,
+                url: site.siteMetadata.siteUrl + "/" + edge.node.frontmatter.path,
+                guid: site.siteMetadata.siteUrl + "/" + edge.node.frontmatter.path,
+                custom_elements: [{ 'content:encoded': edge.node.html }],
+              });
+            });
           },
           query: `
-            {
-              allMdx(
-                sort: { order: DESC, fields: [frontmatter___date] },
-              ) {
-                edges {
-                  node {
-                    excerpt
-                    slug
-                    frontmatter {
-                      title
-                      date(formatString: "YYYY-MM-DD")
-                    }
+          {
+            allMdx(
+              sort: { order: DESC, fields: [frontmatter___date] },
+            ) {
+              edges {
+                node {
+                  frontmatter {
+                    title
+                    date
+                    path
                   }
+                  html
                 }
               }
             }
+          }
           `,
-          output: "/rss.xml",
-          title: "Retwpay BLOG",
-          match: "^/blog/",
+          output: '/rss.xml',
+          title: `Retwpay - Retweet Flea Market App Develop BLOG`,
+          site_url: `https://retwpay.ml/`,
         },
       ],
     },
