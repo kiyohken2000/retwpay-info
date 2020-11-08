@@ -130,7 +130,7 @@ module.exports = [
                 node {
                   frontmatter {
                     title
-                    date
+                    date(formatString: "YYYY MM DD, h:mm:ss +0900")
                     path
                   }
                   html
