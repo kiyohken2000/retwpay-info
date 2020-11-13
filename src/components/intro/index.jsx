@@ -15,8 +15,8 @@ const Intro = () => (
             <li>アプリユーザーがリストされているユーザーに声をかけるときのテンプレートを作成することです</li>
           </ol>
     <Grid container justify="center">
-      <Grid item sm={6} md={6}><img src="../retwpay_buy.jpg" width="63%" height="auto" /></Grid>
-      <Grid item sm={6} md={6}><img src="../retwpay_sell.jpg" width="63%" height="auto" /></Grid>
+      <Grid item sm={6} md={6}><img src="../retwpay_buy_ss.jpg" width="63%" height="auto" /></Grid>
+      <Grid item sm={6} md={6}><img src="../retwpay_sell_ss.jpg" width="63%" height="auto" /></Grid>
     </Grid>
   </div>
 );
