@@ -26,7 +26,7 @@ const Tags = ({ data }) => {
       <Layout className="container">
         <Header />
         <SEO
-          title="Tags"
+          title="タグ"
           description="This page consists of various Tags on various technologies that I'll be using
           to write blogs. You can check the blogs related to the tags by clicking on any of the tags below."
           path="tags"
@@ -34,7 +34,7 @@ const Tags = ({ data }) => {
         <SidebarWrapper>
           <>
             <div className="marginTopTitle">
-              <h1 className="titleSeparate">#Tags</h1>
+              <h1 className="titleSeparate">#タグ</h1>
             </div>
             <Row gutter={[30, 20]}>
               {
