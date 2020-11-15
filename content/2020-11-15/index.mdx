@@ -1,0 +1,51 @@
+---
+title: CPU交換してからKP41病が発生している
+tags: [    ]
+date: 2020-11-15
+path: blog/2020-11-15
+cover: ./img.jpg
+excerpt: BSoD due to KP41 has occurred since the CPU was replaced.
+---
+import { Link } from 'gatsby';
+
+### Ryzen 9 3950Xから5950Xに交換してからKP41によるBSoDが発生している
+
+|環境|   |
+|---|---|
+|CPU|AMD Ryzen9 5950X|
+|クーラー|Scythe 虎徹 Mark2|
+|M/B|GIGABYTE B550 AORUS ELITE|
+|MEM|Crucial W4U3200CM-16G|
+|電源|Antec EA-650|
+
+<br/>
+
+- 高速起動はデフォルト(無効)
+- チップセットドライバは`2.10.13.408`
+
+<br/>
+
+### やっても直らなかったこと一覧
+
+- GIGABYTE B550 AORUS ELITEのBIOSを`F11c`から`F11d`にアップデート
+- Windows10 20H2を再インストール
+- 電源オプションの高速スタートアップを`無効`に変更
+- CPUクーラー(虎徹Mark2)のネジを締め直し
+- メモリ(Crucial W4U3200CM-16G)、スロット入れ替えて差し直し
+- グラボのドライバをアップデート(Adrenalin 2020 `20.9.2`→`20.11.1`)
+- 電源オプションの詳細設定`プロセッサの電源管理`の`最小のプロセッサの状態`を**0%から1%**に変更
+- 仮想メモリ無効
+- superfetch無効
+
+<br/>
+
+### これだけやってもダメだったから電源とメモリをポチった
+
+- Crucial 32GB Kit (2 x 16GB) DDR4-3200 UDIMM CT2K16G4DFD832A
+- Corsair CP-9020194-JP (RM650 2019 650W)
+
+<br/>
+
+これで直らなかったら完全に詰みだ
+
+---
