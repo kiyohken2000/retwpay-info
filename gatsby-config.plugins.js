@@ -2,6 +2,12 @@ const config = require('./config');
 
 module.exports = [
   'gatsby-plugin-react-helmet',
+  {
+    resolve: `gatsby-plugin-react-helmet-canonical-urls`,
+    options: {
+      siteUrl: `https://retwpay.ml`,
+    },
+  },
   'gatsby-transformer-sharp',
   'gatsby-plugin-sharp',
   'gatsby-plugin-less',

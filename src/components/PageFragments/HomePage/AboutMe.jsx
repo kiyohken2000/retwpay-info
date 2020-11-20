@@ -9,8 +9,10 @@ import SEO from '../../Seo';
 const pageText = {
   paraOne: `Retwpayは拡散リツイートを「<mark><b>買いたい</b></mark>」と「<mark><b>売りたい</b></mark>」のマッチングを支援します。<br/>
   <br/>
+  <ul>
   <li><b>リツイートを売って電子マネーを手に入れたい！</b></li>
   <li><b>リツイートを買ってブログやYouTubeを宣伝したい！</b></li>
+  </ul>
   <br/>
   そんな方はぜひご利用ください`,
   paraTwo: `Currently I work mostly with Javascript technologies like ReactJS and NodeJS. I also
@@ -37,7 +39,7 @@ const AboutMe = () => {
         </p>
         <h3><mark>Amazonギフト券</mark>、<mark>LINE pay</mark>、<mark>PayPay</mark>、<mark>Kyash</mark>、<mark>Pring</mark>のいずれかと<mark>Twitter</mark>だけですぐに使えます。</h3>
         <Grid container justify="space-between">
-          <Grid item sm={12} md={12}><img src="../logo.png" width="90%" height="auto"/></Grid>
+          <Grid item sm={12} md={12}><img src="../logo.png" width="90%" height="auto" alt="logoimage"/></Grid>
           </Grid>
         <h2>6つの特長</h2>
       </div>
