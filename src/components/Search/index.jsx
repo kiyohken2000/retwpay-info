@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import { Link } from "gatsby"
 import TextHighlighter from "./highlight"
-import SearchIcon from '@material-ui/icons/Search';
+import TextField from '@material-ui/core/TextField';
 
 const SearchResult = props => {
   // 全記事データ取得 //
@@ -101,14 +101,15 @@ const Search = props => {
   }
   return (
     <div>
-      <input
-        type="text"
-        placeholder="ブログ内検索..."
+      <TextField 
+        id="outlined-search"
+        label="ブログ内検索..."
+        type="search"
+        variant="outlined"
         onFocus={onFocus}
         onBlur={onBlur}
         onChange={onChange}
       />
-      <SearchIcon />
       <SearchResult focus={focus} value={value} />
     </div>
   )
