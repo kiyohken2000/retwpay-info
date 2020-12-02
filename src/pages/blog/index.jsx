@@ -9,6 +9,7 @@ import PostCard from '../../components/PostCard';
 import SEO from '../../components/Seo';
 
 import RssFeedIcon from '@material-ui/icons/RssFeed';
+import Search from '../../components/Search';
 
 const Blog = ({ data }) => (
   <Layout className="outerPadding">
@@ -21,8 +22,15 @@ const Blog = ({ data }) => (
       />
       <SidebarWrapper>
         <div className="marginTopTitle">
-          <h1 className="titleSeparate">開発ブログ</h1>
-          <a href="/rss.xml" target="_blank"><h3>RSS Feed <RssFeedIcon /></h3></a>
+        <Row>
+          <Col span={12}>
+            <h1 className="titleSeparate">開発ブログ</h1>
+          </Col>
+          <Col span={12}>
+            <Search/>
+          </Col>
+        </Row>
+            <a href="/rss.xml" target="_blank"><h3>RSS Feed <RssFeedIcon /></h3></a>
         </div>
         <Row gutter={[20, 20]}>
           {
