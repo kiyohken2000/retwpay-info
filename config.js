@@ -12,7 +12,7 @@ module.exports = {
     blog: 'blog',
     buy: 'buy',
     sell: 'sell',
-    resume: 'resume',
+    contact: 'contact',
     tag: 'tags',
   },
   social: {
