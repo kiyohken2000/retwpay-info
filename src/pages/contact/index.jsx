@@ -9,7 +9,7 @@ const Contact = () => (
   <Layout className="outerPadding">
     <Layout className="container">
       <SEO
-        title="Contact"
+        title="ウェブ制作"
         description="Retwpay"
         path="/contact"
         keywords={['Retwpay', 'Twitter']}
@@ -29,16 +29,24 @@ const Contact = () => (
               <li><a href="https://www.craudia.com/user_detail/wKNWiU" target="_blank">Craudia</a></li>
             </ul>
             <br/>
-            <p>GatsbyJSは、<strong>高いページパフォーマンス</strong>、<strong>低コスト</strong>で運用できることで、海外で大注目のReactベースの静的サイトジェネレータです。最新フレームワークのため<strong>Lighthouseで高スコア</strong>を達成でき、WordPressよりも<strong>高いSEO効果</strong>を期待できます。</p>
             <div>
-              <h3>GatsbyJSを使用している当サイトのLighthouseスコア</h3>
-              <img height="auto" width="63%" src="../lighthouse.png"/>
+              <h3>最新フレームワークGatsbyJSで高いページパフォーマンスを実現</h3>
+                <p>GatsbyJSは、<strong>高いページパフォーマンス</strong>、<strong>低コスト</strong>で運用できることで、海外で大注目のReactベースの静的サイトジェネレータです。最新フレームワークのため<strong>Lighthouseで高スコア</strong>を達成でき、WordPressよりも<strong>高いSEO効果</strong>を期待できます。</p>
+              <div>
+                <h4>GatsbyJSを使用している当サイトのLighthouseスコア</h4>
+                <img height="auto" width="63%" src="../lighthouse.png"/>
+              </div>
             </div>
             <br/>
             <div>
-              <h3>本サイトは完全無料で運営しています</h3>
-              <p>このサイトのドメイン<strong>retwpay.ml</strong>はFreenomで取得した無料ドメインです。Freenomでは<mark>.TK</mark>/<mark>.ML</mark>/<mark>.GA</mark>/<mark>.CF</mark>/<mark>.GQ</mark>の5種類のドメインが無料で取得できます。ホスティングに利用している<strong>Firebase</strong>は<mark>ストレージ1GB</mark>まで<mark>転送量は月10GB</mark>まで<strong>無料</strong>なので、このサイトは<strong>完全無料</strong>で運営しています。</p>
-              <p><a href="https://www.gatsbyjs.com/starters/?v=2" target="_blank">Gatsbyの豊富なテンプレート</a>からあなた好みのウェブページを制作します。</p>
+              <h3>静的サイトなので低コストで運用可能</h3>
+              <p>サーバーで動的にページを生成するWordPressと違い、GatsbyJSでは<strong>月々のサーバー料金が非常に安く</strong>済みます。</p>
+              <p>例えば、本サイトがホスティングに利用している<strong><a href="https://firebase.google.com/pricing?hl=ja" target="_blank">Firebase</a></strong>は<mark>ストレージ1GB</mark>まで<mark>転送量は月10GB</mark>まで<strong>無料</strong>です。このサイトは<strong>基本無料</strong>で運営しています。</p>
+              <p>さらに、このサイトのドメイン<strong>retwpay.ml</strong>は<strong><a href="https://www.freenom.com/ja/index.html" target="_blank">Freenom</a></strong>で取得した無料ドメインです。Freenomでは<mark>.TK</mark>/<mark>.ML</mark>/<mark>.GA</mark>/<mark>.CF</mark>/<mark>.GQ</mark>の5種類のドメインが無料で取得できます。</p>
+            </div>
+            <div>
+              <h3>豊富なテンプレートからあなた好みのウェブページを制作</h3>
+              <p>GatsbyJSの<a href="https://www.gatsbyjs.com/starters/?v=2" target="_blank">豊富なテンプレート</a>から制作します。</p>
             </div>
             <div>
               <h3>デザイン等は以下のサンプルサイトを参照ください</h3>
