@@ -58,7 +58,9 @@ const SearchResult = props => {
             return (
               <li key={e.slug}>
                 <Link to={`/${e.path}/`}>
-                  <TextHighlighter str={e.title} includes={props.value} />
+                  <div>
+                    <TextHighlighter str={e.title} includes={props.value} />
+                  </div>
                 </Link>
               </li>
             )

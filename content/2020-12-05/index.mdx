@@ -131,6 +131,28 @@ const Search = props => {
 />
 ```
 
+検索結果の表示も調整します。`<div>`を追加しただけです。
+
+```javascript
+return (
+      <div>
+        <ul>
+          {result.map(e => {
+            return (
+              <li key={e.slug}>
+                <Link to={`/${e.path}/`}>
+                  <div> {/* ここに追加 */}
+                    <TextHighlighter str={e.title} includes={props.value} />
+                  </div>{/* ここに追加 */}
+                </Link>
+              </li>
+            )
+          })}
+        </ul>
+      </div>
+  )
+```
+
 以上です。
 
 ---
