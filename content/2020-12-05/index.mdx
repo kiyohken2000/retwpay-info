@@ -109,7 +109,7 @@ const Search = props => {
 }
 ```
 
-前回のコードのまま処理を入れてしまうとうまく動きません。**検索結果**をクリックすると**その時点でフォーカスがはずれて**、**リンクを開く前に非表示**になってしまいます。なので`setTime`を使ってディレイを入れています。
+前回のコードのまま処理を入れてしまうとうまく動きません。**検索結果**をクリックすると**その時点でフォーカスがはずれて**、**リンクを開く前に非表示**になってしまいます。なので`setTimeout`を使ってディレイを入れています。
 
 ```javascript
   const outFocus = () => {
@@ -134,16 +134,16 @@ const Search = props => {
 検索結果の表示も調整します。`<div>`を追加しただけです。
 
 ```javascript
-return (
+  return (
       <div>
         <ul>
           {result.map(e => {
             return (
               <li key={e.slug}>
                 <Link to={`/${e.path}/`}>
-                  <div> {/* ここに追加 */}
+                  <div>
                     <TextHighlighter str={e.title} includes={props.value} />
-                  </div>{/* ここに追加 */}
+                  </div>
                 </Link>
               </li>
             )
