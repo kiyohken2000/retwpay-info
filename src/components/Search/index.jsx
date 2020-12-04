@@ -3,6 +3,7 @@ import { useStaticQuery, graphql } from "gatsby"
 import { Link } from "gatsby"
 import TextHighlighter from "./highlight"
 import TextField from '@material-ui/core/TextField';
+import Box from '@material-ui/core/Box';
 
 const SearchResult = props => {
   // 全記事データ取得 //
@@ -58,9 +59,9 @@ const SearchResult = props => {
             return (
               <li key={e.slug}>
                 <Link to={`/${e.path}/`}>
-                  <div>
+                  <Box>
                     <TextHighlighter str={e.title} includes={props.value} />
-                  </div>
+                  </Box>
                 </Link>
               </li>
             )
