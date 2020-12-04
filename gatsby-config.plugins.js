@@ -39,6 +39,13 @@ module.exports = [
                   rel: "nofollow"
                 },
             },
+            {
+              resolve: "gatsby-remark-embed-youtube",
+              options: {
+                width: 650,
+                height: 400
+              }
+            },
             'gatsby-remark-prismjs',
         ],
     },

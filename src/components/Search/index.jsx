@@ -32,25 +32,6 @@ const SearchResult = props => {
     setData(temp)
   }, [])
 
-  /* 表示非表示の切り替え
-  const [className, setClassName] = useState("")
-  useEffect(() => {
-    let id
-    if (props.focus && props.value !== "") {
-      id = setTimeout(() => {
-        setClassName("active")
-      }, 100)
-    } else {
-      id = setTimeout(() => {
-        setClassName("")
-      }, 100)
-    }
-    return () => {
-      clearTimeout(id)
-    }
-  }, [props.focus, props.value])
-  */
-
   // 検索処理 //
   const [result, setResult] = useState([])
   const search = () => {
@@ -110,7 +91,7 @@ const Search = props => {
         onBlur={onBlur}
         onChange={onChange}
       />
-      <SearchResult focus={focus} value={value} />
+      {focus ? <SearchResult focus={focus} value={value} />: null}
     </div>
   )
 }

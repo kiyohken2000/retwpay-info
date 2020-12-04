@@ -47,6 +47,7 @@ const Contact = () => (
             <div>
               <h3>豊富なテンプレートからあなた好みのウェブページを制作</h3>
               <p>GatsbyJSの<a href="https://www.gatsbyjs.com/starters/?v=2" target="_blank">豊富なテンプレート</a>から制作します。</p>
+              <p>また、<a href="https://getform.io/" target="_blank">Getform</a>や<a href="https://disqus.com/" target="_blank">DISQUS</a>などのSaaSを使い、<strong>問い合わせフォーム</strong>や<strong>コメント</strong>といった動的機能の実装も可能です。</p>
             </div>
             <div>
               <h3>デザイン等は以下のサンプルサイトを参照ください</h3>
