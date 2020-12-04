@@ -40,10 +40,18 @@ module.exports = [
                 },
             },
             {
-              resolve: "gatsby-remark-embed-youtube",
+              resolve: "gatsby-remark-embed-video",
               options: {
                 width: 650,
-                height: 400
+                ratio: 1.77,
+                related: true,
+                noIframeBorder: false,
+                urlOverrides: [
+                  {
+                    id: 'youtube',
+                    embedURL: (videoId) => `https://www.youtube-nocookie.com/embed/${videoId}`,
+                  }
+                ]
               }
             },
             'gatsby-remark-prismjs',

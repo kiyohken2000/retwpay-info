@@ -1,0 +1,80 @@
+---
+title: GatsbyへのYouTube埋め込み
+tags: [    ]
+date: 2020-12-06
+path: blog/2020-12-06
+cover: ./img.png
+excerpt: Embed Youtube Video in MDX.
+---
+import { Link } from 'gatsby';
+
+<Link to="/blog/2020-12-05">前回</Link>のエントリーで記事内にYouTubeを埋め込みました。
+
+GatsbyにYouTubeを埋め込むためにはプラグインを使うのが簡単です。[gatsby-remark-embed-youtube](https://www.gatsbyjs.com/plugins/gatsby-remark-embed-youtube/)という名前そのままのプラグインもありますが、今回はオプションがいろいろある[gatsby-remark-embed-video](https://www.gatsbyjs.com/plugins/gatsby-remark-embed-video/)を使うことにしました。
+
+### プラグインのインストール
+
+```shell
+yarn add gatsby-remark-embed-video
+```
+
+**gatsby-config.plugins.js**
+
+```javascript
+  {
+    resolve: `gatsby-plugin-mdx`,
+    options: {
+        gatsbyRemarkPlugins: [
+            {
+                resolve: `gatsby-remark-images`,
+                options: {
+                  maxWidth: 650,
+                  quality: 80,
+                  showCaptions: true,
+                  linkImagesToOriginal: true,
+                },
+            },
+            {
+                resolve: "gatsby-remark-external-links",
+                options: {
+                  target: "_blank",
+                  rel: "nofollow"
+                },
+            },
+            /* ここから */
+            {
+              resolve: "gatsby-remark-embed-video",
+              options: {
+                width: 650,
+                ratio: 1.77,
+                related: true,
+                noIframeBorder: false,
+                urlOverrides: [
+                  {
+                    id: 'youtube',
+                    embedURL: (videoId) => `https://www.youtube-nocookie.com/embed/${videoId}`,
+                  }
+                ]
+              }
+            },
+            /* ここまで追加 */
+            'gatsby-remark-prismjs',
+        ],
+  },
+```
+
+設定はこれだけです。
+
+### 使い方
+
+張り付け方は3パターンあります。
+
+```
+`video: https://www.youtube.com/embed/UhsHNGMmyZ4`
+`youtube: https://www.youtube.com/watch?v=UhsHNGMmyZ4`
+`youtube: UhsHNGMmyZ4`
+```
+
+どれでもできます。以上です。
+
+---
