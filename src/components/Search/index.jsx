@@ -77,6 +77,9 @@ const Search = props => {
   const onBlur = () => {
     setFocus(false)
   }
+  const outFocus = () => {
+    setTimeout(onBlur, 100)
+  }
   const onChange = e => {
     setValue(e.target.value)
   }
@@ -88,7 +91,7 @@ const Search = props => {
         type="search"
         variant="outlined"
         onFocus={onFocus}
-        onBlur={onBlur}
+        onBlur={outFocus}
         onChange={onChange}
       />
       {focus ? <SearchResult focus={focus} value={value} />: null}

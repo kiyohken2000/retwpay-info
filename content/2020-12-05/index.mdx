@@ -66,7 +66,7 @@ const Search = props => {
         onBlur={onBlur}
         onChange={onChange}
       />
-      <SearchResult focus={focus} value={value} /> {/*  この行を変更します */}
+      <SearchResult focus={focus} value={value} />
     </div>
   )
 }
@@ -77,6 +77,21 @@ const Search = props => {
 `変更後`
 
 ```javascript
+const Search = props => {
+  const [focus, setFocus] = useState(false)
+  const [value, setValue] = useState("")
+  const onFocus = () => {
+    setFocus(true)
+  }
+  const onBlur = () => {
+    setFocus(false)
+  }
+  const outFocus = () => {
+    setTimeout(onBlur, 100)
+  }
+  const onChange = e => {
+    setValue(e.target.value)
+  }
   return (
     <div>
       <TextField 
@@ -85,12 +100,35 @@ const Search = props => {
         type="search"
         variant="outlined"
         onFocus={onFocus}
-        onBlur={onBlur}
+        onBlur={outFocus}
         onChange={onChange}
       />
-      {focus ? <SearchResult focus={focus} value={value} />: null} {/*  この行を変更した */}
+      {focus ? <SearchResult focus={focus} value={value} />: null}
     </div>
   )
+}
+```
+
+前回のコードのまま処理を入れてしまうとうまく動きません。**検索結果**をクリックすると**その時点でフォーカスがはずれて**、**リンクを開く前に非表示**になってしまいます。なので`setTime`を使ってディレイを入れています。
+
+```javascript
+  const outFocus = () => {
+    setTimeout(onBlur, 100)
+  }
+```
+
+あとは`onBlur`イベントで呼び出す処理を、新しく作った`outFocus`に変更します。
+
+```javascript
+<TextField 
+  id="outlined-search"
+  label="ブログ内検索..."
+  type="search"
+  variant="outlined"
+  onFocus={onFocus}
+  onBlur={outFocus} {/* ここを変更 */}
+  onChange={onChange}
+/>
 ```
 
 以上です。
