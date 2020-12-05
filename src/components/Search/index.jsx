@@ -18,6 +18,7 @@ const SearchResult = props => {
                 title
                 path
                 excerpt
+                keywords
               }
         }
       }
@@ -41,6 +42,7 @@ const SearchResult = props => {
       const target = `
         ${e.title.toLowerCase()}
         ${e.excerpt.toLowerCase()}
+        ${e.keywords.join(" ").toLowerCase()}
       `
       return target.indexOf(value) !== -1
     })
