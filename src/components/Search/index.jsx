@@ -60,7 +60,7 @@ const SearchResult = props => {
           {result.map(e => {
             return (
               <li key={e.slug}>
-                <Link to={`/${e.path}/`}>
+                <Link to={`/${e.path}`}>
                   <Card>
                     <TextHighlighter str={e.title} includes={props.value} />
                   </Card>
