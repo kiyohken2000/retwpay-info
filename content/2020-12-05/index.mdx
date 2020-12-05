@@ -138,10 +138,10 @@ const Search = props => {
 />
 ```
 
-検索結果の表示も調整します。`<Box>`を追加しただけです。
+検索結果の表示も調整します。`<Card>`を追加しただけです。
 
 ```javascript
-import Box from '@material-ui/core/Box';
+import Card from '@material-ui/core/Card';
 ```
 
 ```javascript
@@ -152,9 +152,9 @@ import Box from '@material-ui/core/Box';
             return (
               <li key={e.slug}>
                 <Link to={`/${e.path}/`}>
-                  <Box>
+                  <Card>
                     <TextHighlighter str={e.title} includes={props.value} />
-                  </Box>
+                  </Card>
                 </Link>
               </li>
             )

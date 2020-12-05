@@ -3,7 +3,7 @@ import { useStaticQuery, graphql } from "gatsby"
 import { Link } from "gatsby"
 import TextHighlighter from "./highlight"
 import TextField from '@material-ui/core/TextField';
-import Box from '@material-ui/core/Box';
+import Card from '@material-ui/core/Card';
 
 const SearchResult = props => {
   // 全記事データ取得 //
@@ -61,9 +61,9 @@ const SearchResult = props => {
             return (
               <li key={e.slug}>
                 <Link to={`/${e.path}/`}>
-                  <Box>
+                  <Card>
                     <TextHighlighter str={e.title} includes={props.value} />
-                  </Box>
+                  </Card>
                 </Link>
               </li>
             )
@@ -83,7 +83,7 @@ const Search = props => {
     setFocus(false)
   }
   const outFocus = () => {
-    setTimeout(onBlur, 100)
+    setTimeout(onBlur, 150)
   }
   const onChange = e => {
     setValue(e.target.value)
