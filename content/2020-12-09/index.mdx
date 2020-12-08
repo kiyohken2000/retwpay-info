@@ -205,12 +205,26 @@ Descriptionには`Fix Random Reboots`は記載されていませんでしたが�
 
 ### 対処(様子見中)
 
-- Curve OptimizerをAll Core `Positive` `3`に変更
+- Curve Optimizerを`All Core` `Positive` `3`に変更
 - P-Stateをデフォルト**0**に戻す
+
+![](./img4.jpg)
 
 <br/>
 
-おそらく**アイドル時の電圧降下に耐えられないコアがいる**という見解は変わっていないので**COの変更**で様子をみようと思っています。
+おそらく**アイドル時の電圧降下に耐えられないコアがいる**という見解は変わっていないので**COの変更**で様子をみようと思っています。Cinebenchのスコアは`Enabled`より少し下がりますがランダムリブートよりはマシです。
+
+### Precision Boost Overdrive オプションによるパフォーマンスの違い
+
+![](./img5.jpg)
+
+|PBO option|CinebenchR23|
+|--|--|
+|Auto|26972|
+|Enabled|28021|
+|Advanced(CO Positive 3)|27222|
+
+<br/>
 
 頼む。直ってくれぃ。
 
