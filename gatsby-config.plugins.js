@@ -23,7 +23,8 @@ module.exports = [
     resolve: `gatsby-plugin-mdx`,
     options: {
       plugins: [
-        `gatsby-remark-images-medium-zoom`
+        `gatsby-remark-images-medium-zoom`,
+        `gatsby-plugin-twitter`
       ],
         gatsbyRemarkPlugins: [
             {

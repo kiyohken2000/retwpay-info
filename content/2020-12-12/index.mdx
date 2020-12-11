@@ -1,0 +1,88 @@
+---
+title: ついにKP41病を克服した。それとGatsbyのTwitter埋め込み
+tags: [    ]
+date: 2020-12-12
+path: blog/2020-12-12
+cover: ./img.jpg
+excerpt: Finally got over the random reboots. And Gatsby's Twitter embed.
+keywords:
+  - 自作パソコン
+  - 自作PC
+  - AMD
+  - CPU
+  - Ryzen
+  - Kernel
+  - KP41
+  - BIOS
+---
+import { Link } from 'gatsby';
+
+### KP41によるランダムリブート問題を解決した
+
+CPUをRyzen 9 3950Xから5950Xに交換して以来続いていた**アイドル時にKernel Power 41によりランダムに再起動される症状**ですが、ついに修正しました。
+
+ここまでの経緯は<Link to="/blog/2020-12-09">前の記事</Link>を参照してください。
+
+9日の朝に設定して、11日の夜にこれを書いてるこのときまでランダムリブートは発生していません。以前は1日1回は発生していたので完全に克服したと判断していいと思います。
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">The Ryzen5000&#39;s random reboot was solved by setting Curve Optimizer to Positive 3. <a href="https://twitter.com/hashtag/Ryzen?src=hash&amp;ref_src=twsrc%5Etfw">#Ryzen</a> <a href="https://twitter.com/hashtag/WHEA_UNCORRECTABLE_ERROR?src=hash&amp;ref_src=twsrc%5Etfw">#WHEA_UNCORRECTABLE_ERROR</a> <a href="https://twitter.com/hashtag/KP41?src=hash&amp;ref_src=twsrc%5Etfw">#KP41</a> <a href="https://twitter.com/hashtag/KernelPower41?src=hash&amp;ref_src=twsrc%5Etfw">#KernelPower41</a> <a href="https://twitter.com/hashtag/BSoD?src=hash&amp;ref_src=twsrc%5Etfw">#BSoD</a></p>&mdash; votepurchase (@votepurchase) <a href="https://twitter.com/votepurchase/status/1336802276392898562?ref_src=twsrc%5Etfw">December 9, 2020</a></blockquote>
+
+正解は`P-State`の変更ではなく、`Curve Optimizer`を`Positive`に設定することでした。
+
+- **Precision Boost Overdrive**を`Advanced`
+- **Curve Optimizer**を`All Core`、`Positive`
+- **Magnitude**を`3`
+
+<br/>
+
+この設定で完全に解決しました。
+
+![](./img1.jpg)
+
+### GatsbyJSで記事にツイートを埋め込む
+
+上に貼りましたが記事内にツイートを埋め込みたかったのでプラグイン[gatsby-plugin-twitter](https://www.gatsbyjs.com/plugins/gatsby-plugin-twitter/)を導入しました。
+
+#### インストール
+
+```shell
+yarn add gatsby-plugin-twitter
+```
+
+**gatsby-config.plugins.js**
+
+```javascript
+resolve: `gatsby-plugin-mdx`,
+    options: {
+      plugins: [
+        `gatsby-remark-images-medium-zoom`,
+        `gatsby-plugin-twitter` // ここに追加
+      ],
+```
+
+#### 使い方
+
+埋め込みたいツイートの埋め込み用コードを取得します。
+
+![](./img2.png)
+
+**取得したhtmlタグ**
+
+```html
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">
+  The Ryzen5000&#39;s random reboot was solved by setting Curve Optimizer to Positive 3. 
+  <a href="https://twitter.com/hashtag/Ryzen?src=hash&amp;ref_src=twsrc%5Etfw">#Ryzen</a> 
+  <a href="https://twitter.com/hashtag/WHEA_UNCORRECTABLE_ERROR?src=hash&amp;ref_src=twsrc%5Etfw">#WHEA_UNCORRECTABLE_ERROR</a> 
+  <a href="https://twitter.com/hashtag/KP41?src=hash&amp;ref_src=twsrc%5Etfw">#KP41</a> 
+  <a href="https://twitter.com/hashtag/KernelPower41?src=hash&amp;ref_src=twsrc%5Etfw">#KernelPower41</a> 
+  <a href="https://twitter.com/hashtag/BSoD?src=hash&amp;ref_src=twsrc%5Etfw">#BSoD</a></p>&mdash; votepurchase (@votepurchase) 
+  <a href="https://twitter.com/votepurchase/status/1336802276392898562?ref_src=twsrc%5Etfw">December 9, 2020</a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+```
+
+最後の`<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>`**以外**をMDXに貼り付けます。
+
+プラグインのインストールだけで、コードを書く必要がないので良いですね。
+
+---
