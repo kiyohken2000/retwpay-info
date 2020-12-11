@@ -22,6 +22,9 @@ module.exports = [
   {
     resolve: `gatsby-plugin-mdx`,
     options: {
+      plugins: [
+        `gatsby-remark-images-medium-zoom`
+      ],
         gatsbyRemarkPlugins: [
             {
                 resolve: `gatsby-remark-images`,
@@ -29,8 +32,23 @@ module.exports = [
                   maxWidth: 650,
                   quality: 80,
                   showCaptions: true,
-                  linkImagesToOriginal: true,
+                  linkImagesToOriginal: false,
                 },
+            },
+            {
+              resolve: `gatsby-remark-images-medium-zoom`,
+              options: {
+                margin: 24,
+                background: '#BADA55',
+                scrollOffset: 40
+              }
+            },
+            {
+              resolve: `gatsby-remark-copy-linked-files`,
+              options: {
+                destinationDir: `static/assets`,
+                ignoreFileExtensions: [`png`, `jpg`, `jpeg`, `bmp`, `tiff`],
+              },
             },
             {
                 resolve: "gatsby-remark-external-links",

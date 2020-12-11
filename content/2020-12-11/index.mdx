@@ -1,0 +1,108 @@
+---
+title: 記事内の画像をミディアムっぽく表示する
+tags: [    ]
+date: 2020-12-11
+path: blog/2020-12-11
+cover: ./img.png
+excerpt: Display Gatsby images like Medium.
+keywords:
+    - 開発
+    - Develop
+    - React
+    - Gatsby
+    - Plugin
+    - Code
+    - コード
+---
+import { Link } from 'gatsby';
+
+これまで、記事内の画像はクリックしたら別タブで開くようにしていました。
+
+しかし、<Link to="/blog/2020-12-09">前回</Link>のBIOS画面のスクリーンショットのように**画面全体を見せたいけど重要なのは一部分**だけ、みたいなときは別タブでいちいち開くのは面倒です。なので画像をクリックしたら**タブ内で拡大表示して、もう一度クリックするかスクロールしたら拡大をやめる**ようにする[Medium](https://medium.com/japan)風の表示方法が便利です。
+
+こんな感じ
+
+![](./img.gif)
+
+調べたらGatsbyにそのためのプラグインがあったので導入しました。あと、上に貼りましたが、投稿内でアニメーションGIFを使いたかったのでそのためのプラグインも導入しました。
+
+### インストール
+
+```shell
+yarn add gatsby-remark-images-medium-zoom
+```
+
+```shell
+yarn add gatsby-remark-copy-linked-files
+```
+
+**gatsby-config.plugins.js**
+
+```javascript
+  {
+    resolve: `gatsby-plugin-mdx`,
+    options: {
+      plugins: [
+        `gatsby-remark-images-medium-zoom` // ここに追加
+      ],
+        gatsbyRemarkPlugins: [
+            {
+                resolve: `gatsby-remark-images`,
+                options: {
+                  maxWidth: 650,
+                  quality: 80,
+                  showCaptions: true,
+                  linkImagesToOriginal: false, // falseにする
+                },
+            },
+            /* ここから */
+            {
+              resolve: `gatsby-remark-images-medium-zoom`,
+              options: {
+                margin: 24,
+                background: '#BADA55',
+                scrollOffset: 40
+              }
+            },
+            {
+              resolve: `gatsby-remark-copy-linked-files`,
+              options: {
+                destinationDir: `static/assets`,
+                ignoreFileExtensions: [`png`, `jpg`, `jpeg`, `bmp`, `tiff`],
+              },
+            },
+            /* ここまで追加 */
+            {
+                resolve: "gatsby-remark-external-links",
+                options: {
+                  target: "_blank",
+                  rel: "nofollow"
+                },
+            },
+            {
+              resolve: "gatsby-remark-embed-video",
+              options: {
+                width: 650,
+                ratio: 1.77,
+                related: true,
+                noIframeBorder: false,
+                urlOverrides: [
+                  {
+                    id: 'youtube',
+                    embedURL: (videoId) => `https://www.youtube-nocookie.com/embed/${videoId}`,
+                  }
+                ]
+              }
+            },
+            'gatsby-remark-prismjs',
+        ],
+```
+
+[gatsby-remark-images-medium-zoom](https://www.gatsbyjs.com/plugins/gatsby-remark-images-medium-zoom/)は**MDX**の場合`plugins`と`gatsbyRemarkPlugins`の両方に追記します。また**gatsby-remark-images**の`linkImagesToOriginal`は`false`にします。
+
+[gatsby-remark-copy-linked-files](https://www.gatsbyjs.com/plugins/gatsby-remark-copy-linked-files/)は単に追記するだけです。
+
+以上です。コードを書く必要はなくプラグインを追記してオプションを書くだけなので簡単ですね。
+
+
+---
