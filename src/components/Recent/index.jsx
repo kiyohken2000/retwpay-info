@@ -1,5 +1,5 @@
 import React from 'react'
-import { graphql, useStaticQuery } from 'gatsby'
+import { Link, graphql, useStaticQuery } from 'gatsby'
 import Card from '@material-ui/core/Card';
 
 const RecentPosts = () => {
@@ -29,11 +29,12 @@ const RecentPosts = () => {
   const posts = data.allMdx.edges
   return (
     <div>
-          {posts.map((post, index) => (
+          {posts.map((post) => (
             <div>
+            <Link to={`/${post.node.frontmatter.path}`}>
             <p>{post.node.frontmatter.title}</p>
             <p>{post.node.frontmatter.excerpt}</p>
-            <p>{post.node.frontmatter.path}</p>
+            </Link>
             </div>
           ))}
     </div>
