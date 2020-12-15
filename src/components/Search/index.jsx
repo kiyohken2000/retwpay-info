@@ -61,7 +61,7 @@ const SearchResult = props => {
             return (
               <li key={e.slug}>
                 <Link to={`/${e.path}`}>
-                  <Card>
+                  <Card style={{backgroundColor: "#F2F2F2"}}>
                     <TextHighlighter str={e.title} includes={props.value} />
                   </Card>
                 </Link>

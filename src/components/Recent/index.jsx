@@ -37,14 +37,14 @@ const RecentPosts = () => {
       </Grid>
           {posts.map((post) => (
             <div>
-              <Card style={{backgroundColor: "#F2F2F2"}}>
-                <Link to={`/${post.node.frontmatter.path}`}>
-                  <DescriptionIcon />
+              <Link to={`/${post.node.frontmatter.path}`}>
+                <Card style={{backgroundColor: "#F2F2F2"}}>
+                  <DescriptionIcon color='primary'/>
                   <Typography variant="subtitle1" color='textPrimary'>{post.node.frontmatter.title}</Typography>
                   <Typography variant="caption" color='textPrimary'>{post.node.frontmatter.excerpt}</Typography>
                   <Typography variant="overline" color='textPrimary'>({post.node.frontmatter.date})</Typography>
-                </Link>
-              </Card>
+                </Card>
+              </Link>
               <p />
             </div>
           ))}
