@@ -15,6 +15,7 @@ import style from './post.module.less';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import PostNav from '../../components/prevnext'
 import RecentPosts from '../../components/Recent'
+import Share from '../../components/share'
 
 import { MDXRenderer } from "gatsby-plugin-mdx"
 import { MDXProvider } from "@mdx-js/react"
@@ -53,6 +54,7 @@ const Post = ({ data, pageContext }) => {
             </MDXProvider>
           </div>
           <PostNav prev={pageContext.prev} next={pageContext.next}/>
+          <Share title={title} path={path} />
           <RecentPosts />
         </SidebarWrapper>
       </Layout>
