@@ -1,3 +1,27 @@
+---
+title: SNS共有ボタンを直した
+tags: [    ]
+date: 2020-12-18
+path: blog/2020-12-18
+cover: ./img.jpg
+excerpt: Improved SNS sharing.
+keywords:
+    - 開発
+    - Develop
+    - React
+    - Gatsby
+    - Plugin
+    - Code
+    - コード
+---
+import { Link } from 'gatsby';
+
+<Link to="/blog/2020-12-17">前回</Link>追加したSNS共有機能のコードを少し変更しました。
+<br/><br/>
+
+### 変更後のコード
+
+```javascript
 import React from 'react'
 import Config from '../../../config'
 
@@ -39,3 +63,13 @@ const Share = ({ title, path }) => {
 )};
 
 export default Share;
+```
+
+- Hatenaボタンを追加
+- アイコンの形とサイズを一回で変更できるように調整
+- URLをシンプルにした
+<br/><br/>
+
+以上です。
+
+---
