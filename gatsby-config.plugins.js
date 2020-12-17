@@ -135,6 +135,14 @@ module.exports = [
     },
   },
   {
+    resolve: 'gatsby-plugin-matomo',
+    options: {
+      siteId: '1',
+      matomoUrl: 'https://retwpayml.matomo.cloud',
+      siteUrl: 'Config.siteUrl'
+    }
+  },
+  {
     resolve: `gatsby-plugin-feed`,
     options: {
       query: `
