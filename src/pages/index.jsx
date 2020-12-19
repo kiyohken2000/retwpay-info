@@ -16,8 +16,8 @@ export default () => (
           <AboutMe />
           <Skills />
         </>
-      </SidebarWrapper>
       <Footer />
+      </SidebarWrapper>
     </Layout>
   </Layout>
 );

@@ -3,11 +3,15 @@ import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 
 export default () => {
+    const today = new Date(),
+    date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+
     return (
-        <div>
-        	<Grid container justify="flex-end">
-        		<Typography variant="caption" color='textPrimary'>Last update {new Date().getFullYear()}-{new Date().getMonth() + 1}-{new Date().getDate()}</Typography>
-        	</Grid>
-        </div>
+      <div>
+				<p/>
+        <Grid container justify="flex-end">
+        	<Typography variant="caption" color='textPrimary'>Last update {date}</Typography>
+        </Grid>
+      </div>
     )
 };

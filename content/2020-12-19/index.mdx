@@ -1,0 +1,81 @@
+---
+title: Gatsbyサイトにビルド時の日付を表示する
+tags: [    ]
+date: 2020-12-19
+path: blog/2020-12-19
+cover: ./img.png
+excerpt: Display the date of the build on the Gatsby.
+keywords:
+    - 開発
+    - Develop
+    - React
+    - Gatsby
+    - Plugin
+    - Code
+    - コード
+---
+import { Link } from 'gatsby';
+
+このブログは高頻度で更新してますが、サイトのトップページは全然変更していません。トップページからアクセスしてくれた人にアクティブなページであることを伝えるために、ビルド時の日付を表示することにしました。
+
+![](./img1.png)
+
+### 追加したコード
+
+#### 日付表示用のコンポーネントを新規作成
+
+**src/components/PageLayout/Fotter/index.jsx**
+
+```javascript
+import React from 'react'
+import Typography from '@material-ui/core/Typography'
+import Grid from '@material-ui/core/Grid'
+
+export default () => {
+    const today = new Date(),
+    date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+
+    return (
+      <div>
+				<p/>
+        <Grid container justify="flex-end">
+        	<Typography variant="caption" color='textPrimary'>Last update {date}</Typography>
+        </Grid>
+      </div>
+    )
+};
+```
+
+#### 作ったコンポーネントをトップページに追加
+
+**src/pages/index.jsx**
+
+```javascript
+import React from 'react';
+import { Layout } from 'antd';
+import Header from '../components/PageLayout/Header';
+import Footer from '../components/PageLayout/Fotter'; // コンポーネントをインポート
+
+import SidebarWrapper from '../components/PageLayout/Sidebar';
+import AboutMe from '../components/PageFragments/HomePage/AboutMe';
+import Skills from '../components/PageFragments/HomePage/SkillProgress';
+
+export default () => (
+  <Layout className="outerPadding">
+    <Layout className="container">
+      <Header />
+      <SidebarWrapper>
+        <>
+          <AboutMe />
+          <Skills />
+        </>
+      <Footer /> {/* コンポーネントを追加 */}
+      </SidebarWrapper>
+    </Layout>
+  </Layout>
+);
+```
+
+以上です。
+
+---
