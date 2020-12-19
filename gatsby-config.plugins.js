@@ -8,6 +8,17 @@ module.exports = [
       siteUrl: `https://retwpay.ml`,
     },
   },
+  {
+    resolve: `gatsby-plugin-build-date`,
+    options: {
+      formatAsDateString: true,
+      formatting: {
+        format: 'YYYY-MM-DD',
+        utc: false,
+      },
+      locale: 'ja',
+    },
+  },
   'gatsby-transformer-sharp',
   'gatsby-plugin-sharp',
   'gatsby-plugin-less',

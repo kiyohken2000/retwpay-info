@@ -22,28 +22,61 @@ import { Link } from 'gatsby';
 
 ### 追加したコード
 
+[gatsby-plugin-build-date](https://www.gatsbyjs.com/plugins/gatsby-plugin-build-date/)を使用しました。
+
+#### プラグインをインストール
+
+```shell
+yarn add gatsby-plugin-build-date
+```
+
+**gatsby-config.plugins.js**
+
+```javascript
+  {
+    resolve: `gatsby-plugin-build-date`,
+    options: {
+      formatAsDateString: true,
+      formatting: {
+        format: 'YYYY-MM-DD',
+        utc: false,
+      },
+      locale: 'ja',
+    },
+  },
+```
+
 #### 日付表示用のコンポーネントを新規作成
 
-**src/components/PageLayout/Fotter/index.jsx**
+**src/components/PageLayout/Footer/index.jsx**
 
 ```javascript
 import React from 'react'
+import { graphql, useStaticQuery } from 'gatsby'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 
-export default () => {
-    const today = new Date(),
-    date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+const Footer = () => {
+  const data = useStaticQuery(graphql`
+  query {
+    currentBuildDate {
+      currentDate
+    }
+  }
+`)
 
-    return (
-      <div>
-				<p/>
-        <Grid container justify="flex-end">
-        	<Typography variant="caption" color='textPrimary'>Last update {date}</Typography>
-        </Grid>
-      </div>
-    )
+  const date = data.currentBuildDate.currentDate
+  return (
+    <div>
+      <p/>
+      <Grid container justify="flex-end">
+        <Typography variant="caption" color='textPrimary'>Last update on {date}</Typography>
+      </Grid>
+    </div>
+  )
 };
+
+export default Footer
 ```
 
 #### 作ったコンポーネントをトップページに追加
@@ -51,29 +84,11 @@ export default () => {
 **src/pages/index.jsx**
 
 ```javascript
-import React from 'react';
-import { Layout } from 'antd';
-import Header from '../components/PageLayout/Header';
-import Footer from '../components/PageLayout/Fotter'; // コンポーネントをインポート
+import Footer from '../components/PageLayout/Fotter';
+```
 
-import SidebarWrapper from '../components/PageLayout/Sidebar';
-import AboutMe from '../components/PageFragments/HomePage/AboutMe';
-import Skills from '../components/PageFragments/HomePage/SkillProgress';
-
-export default () => (
-  <Layout className="outerPadding">
-    <Layout className="container">
-      <Header />
-      <SidebarWrapper>
-        <>
-          <AboutMe />
-          <Skills />
-        </>
-      <Footer /> {/* コンポーネントを追加 */}
-      </SidebarWrapper>
-    </Layout>
-  </Layout>
-);
+```html
+<Footer />
 ```
 
 以上です。
