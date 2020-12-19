@@ -1,3 +1,32 @@
+---
+title: トップページに最近のブログ記事を追加しました
+tags: [    ]
+date: 2020-12-20
+path: blog/2020-12-20
+cover: ./img.png
+excerpt: Recent blog posts added to the top page.
+keywords:
+    - 開発
+    - Develop
+    - React
+    - Gatsby
+    - Plugin
+    - Code
+    - コード
+---
+import { Link } from 'gatsby';
+
+ブログ記事への導線を増やすためにトップページに最新ブログ記事3件を表示するようにしました。
+
+![](./img1.png)
+
+### 追加したコード
+
+#### 記事表示用のコンポーネントを新規作成
+
+**src/components/PageFragments/HomePage/RecentBlog.jsx**
+
+```javascript
 import React from 'react'
 import { Link, graphql, useStaticQuery } from 'gatsby'
 import Grid from '@material-ui/core/Grid'
@@ -80,3 +109,24 @@ const RecentBlog = () => {
 }
 
 export default RecentBlog
+```
+
+`useStaticQuery`を使って全MDXを取得、日付でソートして最新3件を取得します。
+
+スタイルは既存の[記事一覧](/blog)から流用します。
+
+#### 作ったコンポーネントをトップページに追加
+
+**src/pages/index.jsx**
+
+```javascript
+import RecentBlog from '../components/PageFragments/HomePage/RecentBlog';
+```
+
+```html
+<RecentBlog />
+```
+
+以上です。
+
+---

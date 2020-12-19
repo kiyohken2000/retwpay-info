@@ -1,7 +1,7 @@
 import React from 'react';
 import { Layout } from 'antd';
 import Header from '../components/PageLayout/Header';
-import Footer from '../components/PageLayout/Footer'
+import Footer from '../components/PageLayout/Footer';
 
 import SidebarWrapper from '../components/PageLayout/Sidebar';
 import AboutMe from '../components/PageFragments/HomePage/AboutMe';
@@ -16,6 +16,7 @@ export default () => (
         <>
           <AboutMe />
           <Skills />
+          <RecentBlog />
         </>
       <Footer />
       </SidebarWrapper>
