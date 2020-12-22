@@ -5,7 +5,7 @@ import Footer from '../components/PageLayout/Footer';
 
 import SidebarWrapper from '../components/PageLayout/Sidebar';
 import AboutMe from '../components/PageFragments/HomePage/AboutMe';
-import Skills from '../components/PageFragments/HomePage/SkillProgress';
+import AppScreenShots from '../components/PageFragments/HomePage/AppScreenShots';
 import RecentBlog from '../components/PageFragments/HomePage/RecentBlog';
 
 export default () => (
@@ -15,7 +15,7 @@ export default () => (
       <SidebarWrapper>
         <>
           <AboutMe />
-          <Skills />
+          <AppScreenShots />
           <RecentBlog />
         </>
       <Footer />
