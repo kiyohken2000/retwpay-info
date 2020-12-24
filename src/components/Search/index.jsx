@@ -4,6 +4,8 @@ import { Link } from "gatsby"
 import TextHighlighter from "./highlight"
 import TextField from '@material-ui/core/TextField';
 import Card from '@material-ui/core/Card';
+import Divider from '@material-ui/core/Divider';
+import Typography from '@material-ui/core/Typography';
 
 const SearchResult = props => {
   // 全記事データ取得 //
@@ -55,16 +57,19 @@ const SearchResult = props => {
   }, [props.value])
 
   return (
-      <div>
+      <div className="searchResult">
         <ul>
           {result.map(e => {
             return (
               <li key={e.slug}>
                 <Link to={`/${e.path}`}>
                   <Card style={{backgroundColor: "#F2F2F2"}}>
-                    <TextHighlighter str={e.title} includes={props.value} />
+                    <Typography variant="body1" gutterBottom="true">
+                      <TextHighlighter str={e.title} includes={props.value} />
+                    </Typography>
                   </Card>
                 </Link>
+                <Divider />
               </li>
             )
           })}
