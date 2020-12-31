@@ -3,6 +3,12 @@ const config = require('./config');
 module.exports = [
   'gatsby-plugin-react-helmet',
   {
+    resolve: `gatsby-plugin-google-adsense`,
+    options: {
+      publisherId: `ca-pub-9747065248920607`
+    },
+  },
+  {
     resolve: `gatsby-plugin-react-helmet-canonical-urls`,
     options: {
       siteUrl: `https://retwpay.ml`,
