@@ -23,7 +23,7 @@
     "feather-icons-react": "^0.4.1",
     "firebase-tools": "^8.12.1",
     "font-awesome": "^4.7.0",
-    "gatsby": "^2.29.1",
+    "gatsby": "^2.29.3",
     "gatsby-image": "^2.3.1",
     "gatsby-plugin-antd": "^2.1.0",
     "gatsby-plugin-build-date": "^1.0.0",
