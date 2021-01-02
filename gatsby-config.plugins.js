@@ -9,6 +9,14 @@ module.exports = [
     },
   },
   {
+    resolve: `gatsby-plugin-hotjar`,
+    options: {
+      includeInDevelopment: true, // optional parameter to include script in development
+      id: 2178007,
+      sv: 6,
+    },
+  },
+  {
     resolve: `gatsby-plugin-react-helmet-canonical-urls`,
     options: {
       siteUrl: `https://retwpay.ml`,
