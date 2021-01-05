@@ -1,3 +1,40 @@
+---
+title: フッターを少し変更しました
+tags: [    ]
+date: 2021-01-05
+path: blog/2021-01-05
+cover: ./img.jpg
+excerpt: Changed the footer design
+keywords:
+    - 開発
+    - Develop
+    - React
+    - Gatsby
+    - Plugin
+    - Code
+    - コード
+---
+import { Link } from 'gatsby';
+
+## トップページのフッターのデザインを少し変えました
+
+<Link to="/blog/2020-12-19">前に</Link>ビルド時の日付をトップページに表示するようにしましたが、フィードバックウィジェットと微妙に被ってしまってたので表示位置を変えました。ついでに内容も少し変えました。
+
+テック系のブログでよくありがちな、使用技術の公式ページへのリンクを追加しました。
+
+<br/><br/>
+
+### 変更前
+
+![](./img1.png)
+
+### 変更後
+
+![](./img2.png)
+
+### 変更後のコード
+
+```javascript
 import React from 'react'
 import { graphql, useStaticQuery } from 'gatsby'
 import Typography from '@material-ui/core/Typography'
@@ -29,3 +66,8 @@ const Footer = () => {
 };
 
 export default Footer
+```
+
+以上です。
+
+---
