@@ -9,6 +9,12 @@ module.exports = [
     },
   },
   {
+    resolve: `gatsby-plugin-google-tagmanager`,
+      options: {
+      id: "GTM-PBRCFQG",
+    },
+  },
+  {
     resolve: `gatsby-plugin-hotjar`,
     options: {
       includeInDevelopment: true, // optional parameter to include script in development
