@@ -3,18 +3,6 @@ const config = require('./config');
 module.exports = [
   'gatsby-plugin-react-helmet',
   {
-    resolve: `gatsby-plugin-google-adsense`,
-    options: {
-      publisherId: `ca-pub-9747065248920607`
-    },
-  },
-  {
-    resolve: `gatsby-plugin-google-tagmanager`,
-      options: {
-      id: "GTM-PBRCFQG",
-    },
-  },
-  {
     resolve: `gatsby-plugin-hotjar`,
     options: {
       includeInDevelopment: true, // optional parameter to include script in development
