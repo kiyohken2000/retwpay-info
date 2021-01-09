@@ -1,0 +1,306 @@
+---
+title: 自作パソコンの開発環境を整える
+tags: [    ]
+date: 2021-01-09
+path: blog/2021-01-09
+cover: ./img.png
+excerpt: Getting started with Gatsby and React Native on Windows
+keywords:
+    - 開発
+    - Develop
+    - React
+    - Gatsby
+    - Plugin
+    - Code
+    - コード
+---
+import { Link } from 'gatsby';
+
+## 自作パソコンでJavaScriptの開発環境を作る
+
+これまでアプリ開発(React Native)やこのブログの更新(GatsbyJS)は、MacBook Air2020か、サブの自作パソコン(Core i7 6700K)で行っていました。メインの自作パソコンは深夜アニメの録画とエンコードに使っているので安定性を重視していたためです。なるべく他のツールを入れたくなかったのです。Gatsbyでブログ書いたり、コード書くくらいだったらMacBook Airのトラックパッドとキーボードでも十分だったという理由もあります。
+
+ただ、React Nativeで作りたいアプリを思いついたのでマウスとキーボードが快適に使える自作パソコンでも開発できるように環境を作ることにしました。ついでにGatsbyも入れてブログの更新もできるようにします。
+
+## やること
+
+- VSCodeのインストール
+- VSCodeとGithub連携
+- Nodeを入れる
+- GatsbyJSのセットアップ
+- デプロイできるようにする(Firebase Hosting)
+- React Native(Expo)をセットアップ
+
+<br/><br/>
+
+## VisualStudioCodeのセットアップ
+
+### VSCodeのインストール
+
+まずはVSCodeを入れます。
+
+[Download Visual Studio Code](https://code.visualstudio.com/download)
+
+インストーラー版をダウンロードしてインストールします。
+
+実は簡単なテキスト編集にzip版を使っており、日本語化とMDXのエクステンションを入れていたので、インストールしたら最初から日本語化されていました。
+
+### Githubにサインインする
+
+Gitをインストールします。
+
+[Git for Windows](https://gitforwindows.org)
+
+VSCodeを起動したら左下のアカウントアイコンをクリックします。`サインインして設定を同期する`をクリックします。
+
+![](./img1.jpg)
+
+`GitHubでサインイン`を選択します。
+
+![](./img2.jpg)
+
+ブラウザが起動してGithubの認証を求められるので`Continue`をクリックします。
+
+![](./img3.png)
+
+認証が完了するとダイアログが出るので`Visual Studio Codeを開く`をクリックします。
+
+![](./img4.jpg)
+
+VSCodeに戻るので`開く`をクリックします。
+
+![](./img5.jpg)
+
+GitHubにログインできました。これでVSCodeのセットアップは完了です。
+
+![](./img6.jpg)
+
+## Node.jsのセットアップ
+
+### nodeのインストール
+
+nodeのLTS版をダウンロードしてインストールします。
+
+[Node.js](https://nodejs.org/ja/)
+
+![](./img7.png)
+
+ターミナルからインストールできてるか確認します。
+
+VSCodeを起動してターミナルを開きます。メニューバーの**表示**からも開けますが、ショートカット`Ctrl + @`のほうが便利です。
+
+```shell
+node -v
+```
+
+```shell
+npm -v
+```
+
+バージョン番号が表示されたらOKです。
+
+![](./img8.jpg)
+
+### yarnのインストール
+
+パッケージ管理のためyarnをインストールします。
+
+```shell
+npm install -g yarn
+```
+
+完了したらインストールできてるか確認します。
+
+```shell
+yarn -v
+```
+
+このようにエラーが表示される場合があります。
+
+![](./img9.jpg)
+
+スタートボタンを右クリックしてPowerShellを管理者として起動します。
+
+![](./img10.jpg)
+
+PowerShellに次のコマンドを打ちます。
+
+```shell
+Set-ExecutionPolicy RemoteSigned
+```
+
+実行ポリシーの変更について聞かれるので`y`で許可します。
+
+![](./img11.jpg)
+
+VSCodeに戻り改めてyarnがインストールができてるか確認します。
+
+```shell
+yarn -v
+```
+
+![](./img12.jpg)
+
+yarnのバージョンが表示されたのでこれでnodeの設定は完了です。
+
+## GatsbyJSのセットアップ
+
+### GatsbyJSのインストール
+
+```shell
+npm install --global gatsby-cli
+```
+
+インストールが完了したことを確認するためバージョンを表示してみます。
+
+![](./img13.jpg)
+
+GatsbyJSのインストールはこれで完了です。
+
+## Firebaseのセットアップ
+
+このサイトはFirebase Hostingを利用しているのでデプロイできるようにします。
+
+### Firebase-toolsのインストール
+
+```shell
+npm install --global firebase-tools
+```
+
+確認のためバージョンをチェックします。
+
+```shell
+firebase --version
+```
+
+![](./img14.jpg)
+
+### Firebaseにログイン
+
+```shell
+firebase login
+```
+
+`Allow Firebase to collect CLI usage and error reporting information?`は**y**でも**n**でもどちらでもOKです。
+
+Windowsからセキュリティメッセージが出るので`アクセスを許可`します。
+
+![](./img16.jpg)
+
+ブラウザが起動するのでログインするアカウントを選択します。
+
+![](./img15.png)
+
+アクセスを許可します。
+
+![](./img17.png)
+
+ブラウザとターミナルにログイン成功のメッセージが表示されます。
+
+![](./img18.png)
+
+![](./img19.jpg)
+
+## React Native(Expo)のセットアップ
+
+### Expoのインストール
+
+```shell
+npm install -g expo-cli
+```
+
+インストール確認のためバージョンを表示します。
+
+```shell
+expo --version
+```
+
+バージョン番号が表示されたらOKです。
+
+![](./img20.jpg)
+
+プロダクションビルドできるようにExpoにログインしておきます。
+
+```shell
+expo signin
+```
+
+Expoのアカウント情報(メールアドレス/パスワード)を入力してログインを完了します。
+
+![](./img21.jpg)
+
+### 動作確認
+
+インストールは上記のコマンドだけで完了しますが念のため実際に動かしてみて確認します。
+
+使いたいボイラープレートがあるのでダウンロードして解凍します。動作確認だけなのでGit Cloneは行いません。
+
+[WataruMaeda/react-native-boilerplate](https://github.com/WataruMaeda/react-native-boilerplate)
+
+解凍したフォルダ内でVSCodeを起動します。
+
+![](./img22.jpg)
+
+依存関係をインストールします。
+
+```shell
+yarn install
+```
+
+![](./img23.jpg)
+
+実際に起動してみます。
+
+```shell
+expo start
+```
+
+ブラウザが起動します。普段からエミュレーターではなく実機を使っているので、Expoアプリがインストールされていて同一のLAN内にあるiPhone/Androidで左下のQRコードを読み込みます。
+
+![](./img24.png)
+
+スマホで読み込むとビルドが開始されます。
+
+![](./img25.png)
+
+ビルドが完了すると作成中のアプリが起動します。
+
+![](./img26.jpg)
+
+無事、立ち上がりました。Expoの設定は完了です。
+
+## Gatsbyのビルドとデプロイ
+
+### 実際にビルドしてデプロイする
+
+ここまでの手順をブログ記事に書いていたので、実際にビルドしてデプロイしてみます。
+
+```shell
+gatsby build
+```
+
+ビルドに成功しました。
+
+![](./img27.jpg)
+
+デプロイします。
+
+```shell
+firebase deploy
+```
+
+無事、デプロイに成功しました。
+
+![](./img28.jpg)
+
+実際にページを開いてみて確認します。
+
+![](./img29.jpg)
+
+無事に更新されていました。
+
+### Githubにプッシュ
+
+複数のパソコンでブログを更新しているので同期できるようにリポジトリにプッシュします。
+
+---
