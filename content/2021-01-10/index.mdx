@@ -82,9 +82,9 @@ Wordpressでは、URLの最後に`/wp-json/wp/v2/posts?_embed`を付与するこ
 
 **react-native-render-htmlを利用する**
 
-記事のURLが分かればWebViewで開くことが可能ですが、その場合大量の広告まで一緒にレンダリングされてしまいます。視認性を上げるためページに独自のスタイルを当てることも不可能です。
+記事のURLが分かればWebViewで開くことが可能ですが、その場合大量の広告まで一緒にレンダリングされてしまいます。視認性を上げようと思っても、ページに独自のスタイルを当てることは不可能です。
 
-そこで取得したJSON内の記事本文を[react-native-render-html](https://github.com/archriss/react-native-render-html)を使ってレンダリングします。これはHTMLタグを含む文字列値をWebViewを介さず100％ネイティブビューにレンダリングするReact Nativeコンポーネントです。
+そこで、取得したJSON内の記事本文を[react-native-render-html](https://github.com/archriss/react-native-render-html)を使ってレンダリングします。これはHTMLタグを含む文字列値をWebViewを介さず100％ネイティブビューにレンダリングするReact Nativeコンポーネントです。
 
 以下の特徴があります。
 
