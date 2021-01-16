@@ -1,0 +1,117 @@
+---
+title: kenmo readerでYouTubeの埋め込みを再現しました
+tags: [    ]
+date: 2021-01-16
+path: blog/2021-01-16
+cover: ./img.png
+excerpt: YouTube embed on kenmo reader.
+keywords:
+    - 開発
+    - Develop
+    - React Native
+    - アプリ
+    - code
+    - コード
+    - kenmo reader
+---
+import { Link } from 'gatsby';
+
+## kenmo readerでYouTubeの埋め込みを再現しました
+
+これまでkenmo readerではTwitterとInstagramとYouTubeの埋め込みをうまく表現できていませんでした。
+
+該当の部分のHTMLはこんな感じになっています。
+
+- 手越祐也（33）YouTubeで実家と母を公開、贅沢すぎてファンが涙腺崩壊と話題に `https://yukawanet.com/archives/tegoshi20210115.html`
+
+```html
+<p>
+  <span class="embed-youtube" style="text-align:center; display: block;">
+    <iframe class='youtube-player'
+      type='text/html' width='880' height='525'
+      src='https://www.youtube.com/embed/mvrZkiU567w?version=3&#038;rel=1&#038;fs=1&#038;autohide=2&#038;showsearch=0&#038;showinfo=1&#038;iv_load_policy=1&#038;wmode=transparent'
+      allowfullscreen='true' style='border:0;'>
+    </iframe>
+  </span>
+</p>
+```
+
+YouTubeが`<iframe>`で埋め込まれてることが分かると思います。
+
+そこで[@native-html/iframe-plugin](https://www.npmjs.com/package/@native-html/iframe-plugin)と、[react-native-webview](https://github.com/react-native-webview/react-native-webview)を利用して再現します。
+
+### 実装したコード
+
+**src\scenes\article\article.js**
+
+```javascript
+import iframe from '@native-html/iframe-plugin';
+import WebView from 'react-native-webview';
+```
+
+```javascript
+render() {
+  /* ここから */
+  const htmlConfig = {
+    renderers: {
+      iframe,
+    },
+    renderersProps: {
+      iframe: {
+        scalesPageToFit: true
+      }
+    },
+    WebView
+  };
+  /* ここまで追加 */
+  const defaultStyle = this.state.largeFont
+  const defaultClass = this.state.largeFont
+  const content = this.props.route.params.content
+  const url = this.props.route.params.url
+  const title = this.props.route.params.title
+  
+  return (
+    <View style={styles.container}>
+      <StatusBar barStyle="light-content" />
+      <View style={styles.content}>
+        <ScrollView contentContainerStyle={styles.scrollContentContainer}>
+          <Text style={styles.paragraph}>
+            {title}
+          </Text>
+          <HTML
+            source={{ html:content }}
+            classesStyles={defaultClass ? largeClassesStyles : middleClassesStyles}
+            tagsStyles={defaultStyle ? largeTagsStyles : middleTagsStyles}
+            /* ここから */
+            key={ `youtube-${content}` }
+            {...htmlConfig}
+            /* ここまで追加 */
+          />
+        </ScrollView>
+      </View>
+      <View style={styles.Overlay}>
+        <View style={{ flexDirection: 'row'}}>
+          <View style={{ position: 'absolute', right: 60 }}>
+            <TouchableOpacity onPress={() => this.toggleFont()}> 
+              <Icon name="type" size={30} color="black"/>
+            </TouchableOpacity>
+          </View>
+          <View style={{ position: 'absolute', right: 0 }}>
+            <TouchableOpacity 
+              onPress={ ()=>{ Linking.openURL(url)}}
+            >
+              <Icon name="external-link" size={30} color="black"/>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    </View>
+  );
+}
+```
+
+以上です。
+
+TwitterとInstagramは`<iframe>`ではないので同じ方法は使えませんが、解決したいと思います。
+
+---
