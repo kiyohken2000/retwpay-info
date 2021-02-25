@@ -56,8 +56,6 @@ Realtime Databaseでは`orderBy`メソッドは1度しか使えないので素�
 
 ゼロ埋め用に1000をかけてますが、アプリの構造とかユーザー数的にLike数が1000を超える投稿はないだろうという判断です。
 
-実際には日付ではなくて、**24時間以内**を取り出したいので`new Date().getTime()`を使ってミリ秒単位の時間にしました。
-
 というわけで、このやり方でRealtime Databaseに格納するとこんな感じになります。
 
 ![](./img2.png)
@@ -66,22 +64,24 @@ Realtime Databaseでは`orderBy`メソッドは1度しか使えないので素�
 
 ```javascript
 onValueChanged() {
-	let before24Hour = ( new Date().getTime() - (24 * 3600 * 1000) ) * 1000
+	var today = new Date();
+	var todaystr = today.getFullYear() + ('0' + (today.getMonth() + 1)).slice(-2) + ('0' + today.getDate()).slice(-2)
+	var todayRank = todaystr * 1000
 	this.dbh
-		.ref(`gallery/`)
-		.orderByChild('likeRank')
-		.startAt(before24Hour)
-		.limitToLast(20)
-		.on("value", snapshot => {
-			hogehoge
-		}).bind(this);
+	.ref(`gallery/`)
+	.orderByChild('likeRank')
+	.startAt(todayRank)
+	.limitToLast(20)
+	.on("value", snapshot => {
+		hogehoge
+	}).bind(this);
 }
 ```
-`orderByChild`メソッドで**likeRank**フィールドをソートして**24時間前の時刻**を`startAt`メソッドで足きりすると、過去24時間の投稿がLike数順でソートされます。
+`orderByChild`メソッドで**likeRank**フィールドをソートして**24時間前の時刻**を`startAt`メソッドで足きりすると、今日の投稿がLike数順でソートされます。
 
 Realtime Databaseでは昇順でソートされるので、Like数が多いものが後ろに来ます。なので`limitToLast`メソッドで、最後の20件を取り出します。
 
-これで**過去24時間の投稿をLike数順に最大20件**取り出せました。
+これで**今日の投稿をLike数順に最大20件**取り出せました。
 
 ## まとめ
 
