@@ -77,7 +77,7 @@ onValueChanged() {
 	}).bind(this);
 }
 ```
-`orderByChild`メソッドで**likeRank**フィールドをソートして**24時間前の時刻**を`startAt`メソッドで足きりすると、今日の投稿がLike数順でソートされます。
+`orderByChild`メソッドで**likeRank**フィールドをソートして**今日の日付x1000**を`startAt`メソッドで足きりすると、今日の投稿がLike数順でソートされます。
 
 Realtime Databaseでは昇順でソートされるので、Like数が多いものが後ろに来ます。なので`limitToLast`メソッドで、最後の20件を取り出します。
 
@@ -89,6 +89,6 @@ Realtime Databaseでは昇順でソートされるので、Like数が多いも�
 
 ![](./img1.jpg)
 
-なにはともあれ当初考えた形で実装できてよかったです。
+**24時間以内のLike数ランキング**ではないですが、それに近いものになってよかったです。
 
 ---
