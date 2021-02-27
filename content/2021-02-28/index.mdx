@@ -1,0 +1,62 @@
+---
+title: 特定のユーザーの投稿を一覧できるようにしました
+tags: [    ]
+date: 2021-02-28
+path: blog/2021-02-28
+cover: ./img.png
+excerpt: List the a user's posts.
+keywords:
+    - 開発
+    - Develop
+    - React Native
+    - アプリ
+    - code
+    - コード
+    - Grafhouse
+---
+import { Link } from 'gatsby';
+
+## 実装した機能
+
+Grafhouseに特定のユーザーの投稿を一覧表示する機能を追加しました。
+
+![](./img1.png)
+
+イラスト右下のユーザーアイコンをタップするとそのユーザーの投稿を一覧できるようにしました。
+
+## 機能の仕組み
+
+<Link to="/blog/2021-02-23">AppStoreの審査を通す</Link>ためにブロック機能を実装したことを以前書きました。
+
+実はブロック機能を実装するにあたって、画面に表示してないだけでユーザー固有のIDを投稿に付与しています。
+
+![](./img2.png)
+
+これを利用して、同一のユーザーIDからの投稿を一覧する画面を追加しました。
+
+Firebaseから取得するときのクエリはこんな感じです。
+
+```javascript
+onValueChanged() {
+	const userid = this.props.route.params.userid
+	var prevTask = Promise.resolve()
+	prevTask = prevTask.finally(async () => {
+		this.dbh
+		.ref(`gallery/`)
+		.orderByChild('userid')
+		.equalTo(userid)
+		.limitToLast(20)
+		.on("value", snapshot => {
+			hogehoge
+		}).bind(this);
+	})
+}
+```
+
+`.orderByChild()`と`.equalTo()`メソッドを使って、前の画面(Gallery, Like, Rank24h)から受け取った`userid`と一致する投稿を見つけて一覧しています。
+
+## まとめ
+
+匿名SNSとはいえ、過去ポストくらいは見れたほうが良かろうということで実装してみました。もう持ってる情報を使ってお手軽に追加できるというのも理由です。
+
+---
