@@ -117,6 +117,8 @@ x265の設定
 
 ![](./img9.png)
 
+---
+
 ## Blackmagic RAW Speed Test
 
 続いてBlackmagic RAW Speed Testの結果です。
@@ -133,6 +135,34 @@ x265の設定
 AGESA1.0.8.0の結果は<Link to="/blog/2020-11-07">以前の結果</Link>からの流用です。
 
 微妙に下がってるのは部屋に暖房を入れてるのが原因の可能性が高いですが、まぁほぼ誤差といえる範囲ではないでしょうか。
+
+---
+
+## 開発コマンドの所要時間
+
+このブログ(GatsbyJS)とkenmo reader、Grafhouseにおいて`yarn install`で依存関係をインストールしたときの実行時間。
+
+そしてこのブログを`gatsby build`したときの実行時間をメイン機(Ryzen9 5950X)とサブ機(Core i7 6700K)で比較しました。
+
+なお、速度の計測はそれぞれ
+
+```shell
+date; yarn install; date
+date; gatsby build; date
+```
+
+で行った簡易的な測定であることに留意してください。
+
+|command|Ryzen 9 5950X|Core i7 6700K|
+|---|:---:|:---:|
+|blog yarn install|0:31|1:28|
+|gatsby build|4:16|7:21|
+|Grafhouse yarn install|0:32|1:04|
+|kenmo reader yarn install|0:28|0:52|
+
+![](./img11.png)
+
+---
 
 ## まとめ
 
