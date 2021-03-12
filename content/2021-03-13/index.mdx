@@ -1,0 +1,87 @@
+---
+title: Gatsby 3.0を試す
+tags: [    ]
+date: 2021-03-13
+path: blog/2021-03-13
+cover: ./img.png
+excerpt: Gatsby 3.0 is blazing fast.
+keywords:
+  - 開発
+  - Firebase
+  - Gatsby
+  - React
+  - Grafhouse
+---
+import { Link } from 'gatsby';
+
+3/2にGatsby バージョン3が[リリース](https://www.gatsbyjs.com/blog/gatsbyconf-product-announcements/)されました。
+
+![](./img1.png)
+
+主な変更点は
+
+- インクリメンタルビルドによるビルド時間の短縮
+- Lighthouse最適化
+- Gatsby Hosting
+
+となっています。
+
+実際に[kenmo reader](https://kenmo-reader.ml/)と[Grafhouse](https://grafhouse.ml/)のランディングページをGatsby v3にしてLighthouseスコアの変化を調べてみました。
+
+## Gatsby v3へのアップデート
+
+ラッキーなことにコードの変更は必要ありませんでした。コマンド2つでアップデートが完了しました。
+
+### Step 1
+
+念のためいったんキャッシュを削除します。
+
+```shell
+gatsby clean
+```
+
+### Step 2
+
+全パッケージアップグレードします。
+
+```shell
+yarn upgrade --latest
+```
+
+## v3へアップデートできました
+
+![](./img2.png)
+
+![](./img3.png)
+
+## Lighthouseスコア
+
+無事アップデートできたのでLighthouseのスコアを調べます。
+
+各ランディングページはFirebaseにホスティングしていますが、リポジトリの更新ごとにページが生成されるCloudflare Pagesにデプロイしたときのスコアを調べました。
+
+### Grafhouse landing
+
+[Gatsby v2](https://c508fd20.grafhouse.pages.dev/)
+
+![](./img4.png)
+
+[Gatsby v3](https://c5d5a6e2.grafhouse.pages.dev/)
+
+![](./img5.png)
+
+### kenmo reader landing
+
+[Gatsby v2](https://846f468f.kenmo-reader.pages.dev/)
+
+![](./img6.png)
+
+[Gatsby v3](https://09b59a2c.kenmo-reader.pages.dev/)
+
+![](./img7.png)
+
+## まとめ
+
+パフォーマンススコアは顕著に上がりました。Gatsby v3良いですね。このサイトも更新したいと思います。
+
+---
