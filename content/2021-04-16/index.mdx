@@ -1,0 +1,98 @@
+---
+title: Expo SDK 41がリリースされました
+tags: [    ]
+date: 2021-04-16
+path: blog/2021-04-16
+cover: ./img.png
+excerpt: Expo SDK 41 is now available.
+keywords:
+  - 開発
+  - Firebase
+  - React Native
+  - コード
+  - code
+---
+import { Link } from 'gatsby';
+
+Expo SDK 41が公開されました。
+
+- [Expo SDK 41](https://blog.expo.io/expo-sdk-41-12cc5232f2ef)
+
+<br/>
+
+[kenmo reader](https://kenmo-reader.ml)や[Grafhouse](https://grafhouse.ml)、[PINE pro](https://pinepro.ml)はReact Nativeを使って開発しています。開発ツールにはExpoを使っています。
+
+そのExpoの新バージョンが公開されました。
+
+新機能は以下の通りです。
+
+### 全体
+
+- Androidアプリの対象バージョンをAndroid R (11 / SDK 30)に変更
+- react-native-reanimatedの推奨バージョンがv2に変更
+- `lottie-react-native`が最新バージョン(3.5.0)に更新
+- `react-native-screens(v3)`がデフォルトで**enables screens**に変更
+- EAS Buildの全体的な改善
+- サインインを`expo-web-browser`を使用するように変更
+- iOS10のサポート終了
+- Node 10のサポート廃止予告
+- SDK 37のサポート廃止、次回で38の廃止予告
+
+<br/>
+
+### Expo Goアプリ
+
+- プロファイルタブで所属の組織と関連するプロジェクトが表示
+
+<br/>
+
+### Expo CLI
+
+- CLIからパフォーマンスの監視が可能に
+- ターミナルで`r`を押すとアプリがリロードされる(**Force Reloading**)
+- TypeScriptの自動セットアップ
+- エラー表示をわかりやすいものに変更
+- `expo config`コマンドの追加
+- Apple Store Connectの改善
+- `--config`と`--target`が非推奨に
+- `@expo/metro-config`インポートの変更
+- Config Plugins (beta)の追加
+- 非推奨のグローバルパッケージの削除(`expo-linear-gradient`, `expo-linking`, `expo-location`, `expo-permissions`, and `expo-sqlite`)
+- ファイル名に`.expo`を含むファイルが認識されなくなった
+- `expo-permissions`の廃止
+- `@react-native-community/async-storage`から`@react-native-async-storage/async-storage`に変更
+- `@expo/metro-config`をexpo packageで提供
+- Legacy Notifications APIの廃止
+
+<br/>
+
+## アップデートを試してみた結果
+
+### 全体的な感想
+
+- Force Reloadingが結構便利。リロードするときにiPhone振らなくてよくなったから。
+- Windowsでも`expo build ios`ができるようになった。
+
+<br/>
+
+### PINE pro
+
+`expo-permissions`周りの軽微なコード変更で対応できた。
+
+### Grafhouse
+
+[react-native-storage](https://github.com/sunnylqm/react-native-storage)で`@react-native-community/async-storage`を使用しているため、インポートを変更してアップデートはできた。
+
+しかし、手書き入力エリアのアスペクト比が壊れたので断念。スクリーンショット撮ってなかった。残念。
+
+### kenmo reader
+
+ぶっ壊れた。
+
+`yarn install`できなくなった。詰んだ。終わった。
+
+## まとめ
+
+どうしよう。
+
+---
