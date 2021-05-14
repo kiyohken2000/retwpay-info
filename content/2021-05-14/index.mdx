@@ -1,0 +1,111 @@
+---
+title: React Native Expoで位置情報アプリを作る part 1
+tags: [    ]
+date: 2021-05-14
+path: blog/2021-05-14
+cover: ./img.jpg
+excerpt: Building a geolocation app with React Native Expo. Part 1
+keywords:
+  - 開発
+  - Firebase
+  - React Native
+  - expo
+  - コード
+  - code
+  - FGO
+  - find good one
+---
+import { Link } from 'gatsby';
+
+## 新作アプリをリリースしました
+
+この2週間、ブログもアプリも更新せずに何をやっていたかというと新作アプリを作っていました。
+
+- #### [Find Good One](https://findgoodone.ml/)
+- #### [App Store](https://apps.apple.com/jp/app/find-good-one/id1566080175)
+- #### [Google Play](https://play.google.com/store/apps/details?id=net.votepurchase.fgo)
+
+![](./img1.jpg)
+
+## 簡単な説明
+
+詳しい使い方は[ランディングページ](https://findgoodone.ml/)を見ていただきたいのですが、簡単に説明すると**バックグラウンド位置情報を利用した宝探しアプリ**です。
+
+ユーザーはマップ上の任意の座標に架空の宝箱を自由に設置できます。宝箱には、発見した人へのメッセージや画像を設定できます。
+
+他のユーザーが設置した宝箱に接近するとスマートフォンに宝箱を発見した事が通知されます。宝箱を取得することを選ぶと自分のアイテムリストにそれが追加されます。取得した宝箱はいつでも見返すことができます。
+
+![](./img2.jpg)
+
+## 使用技術
+
+PINE Proと同じくアプリはReact Native(Expo)、バックエンドはFirebaseという構成です。
+
+[PINE pro](https://pinepro.ml/)と同じく関数コンポーネントを使って書きました。
+
+- #### React Native
+  - [Expo](https://expo.io/)
+    - [expo-notifications](https://docs.expo.io/versions/latest/sdk/notifications/) - ローカル通知とリモート通知
+    - [expo-location](https://docs.expo.io/versions/v41.0.0/sdk/location/) - 位置情報の取得
+    - [expo-server-sdk-node](https://www.npmjs.com/package/expo-server-sdk) - バックエンド側の通知機能
+  - [react-native-maps](https://github.com/react-native-maps/react-native-maps) - マップ画面のUI
+  - [Maps SDK for Android](https://developers.google.com/maps/documentation/android-sdk/overview?hl=ja) - Androidのマップ画面
+- #### Firebase
+  - Authentication - ログインとサインアップ
+  - Firestore - ユーザー情報や宝箱のデータベース
+  - Storage - アバターや宝箱の画像の保存
+  - Cloud Functions - 通知機能
+
+<br/><br/>
+
+## 苦労した点
+
+バックエンドはFirestoreの構造をPINE proとほぼ同じにしたのでコードを流用したためほとんど苦労しませんでした。
+
+### バックグラウンド位置情報のパーミッション
+
+FGOはバックグラウンドで位置情報を取得して宝箱を探すアプリのためフォアグラウンドとバックグラウンドでの位置情報取得の権限が必要です。
+
+App Storeの審査はこの点でのつまずきはなかったのですが、Google Playでは権限取得に関して2度リジェクトされてしまいました。
+
+### ローカル通知の実装
+
+リモート通知はPINE proでFirebase Cloud Functionsを利用して実装済みのため苦労しませんでした。
+
+FGOでは設置された宝箱に接近したらローカル通知で宝箱の存在をユーザーに知らせる必要があるため後述するジオフェンスと組み合わせたローカル通知の実装が必要でした。
+
+### プッシュ通知に関するイベントリスナー
+
+PINE proのプッシュ通知は、通知を開くと単にアプリが立ち上がるというだけの単純なものでした。しかしFGOでは**宝箱発見の通知を開いたらその宝箱の情報画面に遷移する**という設定が必要です。
+
+イベントリスナーの登録は新しい挑戦でした。
+
+## Google Maps SDK
+
+iOS版では問題なかったのですが、Androidではマップを使う場合Google Maps APIを叩く必要があります。開発中のExpo GoアプリやAPKを直接インストールした場合はAPIの設定は不要ですが、ストア配布版(Android App Bundle)の場合は正しくAPIを設定しないとマップを開いたときにアプリがクラッシュします。
+
+### 設定できるジオフェンス数の制限
+
+ジオフェンスとは位置情報を利用した仮想的な地理的境界のことです。**ある地点**に近づいた or 離れたことをトリガーにアプリにアクションさせることができます。**ある地点**に設定できる場所の数にiOSでは20、Androidでは100という制限があります。
+
+バックグランドで端末の座標を取得し続けて、移動するたびにその端末の近くの宝箱をジオフェンスに設定する(全てバックグラウンドで)というやり方で回避できる問題です。
+
+しかし、自分のiPhoneで試してみたとところバッテリーの消費が激しかったので実装しませんでした。FGOでは手動でジオフェンスを設定するようにしました。
+
+### バックグラウンド位置情報の動作確認
+
+実装方法に関することではありませんが、バックグラウンド位置情報を利用した機能はExpo Goアプリではできません。そのためiOSかAndroidのシミュレーターを使う必要があります。
+
+<Link to="/blog/2021-01-09">以前</Link>書いた通り、アプリ開発はメインの自作パソコンで行っています。
+
+このパソコンは深夜アニメの録画やエンコードに使っており、安定動作させたいためなるべく余計なソフトは入れたくないのです。そのため、シミュレーターでの確認が必要な時にはサブのMac Book Air(2020 intel)を使用しました。
+
+自作パソコンと比べると性能的にもI/O的にも快適度が圧倒的に劣るため苦労しました。
+
+## ストアでのリジェクト
+
+リリースまでに、App Storeで2回、Google Playでも2回リジェクトされました。それぞれ違う理由ですが、特にApp Storeでは珍しい理由でリジェクトされたので紹介します。
+
+### App Store
+
+---
