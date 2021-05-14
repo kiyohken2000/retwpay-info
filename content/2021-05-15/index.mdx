@@ -1,0 +1,149 @@
+---
+title: React Native Expoで位置情報アプリを作る Part 2
+tags: [    ]
+date: 2021-05-15
+path: blog/2021-05-15
+cover: ./img.png
+excerpt: Building a geolocation app with React Native Expo. Part 2
+keywords:
+  - 開発
+  - Firebase
+  - React Native
+  - expo
+  - コード
+  - code
+  - FGO
+  - find good one
+---
+import { Link } from 'gatsby';
+
+## 新作アプリをリリースしました
+
+<Link to="/blog/2021-05-14">前回</Link>の続きです。
+
+リリースした新作アプリ**Find Good One**の仕組みやコードを書きます。
+
+## 画面遷移
+
+アプリの画面遷移です。以下の5個のスタックで構成されています。
+
+- LoginNavigator ログインとサインアップ
+- TabNavigator
+  - HomeNavigator 自分が設置した宝箱の管理
+  - ItemsNavigator 取得した宝箱の管理
+  - DiscoverNavigator 周辺の宝箱を探す、ジオフェンスの開始、発見した宝箱の閲覧
+  - ProfileNavigator プロフィール編集、宝箱の設置
+
+<br/>
+
+ログイン後の画面を`TabNavigator`としてラップして`LoginNavigator`と分けています。
+
+**LoginNavigator**
+
+- Login ログイン画面
+- Registoration サインアップ画面
+
+![](./img1.png)
+
+**HomeNavigator**
+
+- Home 設置した宝箱の一覧
+- Treasure 宝箱個別の画面
+- Location 宝箱の座標をマップ上に表示
+
+![](./img2.jpg)
+
+**ItemsNavigator**
+
+- Items 取得した宝箱の一覧
+- Item 宝箱個別の画面
+- Location 宝箱の座標をマップ上に表示
+
+![](./img3.jpg)
+
+**DiscoverNavigator**
+
+- Scan 周辺の宝箱をマップ上に表示
+- Discover 発見した宝箱を表示する画面
+- Location 発見した宝箱の座標をマップ上に表示
+
+![](./img4.jpg)
+
+**ProfileNavigator**
+
+- Profile 自分のプロフィール画面、編集もできる
+- Map 宝箱を設置する座標を設定するマップ画面
+- Set 設置する宝箱の名前、コメント、画像を設定する画面
+
+![](./img5.jpg)
+
+## Firestoreの構造
+
+以下の5つのコレクションで構成されています。PINE proと同じくメールアドレスをIDとしても利用したかったのでドキュメントkeyをメールアドレスとしたコレクションも作ります。
+
+- users ユーザーの情報 keyはuid
+- users2 ユーザーの情報 keyはメールアドレス
+- treasures 宝箱の情報 keyはuid
+- tokens リモート通知送信用のトークン、keyはメールアドレス
+- report 報告された宝箱の一覧(アプリでは表示しない。管理者が確認する用のコレクション)
+
+<br/>
+
+**users**
+
+- avatar プロフィールとして表示するアバター画像のURL
+- block ブロックした宝箱のIDを列挙した一次元の配列
+- email ユーザーのメールアドレス
+- fullName ユーザーのハンドルネーム
+- id ユーザーID
+- Items 取得した宝箱のIDを列挙した一次元の配列
+- treasure 設置した宝箱のIDを列挙した一次元の配列
+
+![](./img6.png)
+
+**users2**
+
+- usersと同じ
+
+![](./img7.png)
+
+**treasures**
+
+- comment 宝箱のコメント
+- createdTime 作成日時
+- createrEmail 作成者のメールアドレス
+- createrId 作成者のID
+- id 宝箱のuid
+- identifier 宝箱のuid
+- latitude 宝箱の緯度
+- longitude 宝箱の経度
+- picked 宝箱を取得したユーザーのメールアドレスを列挙した一次元の配列
+- radius ジオフェンスの半径
+- treasureImage 宝箱の画像
+- treasureName 宝箱の名前
+
+![](./img9.png)
+
+**tokens**
+
+- email ユーザーのメールアドレス
+- token プッシュ通知用のトークン
+
+![](./img8.png)
+
+**report**
+
+- comment 宝箱のコメント
+- creater 宝箱の設置者のメールアドレス
+- id レポートのuid
+- image 宝箱の画像
+- name 宝箱の名前
+- treasureId 宝箱のuid
+
+![](./img10.png)
+
+## まとめ
+
+全体の構造は以上です。
+
+---
