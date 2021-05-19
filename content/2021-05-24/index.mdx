@@ -117,14 +117,14 @@ function delMessage(context, message) {
           alert('You can only delete own messages.')
         }
         break
-        case 1:
-          const text = message.text
-          Clipboard.setString(text)
-          break
-        case 2:
-          const script = message.text // いったんメッセージ本文を変数に格納
-          speak(script) // 格納した変数を読み上げ関数に渡す
-          break
+      case 1:
+        const text = message.text
+        Clipboard.setString(text)
+        break
+      case 2:
+        const script = message.text // いったんメッセージ本文を変数に格納
+        speak(script) // 格納した変数を読み上げ関数に渡す
+        break
     }
   });
 }
