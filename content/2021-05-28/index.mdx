@@ -128,6 +128,10 @@ GCPの管理画面でAPI keyを作ります。
 
 今回はCloud Functionsのコードのみの変更です。新しく関数を作ります。今回もボット部屋は固定です。
 
+エラーの場合の処理も入れます。
+
+![](./img6.jpg)
+
 **functions\index.js**
 
 ```javascript
@@ -172,17 +176,28 @@ exports.imageBotMessage = functions.region('asia-northeast2').firestore
           // ここまで
           console.log("Request success!");
           if (result.data) { // 認識結果が返ってきたときの処理
-            const labels = result.data.responses[0].labelAnnotations;
-            const descriptions = labels.map(label => label.description); // descriptionだけ配列に格納(scoreやtopicalityはとりあえずいらない)
-            const dStr = descriptions.join('か'); // 上記配列を文字列に変換。羅列だと寂しいので 'か' でつなげる
-            const text = `これは${dStr} たぶんね`; // BOTの返答として格納する文字列を作成
-            console.log(text);
-            messageRef // 用意した返答をFirestoreに保存
-            .add({
-              text,
-              createdAt: t,
-              user: u
-            });
+            const labels = await result.data.responses[0].labelAnnotations;
+            if (labels) {
+              const descriptions = labels.map(label => label.description); // descriptionだけ配列に格納(scoreやtopicalityはとりあえずいらない)
+              const dStr = await descriptions.join('か'); // 上記配列を文字列に変換。羅列だと寂しいので 'か' でつなげる
+              const text = `これは${dStr} たぶんね`; // BOTの返答として格納する文字列を作成
+              console.log(text);
+              messageRef // 用意した返答をFirestoreに保存
+              .add({
+                text,
+                createdAt: t,
+                user: u
+              });
+            } else {
+              const text = 'わからん';
+              console.log(text);
+              messageRef
+              .add({
+                text,
+                createdAt: t,
+                user: u
+              });
+            }
           } else { // 認識がうまくいかなかったとき用の処理
             const text = 'わからん';
             console.log(text);
@@ -207,7 +222,7 @@ exports.imageBotMessage = functions.region('asia-northeast2').firestore
 
 テキストBOTと画像BOT共通ですが、しばらくBOTが動いてない状態だとCloud Functionsが起きるまでにタイムラグがあるため1分くらいレスポンスが遅れます。
 
-たまにエラーでBOTが答えてくれないことがありますがBOT同士の連携がたまにハマることがあります。
+エラーでBOTが答えてくれないことがありますがBOT同士の連携がたまにハマることがあります。
 
 ![](./img5.jpg)
 
