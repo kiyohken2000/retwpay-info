@@ -188,7 +188,7 @@ exports.imageBotMessage = functions.region('asia-northeast2').firestore
                 createdAt: t,
                 user: u
               });
-            } else {
+            } else { // 認識がうまくいかなかったとき用の処理
               const text = 'わからん';
               console.log(text);
               messageRef
@@ -201,7 +201,7 @@ exports.imageBotMessage = functions.region('asia-northeast2').firestore
           } else { // 認識がうまくいかなかったとき用の処理
             const text = 'わからん';
             console.log(text);
-            messageRef // BOTには'わからん'と言わせておく
+            messageRef
             .add({
               text,
               createdAt: t,
