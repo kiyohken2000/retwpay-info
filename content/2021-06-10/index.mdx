@@ -23,7 +23,7 @@ import { Link } from 'gatsby';
 
 <br/>
 
-## Gallery
+## Screens
 
 ![](./img1.jpg)
 
@@ -70,7 +70,15 @@ import { Link } from 'gatsby';
 
 ## How to use
 
-### Setting up Firebase
+### 1. Install
+
+```
+git clone https://github.com/kiyohken2000/reactnative-expo-firebase-boilerplate.git
+cd reactnative-expo-firebase-boilerplate
+yarn install
+```
+
+### 2. Setting up Firebase
 
 **Step 1: Create a Google Firebase Account**
 
@@ -116,7 +124,7 @@ import { Link } from 'gatsby';
 **Step 5: Copy the API Key and connect Firebase**
 
 - On the Project Overview, click on the "Web" icon since we are building on Expo.
-- Tthen give it a name, click "Register app".
+- Then give it a name, click "Register app".
 - It will show you the Firebase configuration, copy the SDK keys, we will use it in the next step.
 
 <br/>
@@ -154,7 +162,7 @@ if (!firebase.apps.length) {
 export { firebase };
 ```
 
-### Update app.json
+### 3. Update app.json and default avatar
 
 Replace the name and Slug with yours.
 
@@ -163,12 +171,20 @@ Replace the name and Slug with yours.
 "slug": "your-app-name",
 ```
 
-### Install
+**src\scenes\registration\Registration.js**
+
+```javascript
+const data = {
+  id: uid,
+  email,
+  fullName,
+  avatar: 'Your default icon URL',
+};
+```
+
+### 4. Run Your App
 
 ```
-git clone https://github.com/kiyohken2000/reactnative-expo-firebase-boilerplate.git
-cd reactnative-expo-firebase-boilerplate
-yarn install
 expo start
 ```
 
