@@ -178,7 +178,7 @@ import Unread from './unread'
 
 `Home`から受け取った部屋の情報から部屋IDを取得して未読メンバーをリッスンするようにします。リッスンした未読メンバーの配列は`data`に格納します。配列が存在しない場合の処理もif文で入れておきます。
 
-`useEffect`の第二引数に`data`を設定することで、配列に変更があった場合stateも変わるようにします。
+`useEffect`の第二引数に`talk.latestMessage.createdAt`を設定することで無限ループするのを防ぎます。
 
 その後`info`関数に配列を渡して、自分のメールアドレス`email`が含まれてるか評価してif文でマークの表示/非表示の処理を分けます。
 
@@ -191,7 +191,9 @@ import { firebase } from '../../firebase/config'
 import FontIcon from 'react-native-vector-icons/FontAwesome5'
 
 export default function Unread(props) {
+  console.log('StartScreen')
   const id = props.talk.id
+  const createdAt = props.talk.latestMessage.createdAt
   const email = props.data.email
   const [data, setData] = useState([])
 
@@ -203,8 +205,9 @@ export default function Unread(props) {
         setData(data)
       }
     });
+    console.log('useEffect')
     return () => unmount()
-  },[data])
+  },[createdAt])
 
   function info(i) {
     if (i.includes(email)) {
