@@ -1,0 +1,129 @@
+---
+title: Next.jsでHello World
+tags: [    ]
+date: 2021-07-26
+path: blog/2021-07-26
+cover: ./img.png
+excerpt: Hello World with Next.js
+keywords:
+  - 開発
+  - Next.js
+  - コード
+  - code
+  - Vercel
+---
+import { Link } from 'gatsby';
+
+作りたいアプリを思いついたわけではないですがNext.jsでハローワールドしてみました。
+
+- [Welcome to Next.js!](https://nextapp-gamma.vercel.app/)
+
+<br/>
+
+## 自分用メモ
+
+ページ遷移と値の受け渡しは`useRouter`を使う。
+
+**遷移元**
+
+```javascript
+import React, {useEffect, useState} from 'react'
+import axios from 'axios'
+import { useRouter } from 'next/router'
+
+const Posts = () => {
+  const [data, setData] = useState([])
+  const router = useRouter()
+
+  useEffect(() => {
+    fetch()
+    console.log('loaded')
+  },[])
+
+  const pageNav = (item) => {
+    router.push({
+      pathname:'detail',
+      query: {
+        title: item.title,
+        body: item.body
+      }
+    })
+  }
+
+  const fetch = async() => {
+    const result = await axios('https://jsonplaceholder.typicode.com/posts')
+    setData(result.data)
+  }
+
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6">
+      {
+        data.map((item, i) => {
+          return (
+            <div onClick={()=> pageNav(item)} key={i} className="max-w-xs rounded overflow-hidden shadow-lg my-2">
+              <div className="px-6 py-4">
+                <div className="font-bold text-xl mb-2">{item.title}</div>
+                <p className="text-grey-darker text-base">
+                  {item.body}
+                </p>
+              </div>
+            </div>
+          )
+        })
+      }
+    </div>
+  )
+}
+
+export default Posts
+```
+
+**遷移先**
+
+```javascript
+import React, {useEffect} from 'react'
+import { useRouter } from 'next/router'
+import Alert from '../../components/alert'
+
+const Detail = () => {
+  const router = useRouter()
+  const title = router.query.title
+  const body = router.query.body
+
+  useEffect(() => {
+    console.log('loaded')
+  },[])
+
+  return (
+    <div className="max-w-xs rounded overflow-hidden shadow-lg my-2">
+      <div className="px-6 py-4">
+        <div className="font-bold text-xl mb-2">{title}</div>
+        <p className="text-grey-darker text-base">
+          {body}
+        </p>
+         <div className="justify-items-center">
+          <Alert title={title} body={body}/>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default Detail
+```
+
+## Tailwind CSS
+
+CSSは今はやりのTailwindを使った。
+
+自分用リンク
+
+- [Tailwind Cheat Sheet](https://tailwindcomponents.com/cheatsheet/)
+
+<br/>
+
+## まとめ
+
+[useNavigation](https://reactnavigation.org/docs/use-navigation/)と[useRoute](https://reactnavigation.org/docs/use-route/)が恋しい。
+
+---
