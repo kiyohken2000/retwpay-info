@@ -1,0 +1,50 @@
+---
+title: useEffect cheat sheet
+tags: [    ]
+date: 2021-09-07
+path: blog/2021-09-07
+cover: ./img.jpg
+excerpt: React Native
+keywords:
+  - 開発
+  - Firebase
+  - React Native
+  - コード
+  - code
+---
+import { Link } from 'gatsby';
+
+自分用のメモ
+
+```javascript
+useEffect(() => {
+  /* This will run once, after the component mounts */
+}, [])
+```
+
+```javascript
+useEffect(() => {
+  /* This will run once, after component update */
+  /* This can either by change in props or state */
+})
+```
+
+```javascript
+useEffect(() => {
+  /* This will run once, after the component mounts */
+  return () => {
+    /* This will run only after the component unmounts */
+  }
+}, [])
+```
+
+```javascript
+useEffect(() => {
+  /* This will run once, after the component mounts,
+  and every time some dependencies changes */
+
+  /* dependencies may be som props or state */
+}, [dependencies])
+```
+
+---
