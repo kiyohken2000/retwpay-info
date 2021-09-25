@@ -1,0 +1,75 @@
+---
+title: M1 MacBook Airを手に入れたので性能を調べました
+tags: [    ]
+date: 2021-09-26
+path: blog/2021-09-26
+cover: ./img.png
+excerpt: M1 MacBook Air Performance
+keywords:
+  - 開発
+  - Firebase
+  - Gatsby
+  - コード
+  - code
+---
+import { Link } from 'gatsby';
+
+新型iPhoneが発売されたこととは全く関係ありませんが、しばらく前にM1 MacBook Airを買ったので性能を調べました。
+
+比較対象はRyzen9な自作パソコンと、これまで使っていたMacBookAir2020(Intel)です。
+
+![](./img1.jpg)
+
+![](./img2.jpg)
+
+![](./img3.jpg)
+
+## Cinebench
+
+まずは定番のCinebenchの結果から。
+
+![](./img4.jpg)
+
+![](./img5.jpg)
+
+![](./img6.jpg)
+
+当然ですがRyzen9が圧倒的に速いです。むしろ、CPUだけでMacBookAirそのものに近い値段なので圧倒的な差じゃないと泣けます。最近涼しくなってきたとはいえ、まだそれなりの室温なので以前に測定したときよりスコアが低く出ています。
+
+![](./img10.png)
+
+## 開発コマンド
+
+次に、開発コマンドに実行時間を調べました。
+
+このブログをGitHubからクローンした後、`yarn install`が完了するまでの時間と、`gatsby build`したときの時間を計測しました。
+
+[Gatsby CLI](https://www.gatsbyjs.com/docs/reference/gatsby-cli/)のバージョンは`3.14.0`で揃えました。
+
+![](./img7.jpg)
+
+計測方法は、それぞれのコマンドを`date`で挟んでコマンド実行前後の現在時刻を表示して経過時間を調べるやり方です。
+
+`date; yarn install; date`
+
+![](./img8.jpg)
+
+`date; gatsby build; date`
+
+![](./img9.jpg)
+
+なお、このブログのレポジトリは[こちら](https://github.com/kiyohken2000/retwpay-info)です。
+
+### 実行時間
+
+その結果がこちらです。
+
+![](./img11.png)
+
+## まとめ
+
+MacBookAir2020とM1 MacBookAirを比べると明らかにM1 MBAが高速でした。
+
+本当はReact Nativeアプリをビルドしたときの時間で比較したいけど良い方法が思いつかない。
+
+---
