@@ -222,6 +222,7 @@ import { SampleContext } from './SampleContext'
 
 export default function FunctionComponentSample(props) {
   const { from } = useContext(SampleContext)
+  const { sampleFunction } = props
 
   return (
     <TouchableOpacity
