@@ -1,0 +1,238 @@
+---
+title: Hooks時代のReactでクラスコンポーネントを倒す
+tags: [    ]
+date: 2022-03-12
+path: blog/2022-03-12
+cover: ./img.png
+excerpt: From class component to function component or reverse.
+keywords:
+  - 開発
+  - コード
+  - code
+  - reactnative
+  - expo
+---
+import { Link } from 'gatsby';
+
+## クラスコンポーネントと関数コンポーネント
+
+Reactにはクラスコンポーネントと関数コンポーネントがあります。現在はhooksを使える関数コンポーネントで書くのが主流です。ですが、hooksのなかった大昔に書かれたアプリはクラスコンポーネントで書かれていることが多いです。
+
+たまに古いReact(もしくはReact Native)アプリのメンテナンスのためにクラスコンポーネントを編集することがあります。そんなときに、関数コンポーネントでもってクラスコンポーネントに立ち向かうことができます。
+
+**クラスコンポーネントの例**
+
+```javascript
+class ClassComponentSample extends React.Component {
+  constructor(props) {
+    this.sampleFunction = this.sampleFunction.bind(this)
+    this.state = {
+      likeClass: false,
+    }
+  }
+
+  sampleFunction() {
+    console.log('hello from Class Component')
+  }
+  
+  render() {
+    return (
+      <View>
+        <Text>クラスコンポーネントの例</Text>
+      </View>
+    )
+  }
+}
+
+export default ClassComponentSample
+```
+
+**関数コンポーネントの例**
+
+```javascript
+export default function FunctionComponentSample(props) {
+  const [iLoveFunctional, setIsILoveFunctional] = useState(true)
+
+  const sampleFunction = () => {
+    console.log('hello from Function Component')
+  }
+
+  return (
+      <View>
+        <Text>関数コンポーネントの例</Text>
+      </View>
+  )
+}
+```
+
+## propsの受け渡し
+
+React(React Native)ではクラスコンポーネントから関数コンポーネントへ、もしくはその逆でも普通にpropsを受け渡しできます。
+
+以下の例ではクラスコンポーネントの子として関数コンポーネントを表示しています。そしてクラスコンポーネントで定義したstate(likeClass)と関数(sampleFunction)を渡しています。
+
+```javascript
+import FunctionComponentSample from './FunctionComponentSample'
+
+class ClassComponentSample extends React.Component {
+  constructor(props) {
+    this.sampleFunction = this.sampleFunction.bind(this)
+    this.state = {
+      likeClass: false,
+    }
+  }
+
+  sampleFunction() {
+    console.log('hello from Class Component')
+  }
+  
+  render() {
+    return (
+      <FunctionComponentSample
+        likeClass={this.state.likeClass}
+        sampleFunction={this.sampleFunction}
+      />
+    )
+  }
+}
+
+export default ClassComponentSample
+```
+
+```javascript
+export default function FunctionComponentSample(props) {
+  const { likeClass, sampleFunction } = props
+
+  useEffect(() => {
+    console.log(likeClass) // コンソールには"false"が表示される
+  }, [])
+
+  return (
+    <TouchableOpacity
+      onPress={() => sampleFunction()} // コンソールには'hello from Class Component'が表示される
+    >
+      <Text>関数コンポーネントの例</Text>
+    </TouchableOpacity>
+  )
+}
+```
+
+もちろん、この逆に関数コンポーネントの子としてクラスコンポーネントを使うこともできます。そして関数コンポーネントで定義したstateや関数を渡すことも可能です。
+
+## 引数も渡す
+
+クラスコンポーネントから受け取った関数を、関数コンポーネントから引数をつけて実行することもできます。
+
+```javascript
+import FunctionComponentSample from './FunctionComponentSample'
+
+class ClassComponentSample extends React.Component {
+  constructor(props) {
+    this.sampleFunction = this.sampleFunction.bind(this)
+  }
+
+  sampleFunction(props) {
+    console.log('hello from ', props)
+  }
+  
+  render() {
+    return (
+      <FunctionComponentSample
+        sampleFunction={this.sampleFunction}
+      />
+    )
+  }
+}
+export default ClassComponentSample
+```
+
+```javascript
+export default function FunctionComponentSample(props) {
+  const { sampleFunction } = props
+
+  return (
+    <TouchableOpacity
+      onPress={() => sampleFunction('function component')} // コンソールには'hello from function component'が表示される
+    >
+      <Text>関数コンポーネントの例</Text>
+    </TouchableOpacity>
+  )
+}
+```
+
+## コンテキストも渡す
+
+React Hooksで`useState`、`useEffect`の次に(私が)よく使う`useContext`を使用してコンテキストも渡してあげます。
+
+```javascript
+import React, { createContext, useState } from 'react'
+
+export const SampleContext = createContext();
+
+export const SampleContextProvider = (props) => {
+  const [from, setFrom] = useState('function component')
+  
+  return (
+    <SampleContext.Provider
+      value={{
+        from, setFrom
+      }}
+    >
+      {props.children}
+    </SampleContext.Provider>
+  )
+}
+```
+
+```javascript
+import FunctionComponentSample from './FunctionComponentSample'
+
+class ClassComponentSample extends React.Component {
+  constructor(props) {
+    this.sampleFunction = this.sampleFunction.bind(this)
+  }
+
+  sampleFunction(props) {
+    console.log('hello from ', props)
+  }
+  
+  render() {
+    return (
+      <FunctionComponentSample
+        sampleFunction={this.sampleFunction}
+      />
+    )
+  }
+}
+export default ClassComponentSample
+```
+
+```javascript
+<SampleContextProvider>
+  <ClassComponentSample />
+</SampleContextProvider>
+```
+
+```javascript
+import { SampleContext } from './SampleContext'
+
+export default function FunctionComponentSample(props) {
+  const { from } = useContext(SampleContext)
+
+  return (
+    <TouchableOpacity
+      onPress={() => sampleFunction(from)} // コンソールには'hello from function component'が表示される
+    >
+      <Text>関数コンポーネントの例</Text>
+    </TouchableOpacity>
+  )
+}
+```
+
+上の例では、関数コンポーネントにおいて、クラスコンポーネントをバイパスして受け取ったコンテキスト(from)をクラスコンポーネントから受け取った関数(sampleFunction)の引数として実行しています。
+
+## まとめ
+
+可読性が最悪ですが、クラスコンポーネントを書きたくない場合に備えて覚えておきたいtipsです。
+
+---
