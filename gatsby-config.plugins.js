@@ -199,7 +199,7 @@ module.exports = [
           }
           `,
           output: '/rss.xml',
-          title: `Retwpay - Retweet Flea Market App Develop BLOG`,
+          title: `t.shirakura tech blog`,
           site_url: `https://retwpay.ml/`,
         },
       ],

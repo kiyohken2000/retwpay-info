@@ -24,7 +24,7 @@ export default () => {
   return (
     <>
     <Helmet>
-    <meta property="og:image" content="https://retwpay.ml/Icon-256.png" />
+    <meta property="og:image" content="https://retwpay.ml/avatar.jpg" />
     </Helmet>
       <div className={style.circleMenu} role="button" tabIndex="0" onKeyDown={toggleMenu} onClick={toggleMenu}>
         <div className={`${style.hamburger} ${menu ? style.menuIcon : null}`}>
@@ -39,16 +39,6 @@ export default () => {
             <li className={style.navItem}>
               <Link to="/" onClick={toggleMenu} activeClassName={style.anchorActive}>
                 トップ
-              </Link>
-            </li>
-            <li className={style.navItem}>
-              <Link to="/buy" onClick={toggleMenu} activeClassName={style.anchorActive}>
-                買い方
-              </Link>
-            </li>
-            <li className={style.navItem}>
-              <Link to="/sell" onClick={toggleMenu} activeClassName={style.anchorActive}>
-                売り方
               </Link>
             </li>
             <li className={style.navItem}>

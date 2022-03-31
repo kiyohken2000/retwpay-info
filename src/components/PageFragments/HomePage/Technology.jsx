@@ -7,7 +7,6 @@ const Technology = () => (
     <li>WebApp : Wordpress, HTML, CSS, PHP, JavaScript</li>
     <li>Mobile : React Native, Expo</li>
     <li>This page : GatsbyJS and Firebase Hosting</li>
-    <li>Icon by Cacoo</li>
   </div>
 );
 

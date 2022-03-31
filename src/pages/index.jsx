@@ -15,7 +15,7 @@ export default () => (
       <SidebarWrapper>
         <>
           <AboutMe />
-          <AppScreenShots />
+          {/*<AppScreenShots />*/}
           <RecentBlog />
         </>
       <Footer />

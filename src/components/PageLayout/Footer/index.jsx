@@ -22,7 +22,7 @@ const Footer = () => {
     <div>
     <p/>
       <Grid container justify="center">
-        <Typography variant="caption" color='textPrimary'>Retweet Flea Market App - Powered by {gatsby}, {reactnative}, {wordpress} and {firebase} ❤️ {date}</Typography>
+        <Typography variant="caption" color='textPrimary'>Powered by {gatsby}, {reactnative} and {firebase} ❤️ {date}</Typography>
       </Grid>
     </div>
   )

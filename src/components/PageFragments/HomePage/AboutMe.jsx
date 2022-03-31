@@ -7,18 +7,15 @@ import Grid from '@material-ui/core/Grid';
 import SEO from '../../Seo';
 
 const pageText = {
-  paraOne: `Retwpayは拡散リツイートを「<mark><b>買いたい</b></mark>」と「<mark><b>売りたい</b></mark>」のマッチングを支援します。<br/>
-  <br/>
-  <ul>
-  <li><b>リツイートを売って電子マネーを手に入れたい！</b></li>
-  <li><b>リツイートを買ってブログやYouTubeを宣伝したい！</b></li>
-  </ul>
-  <br/>
-  そんな方はぜひご利用ください`,
-  paraTwo: `Currently I work mostly with Javascript technologies like ReactJS and NodeJS. I also
-    have hands on experience working with cloud infrastructures like <b>AWS/GCP</b> and have deployed applications
-    keeping scalability in mind. Docker, Kubernetes, Jenkins, SonarQube are some of the cool
-    tools I use for <b>CI/ CD</b>. I'm always a learner and a self taught programmer.`,
+  paraOne: `Software Developer tech blog by t.shirakura
+  I am Independent Web and Mobile app developer.
+  I hope I can help you in your exciting and prosperous life.
+  My technical skills are React, React Native, GatsbyJS, WordPress and DIY PC.`,
+  paraTwo: `
+  私はインディペンデントのウェブとモバイルアプリ開発者です。みなさんの刺激的で豊かな生活を手助けできることを願っています。
+  技術スキル: React, React Native, GatsbyJS, 自作パソコン
+  
+  `,
 };
 
 const AboutMe = () => {
@@ -27,77 +24,17 @@ const AboutMe = () => {
     <>
       <div>
         <SEO
-          title="トップ"
+          title="About"
           description={description}
           path=""
-          keywords={['Rolwin', 'Reevan', 'Monteiro', 'FullStack developer', 'Javascript', 'ReactJS', 'NodeJS', 'Gatsby']}
+          keywords={['toshiaki', 'shirakura', 'React Native', 'firebase', 'Javascript', 'ReactJS', 'NodeJS', 'Gatsby']}
         />
-        <h1>Retwpay</h1>
-        <h3 className="titleSeparate">リツイートフリマアプリ</h3>
+        <h1 className="titleSeparate">About Me</h1>
         <p>
-        <p dangerouslySetInnerHTML={domHtml(pageText.paraOne)} />
+          {pageText.paraOne}
         </p>
-        <h3><mark>Amazonギフト券</mark>、<mark>LINE pay</mark>、<mark>PayPay</mark>、<mark>Kyash</mark>、<mark>Pring</mark>のいずれかと<mark>Twitter</mark>だけですぐに使えます。</h3>
-        <Grid container justify="space-between">
-          <Grid item sm={12} md={12}><img src="../logo1.png" width="100%" height="auto" alt="logoimage"/></Grid>
-          </Grid>
-        <h2>6つの特長</h2>
+        <p dangerouslySetInnerHTML={domHtml(pageText.paraTwo)} />
       </div>
-      <Row gutter={[20, 20]}>
-        <Col xs={24} sm={24} md={12} lg={8}>
-          <AboutTile
-            img="location.png"
-            height={60}
-            alt="location image"
-            textH4="電子マネーの個人間送金を利用"
-            textH3="中抜きが発生しません"
-          />
-        </Col>
-        <Col xs={24} sm={24} md={12} lg={8}>
-          <AboutTile
-            img="coffee.png"
-            alt="coffee image"
-            textH4="素人参加型だから"
-            textH3="高インプレッション"
-          />
-        </Col>
-        <Col xs={24} sm={24} md={12} lg={8}>
-          <AboutTile
-            img="meeting.png"
-            alt="meeting image"
-            textH4="アカウント登録不要"
-            textH3="すぐに始められます"
-          />
-        </Col>
-        <Col xs={24} sm={24} md={12} lg={8}>
-          <AboutTile
-            img="motorcycle.png"
-            alt="motorcycle image"
-            textH4="アカウント登録してもっと便利"
-            textH3="拡散依頼、請負の連絡を待てる"
-          />
-        </Col>
-        <Col xs={24} sm={24} md={12} lg={8}>
-          <AboutTile
-            img="web.png"
-            alt="web image"
-            textH4="アカウント登録してもっと便利"
-            textH3="報酬額を自分で設定"
-            height={60}
-            width={60}
-          />
-        </Col>
-        <Col xs={24} sm={24} md={12} lg={8}>
-          <AboutTile
-            img="graduation.png"
-            alt="graduation image"
-            textH4="もちろん無料"
-            textH3="登録料も利用料もありません"
-            height={60}
-            width={60}
-          />
-        </Col>
-      </Row>
     </>
   );
 };

@@ -1,8 +1,8 @@
 module.exports = {
   pathPrefix: '',
   siteUrl: 'https://retwpay.ml/',
-  siteTitle: 'Retwpay',
-  siteDescription: 'Retweet Flea Market App',
+  siteTitle: 't.shirakura blog',
+  siteDescription: 't.shirakura tech blog',
   author: 'votepurchase',
   postsForArchivePage: 3,
   defaultLanguage: 'ja',
@@ -10,13 +10,11 @@ module.exports = {
   pages: {
     home: '/',
     blog: 'blog',
-    buy: 'buy',
-    sell: 'sell',
     contact: 'contact',
     tag: 'tags',
   },
   social: {
-    github: 'https://github.com/rolwin100',
+    github: 'https://github.com/kiyohken2000',
     facebook: 'https://www.facebook.com/rolwin.monteiro',
     twitter: 'https://twitter.com/votepurchase',
     instagram: 'https://www.instagram.com/reevan100/',
