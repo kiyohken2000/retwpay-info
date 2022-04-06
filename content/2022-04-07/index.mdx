@@ -1,0 +1,66 @@
+---
+title: スプレッド構文によるオブジェクト操作
+tags: [    ]
+date: 2022-04-07
+path: blog/2022-04-07
+cover: ./img.png
+excerpt: How do I remove a property from a JavaScript object?
+keywords:
+  - 開発
+  - コード
+  - code
+  - javascript
+---
+import { Link } from 'gatsby';
+
+## 自分用のメモ
+
+**コード**
+
+```javascript
+const test = () => {
+  const originObj = {
+    a: 1,
+    b: 2,
+    c: 3,
+    d: 4
+  }
+  console.log('originObj:', originObj)
+  const addE = { // プロパティの追加
+    ...originObj,
+    e: 5
+  }
+  console.log('addE:', addE)
+  const { // プロパティの削除
+    a,
+    ...delA
+  } = addE
+  console.log('delA:', delA)
+}
+```
+
+**結果**
+
+```
+originObj: Object {
+  "a": 1,
+  "b": 2,
+  "c": 3,
+  "d": 4,
+}
+addE: Object {
+  "a": 1,
+  "b": 2,
+  "c": 3,
+  "d": 4,
+  "e": 5,
+}
+delA: Object {
+  "b": 2,
+  "c": 3,
+  "d": 4,
+  "e": 5,
+}
+```
+
+---
