@@ -1,0 +1,182 @@
+---
+title: Expo 46が公開されました
+tags: [    ]
+date: 2022-08-03
+path: blog/2022-08-03
+cover: ./img.png
+excerpt: Expo 46 is available
+keywords:
+  - 開発
+  - コード
+  - code
+  - reactnative
+  - expo
+---
+import { Link } from 'gatsby';
+
+## Expo46
+
+8月2日にExpo46が正式に公開されました。
+
+- [Expo SDK 46](https://blog.expo.dev/expo-sdk-46-c2a1655f63f7)
+
+<br/>
+
+## 主要な変更点
+
+- [react-native-skia](https://github.com/Shopify/react-native-skia)のサポート
+- [FlashList](https://shopify.github.io/flash-list/)のサポート
+- React Native 0.69.3とReact 18へのアップデート
+- ローカルのexpo-cliをデフォルトで使用するように変更
+- [expo-dev-client](https://docs.expo.dev/development/getting-started/)が1.0.0に到達
+- クラシックビルドを使用する最後のバージョンに到達
+
+<br/>
+
+ローカルのexpo-cliをデフォルトで使用するようになったので`expo start`などのコマンドに若干の変更が必要です。
+
+なお、`expo build:ios`や`expo build:android`などのクラシックビルドコマンドは今後2週間で利用可能になるようです。
+
+## アップグレード方法
+
+いつものごとく自作のボイラープレートでアップグレードを試してみました。
+
+- [ReactNative-Expo-Firebase-Boilerplate-v2](https://github.com/kiyohken2000/ReactNative-Expo-Firebase-Boilerplate-v2)
+
+<br/>
+
+まずはグローバルのexpo-cliを更新します。
+
+```
+npm i -g expo-cli
+```
+
+次にパッケージをアップグレードします。
+
+ローカルのexpo-cliがデフォルトになったため、グローバルにインストールした`expo`コマンドを使う場合は`expo-cli`と明示する必要があります。
+
+```
+expo-cli upgrade 46
+```
+
+ローカルの`expo-cli`も更新しておきます。
+
+```
+yarn add expo-cli
+```
+
+アプリを実行してみます。ローカルのexpo-cliを使うので`npx`を付与して実行します。
+
+```
+npx expo start
+```
+
+## 発生したエラー
+
+上記コマンドで実行したところ以下のエラーが発生しました。
+
+`Invariant Violation: ViewPropTypes has been removed from React Native.`
+
+以前から**ViewPropTypes**が**deprecated**になったという警告は出ていましたがついに**removed**されてしまったためエラーが発生しました。
+
+### 対処方法
+
+[Issues](https://github.com/facebook/react-native/issues/33734)を参考に修正していきます。
+
+まずは[patch-package](https://www.npmjs.com/package/patch-package)をインストールします。
+
+```
+yarn add patch-package
+```
+
+次に[deprecated-react-native-prop-types](https://www.npmjs.com/package/deprecated-react-native-prop-types/v/2.2.0)をインストールします。
+
+```
+yarn add deprecated-react-native-prop-types
+```
+
+`node_modules/react-native/index.js`の436から463行目を修正していきます。
+
+**変更前**
+
+```javascript
+// Deprecated Prop Types
+get ColorPropType(): $FlowFixMe {
+invariant(
+  false,
+  'ColorPropType has been removed from React Native. Migrate to ' +
+    "ColorPropType exported from 'deprecated-react-native-prop-types'.",
+);
+},
+get EdgeInsetsPropType(): $FlowFixMe {
+invariant(
+  false,
+  'EdgeInsetsPropType has been removed from React Native. Migrate to ' +
+    "EdgeInsetsPropType exported from 'deprecated-react-native-prop-types'.",
+);
+},
+get PointPropType(): $FlowFixMe {
+invariant(
+  false,
+  'PointPropType has been removed from React Native. Migrate to ' +
+    "PointPropType exported from 'deprecated-react-native-prop-types'.",
+);
+},
+get ViewPropTypes(): $FlowFixMe {
+invariant(
+  false,
+  'ViewPropTypes has been removed from React Native. Migrate to ' +
+    "ViewPropTypes exported from 'deprecated-react-native-prop-types'.",
+);
+},
+```
+
+**変更後**
+
+```javascript
+// Deprecated Prop Types
+get ColorPropType(): $FlowFixMe {
+  return require('deprecated-react-native-prop-types').ColorPropType;
+},
+get EdgeInsetsPropType(): $FlowFixMe {
+  return require('deprecated-react-native-prop-types').EdgeInsetsPropType;
+},
+get PointPropType(): $FlowFixMe {
+  return require('deprecated-react-native-prop-types').PointPropType;
+},
+get ViewPropTypes(): $FlowFixMe {
+  return require('deprecated-react-native-prop-types').ViewPropTypes;
+},
+```
+
+行った変更をpatch-packageに保存します。
+
+```
+npx patch-package react-native
+```
+
+依存関係のインストール時にpatch-packageも実行されるようにコマンドを追加します。
+
+`postinstall`を追加するのと、毎回`npx`をつけて`expo`コマンドを実行するのも面倒なので`start`と`publish`も変更しました。
+
+**package.json**
+
+```
+"scripts": {
+  "start": "npx expo start",
+  "android": "npx expo start --android",
+  "ios": "npx expo start --ios",
+  "postinstall": "patch-package",
+  "publish": "npx expo publish",
+},
+```
+
+以上の変更でExpo Goにてアプリを実行できることを確認しました。
+
+## まとめ
+
+いよいよクラシックビルドをサポートする最後のSDKになりました。来年はじめにはクラシックビルドが終了するため既存のExpoアプリは今後5ヶ月以内にEASビルドに移行する必要があります。
+
+EASへの移行についてもいずれブログ記事にする予定です。
+
+---
