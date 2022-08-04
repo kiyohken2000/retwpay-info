@@ -1,0 +1,94 @@
+---
+title: Expo managed workflowアプリをEASビルドに移行する part 2
+tags: [    ]
+date: 2022-08-05
+path: blog/2022-08-05
+cover: ./img.png
+excerpt: Switching to EAS Build
+keywords:
+  - 開発
+  - コード
+  - code
+  - reactnative
+  - expo
+---
+import { Link } from 'gatsby';
+
+<Link to="/blog/2022-08-04">前回の</Link>続きです。
+
+## .easignoreを作る
+
+`google-services.json`やfirebaseのAPI keyなど.gitignoreしてるファイルがいくつかあります。
+
+ExpoサーバーでEASビルドを行う場合、`.gitignore`ファイルを参照してignoreされてるファイルはアップロードされません。そのためソースコードがignoreしてるファイルを参照している場合ビルド時に**ファイルが存在しない**エラーが発生してビルドに失敗します。
+
+そこで、`.easignore`ファイルを作成する必要があります。
+
+ルートディレクトリに`.easignore`が存在している場合`.gitignore`の代わりに`.easignore`が参照されます。
+
+**.gitignore**
+
+```
+node_modules/**/*
+.expo/*
+npm-debug.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+web-build/
+web-report/
+config.js
+src\firebase\config.js
+google-services.json
+gptkeys.js
+```
+
+**.easignore**
+
+```
+node_modules/**/*
+.expo/*
+npm-debug.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+web-build/
+web-report/
+```
+
+- [How projects are uploaded to EAS Build](https://github.com/expo/fyi/blob/main/eas-build-archive.md)
+
+<br/>
+
+## よく使うコマンド一覧
+
+```
+// ビルド:開発用バイナリ
+eas build --profile development --platform ios
+eas build --profile development --platform android
+
+// ビルド:内部配布バイナリ
+eas build --profile preview --platform ios
+eas build --profile preview --platform android
+
+// ビルド:プロダクション
+eas build --profile production --platform ios
+eas build --profile production --platform android
+
+// OTAアップデート
+expo publish --release-channel internal
+expo publish --release-channel production
+
+// iOS用:デバイス登録(開発用と内部配布バイナリのインストールに必須)
+eas device:create
+// 登録済みiPhoneの表示
+eas device:list
+```
+
+---
