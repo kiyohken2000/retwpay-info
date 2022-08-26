@@ -1,0 +1,170 @@
+---
+title: useEffectでasync/awaitを使う方法
+tags: [    ]
+date: 2022-08-26
+path: blog/2022-08-26
+cover: ./img.png
+excerpt: How to Use an Async Function in the React useEffect() Hook
+keywords:
+  - 開発
+  - コード
+  - code
+  - react
+---
+import { Link } from 'gatsby';
+
+自分用メモ
+
+### メソッドチェーン版
+
+```javascript
+export default function App() {
+  const [books, setBooks] = useState([]);
+  useEffect(() => {
+    // await async "fetchBooks()" function
+    fetchBooks()
+      .then((books) => {
+        setBooks(books);
+      })
+      .catch(() => {
+        console.log('Error occured when fetching books');
+      });
+  }, []);
+  return (
+    <div>
+      {books.map((book) => (
+        <div>
+          <h2>{book.title}</h2>
+        </div>
+      ))}
+    </div>
+  );
+}
+```
+
+## ダメな例
+
+### linterに怒られる
+
+```javascript
+// ❌ Your linter: don't do this!
+useEffect(async () => {
+  try {
+    const books = await fetchBooks();
+    setBooks(books);
+  } catch {
+    console.log('Error occured when fetching books');
+  }
+}, []);
+```
+
+### Memory leakが発生する
+
+```javascript
+useEffect(async () => {
+  const observer = () => {
+    // do stuff
+  };
+  await fetchData();
+  observable.subscribe(observer);
+  // Memory leak!
+  return () => {
+    observable.unsubscribe(observer);
+  };
+}, []);
+```
+
+## 良い例
+
+### 即時実行関数を使う
+
+```javascript
+const [books, setBooks] = useState([]);
+useEffect(() => {
+  (async () => {
+    try {
+      const books = await fetchBooks();
+      setBooks(books);
+    } catch (err) {
+      console.log('Error occured when fetching books');
+    }
+  })();
+}, []);
+```
+
+### named関数を使う
+
+```javascript
+useEffect(() => {
+  // Named function "getBooks"
+  const getBooks = async() => {
+    try {
+      const books = await fetchBooks();
+      setBooks(books);
+    } catch (err) {
+      console.log('Error occured when fetching books');
+    }
+  }
+  // Call named function
+  getBooks();
+}, []);
+```
+
+```javascript
+// ✅ Callback is not async
+useEffect(() => {
+  const observer = () => {
+    // do stuff
+  };
+  // Named function "fetchDataAndSubscribe"
+  const fetchDataAndSubscribe = async() => {
+    await fetchData();
+    observable.subscribe(observer);
+  }
+  fetchDataAndSubscribe();
+  // ✅ No memory leak
+  return () => {
+    observable.unsubscribe(observer);
+  };
+}, []);
+```
+
+### カスタムフックを作る
+
+```javascript
+export function useEffectAsync(effect, inputs) {
+  useEffect(() => {
+    return effect();
+  }, inputs);
+}
+```
+
+```javascript
+const [books, setBooks] = useState([]);
+useEffectAsync(async () => {
+  try {
+    const books = await fetchBooks();
+    setBooks(books);
+  } catch (err) {
+    console.log('Error occured when fetching books');
+  }
+});
+```
+
+### useEffect() の外で非同期関数を定義する
+
+```javascript
+const getBooks = useCallback(async () => {
+  try {
+    const books = await fetchBooks();
+    setBooks(books);
+  } catch (err) {
+    console.log('Error occured when fetching books');
+  }
+}, []);
+useEffect(() => {
+  getBooks();
+}, [getBooks]);
+```
+
+---
