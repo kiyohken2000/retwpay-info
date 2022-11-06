@@ -16,7 +16,7 @@ import { Link } from 'gatsby';
 
 ## SNSリンクの設置
 
-React NativeアプリにSNSリンクを設置する機械がありました。
+React NativeアプリにSNSリンクを設置する機会がありました。
 
 アプリ内のFacebookボタン、Twitterボタン、LINEボタンをタップすると、それぞれのSNSの投稿画面を開きつつ投稿内容にアプリから渡されたURLがあらかじめ書かれているタイプです。
 
@@ -34,7 +34,7 @@ React NativeアプリにSNSリンクを設置する機械がありました。
 const onTwitter = () => {
   const link = encodeURIComponent(websiteUrl)
   const url = `https://twitter.com/intent/tweet?text=${link}`
-  Linking.openURL(postMessage)
+  Linking.openURL(url)
 }
 
 const onFacebook = () => {
@@ -45,7 +45,7 @@ const onFacebook = () => {
 
 const onLine = () => {
   const url = `http://line.me/R/msg/text/?${websiteUrl}`
-  Linking.openURL(postMessage)
+  Linking.openURL(url)
 }
 ```
 
