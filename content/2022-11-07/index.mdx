@@ -1,0 +1,90 @@
+---
+title: React NativeのTips2種 パラメーター付きSNSリンクの作成とコンポーネントの再マウント
+tags: [    ]
+date: 2022-11-07
+path: blog/2022-11-07
+cover: ./img.jpg
+excerpt: SNS link in React Native and Component remounting.
+keywords:
+  - 開発
+  - コード
+  - code
+  - react native
+  - expo
+---
+import { Link } from 'gatsby';
+
+## SNSリンクの設置
+
+React NativeアプリにSNSリンクを設置する機械がありました。
+
+アプリ内のFacebookボタン、Twitterボタン、LINEボタンをタップすると、それぞれのSNSの投稿画面を開きつつ投稿内容にアプリから渡されたURLがあらかじめ書かれているタイプです。
+
+**snsシェアボタン url**でググるとたくさん出てきます。
+
+![](./img1.png)
+
+紹介されてるコードだとパラメーター付きURLには対応していないのでひと手間かける必要があります。
+
+パラメーター付きURLを渡す場合は以下のようにします。
+
+```javascript
+// websiteUrlはパラメーター付きURL
+
+const onTwitter = () => {
+  const link = encodeURIComponent(websiteUrl)
+  const url = `https://twitter.com/intent/tweet?text=${link}`
+  Linking.openURL(postMessage)
+}
+
+const onFacebook = () => {
+  const link = encodeURIComponent(websiteUrl)
+  const url = `https://www.facebook.com/sharer/sharer.php?u=${link}`;
+  Linking.openURL(url)
+}
+
+const onLine = () => {
+  const url = `http://line.me/R/msg/text/?${websiteUrl}`
+  Linking.openURL(postMessage)
+}
+```
+
+パラメーター付きURLを`encodeURIComponent`を使ってエンコードしてから`Linking.openURL`に渡してあげます。
+
+## コンポーネントを再マウントする方法
+
+最近作ったアプリで、ユーザー操作によってコンポーネントを再マウントできるようにする必要がありました。
+
+具体的には、一つの操作でウェブAPIを複数回叩く必要があり、最初のリクエストから処理が完了するまで約10秒以上のローディングが発生する場面がありました。ローディング中はユーザー操作を受け付けなくなります。
+
+そこで、ローディング画面に中止ボタンを置いて再びユーザー操作を受け付けられるようにする実装が必要でした。
+
+APIリクエストをキャンセルする処理を入れても実装可能かとは思いますが、単純にリクエスト中のコンポーネントを再マウントできるようにすることでも実装できます。
+
+コンポーネントに`key`を設定しておいて、`key`を変更することで新しいコンポーネントとして再マウントできます。
+
+```javascript
+import React, { useContext, useEffect, useState } from 'react'
+import Main from './Main'
+
+export default function Home() {
+  const [parentKey, setParentKey] = useState(0)
+
+  const incrementKey = () => {
+    setParentKey(prev => prev + 1)
+  }
+
+  return (
+    <Main
+      key={parentKey}
+      incrementKey={incrementKey}
+    />
+  )
+}
+```
+
+`<Main/>`コンポーネントの中で`incrementKey`を実行することでコンポーネントが再マウントされ、`<Main/>`コンポーネントが初期状態(ローディング開始前)に戻ります。
+
+私の場合は`<Main/>`コンポーネント内の**中止ボタン**タップ時に`incrementKey`を実行することでローディングをキャンセルする処理を実装しました。
+
+---
