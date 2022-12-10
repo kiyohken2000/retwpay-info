@@ -1,0 +1,66 @@
+---
+title: Expo 47が公開されました
+tags: [    ]
+date: 2022-12-11
+path: blog/2022-12-11
+cover: ./img.png
+excerpt: Expo 47 is available.
+keywords:
+  - 開発
+  - コード
+  - code
+  - react native
+  - expo
+---
+import { Link } from 'gatsby';
+
+## Expo SDK 47
+
+いつの話だよという感じですがExpo47が公開されました。
+
+- [Expo SDK 47](https://blog.expo.dev/expo-sdk-47-a0f6f5c038af)
+
+<br/>
+
+主要な変更点は以下の3点でしょうか。
+
+- Expo Go (iOS)でHermesが利用可能になった
+- Expo 48ではHermesがデフォルトで有効になる
+- classic buildのサポート終了
+
+<br/>
+
+いつものごとく[自作ボイラープレート](https://github.com/kiyohken2000/ReactNative-Expo-Firebase-Boilerplate-v2)を更新しましたが特に問題なくアップデートできました。なお、classic buildのサポートが終了したためEAS buildへの移行方法をREADMEに追記しました。
+
+Hermesの有効/無効は`app.json`の`expo.jsEngine`を`hermes`もしくは`jsc`にすることで切り替えられます。
+
+```
+{
+  "expo": {
+    "name": "reactnative-expo-firebase-boilerplate-v2",
+    "slug": "reactnative-expo-firebase-boilerplate-v2",
+    "privacy": "public",
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "jsEngine": "hermes",
+    "version": "1.0.0",
+}
+```
+
+有効になっているかどうかは以下の関数で確認できます。
+
+```javascript
+const isHermes = () => !!global.HermesInternal;
+```
+
+真偽値が返ります。
+
+```javascript
+console.log('isHermes', isHermes())
+```
+
+いよいよ年明け早々にclassic buildそのものが終了します。Expoの更新とEAS buildへの移行は早めに済ませておきたいですね。
+
+---
