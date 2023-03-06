@@ -1,0 +1,62 @@
+---
+title: Expo 48が公開されました
+tags: [    ]
+date: 2023-02-01
+path: blog/2023-03-07
+cover: ./img.png
+excerpt: Expo 48 is available.
+keywords:
+  - 開発
+  - コード
+  - code
+  - react native
+  - expo
+---
+import { Link } from 'gatsby';
+
+## Expo SDK 48
+
+Expo SDK 48が公開されました。
+
+- [Expo SDK 48](https://blog.expo.dev/expo-sdk-48-ccb8302e231)
+
+<br/>
+
+詳しい説明は公式のブログポストを参照いただくとして、ハイライトは
+
+- 予告通り デフォルトのエンジンがHermesに変更
+- Expo Image v1.0がリリースされた
+- Expo Router v1.0がリリースされた
+
+<br/>
+
+といったところでしょうか。
+
+## アップグレードした結果
+
+いつものごとく[自作ボイラープレート](https://github.com/kiyohken2000/ReactNative-Expo-Firebase-Boilerplate-v2)をアップグレードしてみました。
+
+公式のブログポストのアップグレード手順には記載されていませんが、いつもの
+
+```
+expo upgrade 48
+```
+
+コマンドでもアップグレードできました。
+
+Expo Goでの実行は何のトラブルもありませんでした。
+
+しかし`expo publish`で公開したプロジェクトをiPhoneのExpo Goで開いた時のみ起動直後にクラッシュしてしまいました。AndroidのExpo Goでは問題なく起動します。検証のために`expo-dev-client`をインストールしてdev clientをビルドしてみたのですが問題なく起動してしまったためエラーの確認すらできませんでした。
+
+最終的には
+
+- react-native-vector-iconsを6→9系
+- react-native-elementsを3→4系
+- react-native-loading-spinner-overlayを2→3系
+- react-native-paperを4→5系
+
+<br/>
+
+にアップデートしたところ起動するようになりました。
+
+---
