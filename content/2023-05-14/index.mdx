@@ -3,7 +3,7 @@ title: React NativeでGoogle Sheets APIを使用する
 tags: [    ]
 date: 2023-05-14
 path: blog/2023-5-14
-cover: ./img.png
+cover: ./img.jpg
 excerpt: Using Google Sheets API with React Native.
 keywords:
   - 開発
@@ -14,11 +14,11 @@ keywords:
 ---
 import { Link } from 'gatsby';
 
-## Google Sheetsを読み取り専用データベースとして使用するReact Nativeアプリの作成
+## Google Sheetsを読み取り専用データベースとして使用するReact Nativeアプリ
 
 React NativeアプリのデータベースとしてGoogleスプレッドシートを使用することは推奨されません。なぜなら、クエリの実行を行えず、API呼び出しの割り当ても存在するからです。素直にFirestoreを使ったほうが良いです。
 
-しかし非プログラマーがFirebaseコンソールでFirestoreにデータを追加/変更するのは技術的なハードルが高いです。もちろんFirestoreにデータを追加/変更するウェブUIを用意するのが正攻法ですが、その場合はアプリとウェブ管理画面の両方を作成する必要があります。そこで、Googleスプレッドシートを読み取り専用のデータベースとして使用するアイディアが役立つ場合があります。Googleスプレッドシートを使えばデータの管理画面を用意する必要がないからです。
+しかし非プログラマーがFirebaseコンソールでFirestoreにデータを追加/変更するのは技術的なハードルが高いです。Firestoreにデータを追加/変更するウェブUIを用意するのが正攻法ですが、その場合はアプリとウェブ管理画面の両方を作成する必要があります。そこで、Googleスプレッドシートを読み取り専用のデータベースとして使用するアイディアが役立つ場合があります。Googleスプレッドシートを使えばデータの管理画面を用意する必要がないからです。
 
 ![](./img8.png)
 
@@ -30,7 +30,7 @@ React NativeアプリのデータベースとしてGoogleスプレッドシー�
 
 ![](./img1.png)
 
-共有オプションを使用して閲覧権限を「リンクを知っている全員」にしておきます。このスプレッドシートにデータを追加/変更するとリアルタイムにアプリに反映されます。
+共有オプションを使用して閲覧権限を「リンクを知っている全員」にしておきます。このスプレッドシートにデータを追加/変更するとアプリに反映されます。
 
 ![](./img2.png)
 
@@ -38,19 +38,19 @@ React NativeアプリのデータベースとしてGoogleスプレッドシー�
 
 アプリからGoogleスプレッドシートにアクセスするためのAPIキーをGCPコンソールで作成します。
 
-まずGCPコンソールを開いて**Google Sheets API**を開きます。
+まずGCPコンソールの**Google Sheets API**を開きます。
 
 ![](./img3.png)
 
-Google Sheets APIを有効にします。
+Google Sheets APIを有効にします。**有効にする**をクリックします。
 
 ![](./img4.png)
 
-Google Sheets APIを有効になりました。
+Google Sheets APIが有効になりました。
 
 ![](./img5.png)
 
-次にAPIキーを発行します。**認証情報** → **認証情報を作成** → **APIキーを作成**を選択します。
+次にAPIキーを発行します。**認証情報** → **認証情報を作成** → **APIキー**を選択します。
 
 ![](./img6.png)
 
@@ -62,7 +62,7 @@ APIキーが発行されました。これはアプリからスプレッドシ�
 
 アプリからアクセスするときのURLは以下のようになります。
 
-**https://sheets.googleapis.com/v4/spreadsheets/{Sheet-ID}/values/{Sheet-Name}?valueRenderOption=FORMATTED_VALUE&key={API-Key}**
+`https://sheets.googleapis.com/v4/spreadsheets/{Sheet-ID}/values/{Sheet-Name}?valueRenderOption=FORMATTED_VALUE&key={API-Key}`
 
 
 変数は以下の3つです。
