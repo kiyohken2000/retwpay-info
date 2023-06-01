@@ -1,0 +1,397 @@
+---
+title: React NativeでOpen AIを使用してText to Imageを行う
+tags: [    ]
+date: 2023-06-02
+path: blog/2023-06-02
+cover: ./img.jpg
+excerpt: Generate images from text using OpenAI API in React Native.
+keywords:
+  - 開発
+  - コード
+  - code
+  - expo
+  - reactnative
+---
+import { Link } from 'gatsby';
+
+## Open AI APIで画像生成ができるようになっていました
+
+以前、<Link to="/blog/2021-11-25">Open AI APIの文章生成AIを利用した機能</Link>をReact Nativeアプリに実装しました。いつからかはわかりませんがOpen AI APIが画像生成にも対応していたのでReact Nativeから利用してみました。
+
+![](./img1.png)
+
+- [ソースコード](https://github.com/kiyohken2000/expo-ai-image-generator)
+
+<br/>
+
+## 実装方法
+
+### Step 1. 事前準備
+
+ベースとなるReact Native(Expo)プロジェクトを用意します。
+
+```
+expo init
+```
+
+で新規でプロジェクトを作成しても良いのですが、せっかくなので自分用に用意しておいた[ボイラープレート](https://github.com/kiyohken2000/ReactNativeExpoBoilerplate)を使用しました。
+
+まずはソースコードをダウンロードしてきて依存関係をインストールします。
+
+```
+yarn install
+```
+
+とりあえず起動してみます。
+
+```
+expo start
+```
+
+![](./img2.png)
+
+無事ボイラープレートを起動できました。
+
+### Step 2. APIキーの準備
+
+Open AI APIを使用するにはアカウントを作成してAPIキーを発行する必要があります。
+
+Open AIのダッシュボードにログインしてAPIキーを発行します。
+
+![](./img3.png)
+
+### Step 3. ライブラリのインストール
+
+必要なライブラリは2つです。
+
+- [openai](https://www.npmjs.com/package/openai)
+- [react-native-url-polyfill](https://www.npmjs.com/package/react-native-url-polyfill)
+
+<br/>
+
+インストールします。
+
+```
+yarn add openai
+```
+
+```
+yarn add react-native-url-polyfill
+```
+
+### Step 4. 画像生成画面の作成
+
+![](./img4.jpg)
+
+1. 画面下半分のテキスト入力エリアにプロンプトを入力
+2. 画面下の**Generate**ボタンを押して生成を開始
+3. 画像生成中はローディングを表示する
+4. 生成した画像を表示する
+
+以上の機能を持った画面を作っていきます。
+
+まずは画面のコード全体を書きます。
+
+**./src/scenes/home/Home.js**
+
+```javascript
+import React, { useState } from 'react'
+import { StyleSheet, Text, View, TextInput, Dimensions } from 'react-native'
+import Button from '../../components/Button'
+import { colors, fontSize } from '../../theme'
+import ScreenTemplate from '../../components/ScreenTemplate'
+import Spinner from 'react-native-loading-spinner-overlay'
+import AutoHeightImage from 'react-native-auto-height-image';
+import { Configuration, OpenAIApi } from "openai";
+import "react-native-url-polyfill/auto";
+import { apiKey } from '../../key'
+
+const { width } = Dimensions.get('window')
+
+export default function Home() {
+  const [text, setText] = useState('')
+  const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState('');
+  const configuration = new Configuration({apiKey});
+  const openai = new OpenAIApi(configuration);
+
+  const generateImage = async () => {
+    try {
+      setLoading(true);
+      const res = await openai.createImage({
+        prompt: text,
+        n: 1,
+        size: "512x512",
+      });
+      setResult(res.data.data[0].url);
+    } catch (error) {
+      console.error(`Error generating image: ${error}`);
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  return (
+    <ScreenTemplate>
+      <View style={styles.root}>
+        <View style={{flex: 3}}>
+          <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+          {result?
+            <AutoHeightImage
+              width={width * 0.9}
+              source={{ uri: result }}
+              defaultSource={require('../../../assets/images/logo-lg.png')}
+            />
+            :
+            <Text style={styles.text}>プロンプトを入力してボタンを押してください</Text>
+            }
+          </View>
+        </View>
+        <View style={{flex: 1, padding: 5}}>
+          <TextInput
+            style={styles.textInput}
+            onChangeText={(text) => setText(text)}
+            placeholder="Describe your idea"
+            placeholderTextColor={colors.graySecondary}
+            multiline={true}
+          />
+        </View>
+        <View style={styles.buttonContainer}>
+          <Button
+            label="Generate"
+            color={colors.lightPurple}
+            labelColor={colors.white}
+            disable={!text || text.length < 10}
+            onPress={generateImage}
+          />
+        </View>
+      </View>
+      <Spinner
+        visible={loading}
+        textStyle={{ color: colors.white }}
+        overlayColor="rgba(0,0,0,0.5)"
+      />
+    </ScreenTemplate>
+  )
+}
+
+const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+  },
+  textInput: {
+    backgroundColor: 'transparent',
+    color: colors.black,
+    padding: 5,
+    fontSize: fontSize.large,
+    borderWidth: 1,
+    borderColor: colors.bluePrimary,
+    flex: 1,
+    borderRadius: 5
+  },
+  buttonContainer: {
+    flex: 0.5,
+    paddingHorizontal: 5,
+    justifyContent: 'center'
+  },
+  image: {
+    width: 100,
+    height: 100,
+  },
+  text: {
+    color: colors.black,
+    fontSize: fontSize.large,
+    fontWeight: "bold",
+  },
+})
+```
+
+**必要なライブラリのインポート**
+
+```javascript
+import Spinner from 'react-native-loading-spinner-overlay'
+import AutoHeightImage from 'react-native-auto-height-image';
+import { Configuration, OpenAIApi } from "openai";
+import "react-native-url-polyfill/auto";
+```
+
+前のステップでインストールした`openai`と`react-native-url-polyfill`をインポートします。今回のテーマとは直接関係ありませんが、ローディングスピナーと画像表示用のライブラリもインストールして使用しています。
+
+**認証用オブジェクトの作成**
+
+```javascript
+const configuration = new Configuration({
+  apiKey: "YOUR API KEY HERE",
+});
+```
+
+前のステップで発行したAPIキーを使って認証用オブジェクトを作成します。`YOUR API KEY HERE`の部分を実際のAPIキーに書き換える必要があります。
+
+**Open AI APIオブジェクトの作成**
+
+```javascript
+const openai = new OpenAIApi(configuration);
+```
+
+作成した認証用オブジェクトを使用してOpenAI APIオブジェクトを作成します。
+
+**Stateの作成**
+
+```javascript
+const [text, setText] = useState('')
+const [loading, setLoading] = useState(false);
+const [result, setResult] = useState('');
+```
+
+入力プロンプト用の`text`、ローディング表示用の`loading`、APIから返ってきた画像URLをセットする`result`Stateを作成します。
+
+**画像生成関数の作成**
+
+```javascript
+const generateImage = async () => {
+  try {
+    setLoading(true);
+    const res = await openai.createImage({
+      prompt: text,
+      n: 1,
+      size: "512x512",
+    });
+    console.log(res.data)
+    setResult(res.data.data[0].url);
+  } catch (error) {
+    console.error(`Error generating image: ${error}`);
+  } finally {
+    setLoading(false);
+  }
+};
+```
+
+必要なパラメーターをAPIに渡す関数を作成します。
+
+`n`は生成画像の枚数です。1から10までを指定できます。`size`は生成する画像の解像度です。`256x256`, `512x512`, `1024x1024`を選択できます。
+
+```javascript
+console.log(res.data)
+```
+
+でレスポンスの中身を表示すると以下のようになっています。
+
+```
+n = 1の場合
+Object {
+  "created": 1685629477,
+  "data": Array [
+    Object {
+      "url": "https://oaidalleapiprodscus.blob.core.windows.net/private/org-Zj6MJGWIAiw3oKfgxkS956Od/user-8t4a3iC3GAA65zhfASIj8dS1/img-v9JtuYyhREw6s769R7nuTcVb.png?st=2023-06-01T13%3A24%3A37Z&se=2023-06-01T15%3A24%3A37Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2023-05-31T20%3A30%3A52Z&ske=2023-06-01T20%3A30%3A52Z&sks=b&skv=2021-08-06&sig=OA/Ar5hnOZhnK8J2U37ViW6sT1WMKj%2B4Xf5l%2BNJGsLs%3D",
+    },
+  ],
+}
+
+n = 2の場合
+Object {
+  "created": 1685629528,
+  "data": Array [
+    Object {
+      "url": "https://oaidalleapiprodscus.blob.core.windows.net/private/org-Zj6MJGWIAiw3oKfgxkS956Od/user-8t4a3iC3GAA65zhfASIj8dS1/img-nhkUAOBNxAuppAo6DKtogZXU.png?st=2023-06-01T13%3A25%3A28Z&se=2023-06-01T15%3A25%3A28Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2023-06-01T13%3A41%3A22Z&ske=2023-06-02T13%3A41%3A22Z&sks=b&skv=2021-08-06&sig=X5oDWRhlEFCdlhBABh/mkeqEzmZLNtF6lMDJf2oZwN0%3D",
+    },
+    Object {
+      "url": "https://oaidalleapiprodscus.blob.core.windows.net/private/org-Zj6MJGWIAiw3oKfgxkS956Od/user-8t4a3iC3GAA65zhfASIj8dS1/img-F5HsoUDxHbOtxUmxuauiWq3V.png?st=2023-06-01T13%3A25%3A28Z&se=2023-06-01T15%3A25%3A28Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2023-06-01T13%3A41%3A22Z&ske=2023-06-02T13%3A41%3A22Z&sks=b&skv=2021-08-06&sig=MJCozzyDfkor3T7IwozFNz%2BOIr7XZsy/zoBp8zFWzlE%3D",
+    },
+  ],
+}
+```
+
+こんな感じで配列形式で生成した画像のURLを受け取ることができます。
+
+今回は画像1枚で十分なので配列の先頭を指定して`result`にセットします。
+
+[公式ドキュメント](https://platform.openai.com/docs/api-reference/images/create)
+
+**UIの作成**
+
+```javascript
+const { width } = Dimensions.get('window')
+```
+
+```javascript
+<ScreenTemplate>
+  <View style={styles.root}>
+    <View style={{flex: 3}}>
+      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      {result?
+        <AutoHeightImage
+          width={width * 0.9}
+          source={{ uri: result }}
+          defaultSource={require('../../../assets/images/logo-lg.png')}
+        />
+        :
+        <Text style={styles.text}>プロンプトを入力してボタンを押してください</Text>
+        }
+      </View>
+    </View>
+    <View style={{flex: 1, padding: 5}}>
+      <TextInput
+        style={styles.textInput}
+        onChangeText={(text) => setText(text)}
+        placeholder="Describe your idea"
+        placeholderTextColor={colors.graySecondary}
+        multiline={true}
+      />
+    </View>
+    <View style={styles.buttonContainer}>
+      <Button
+        label="Generate"
+        color={colors.lightPurple}
+        labelColor={colors.white}
+        disable={!text || text.length < 10}
+        onPress={generateImage}
+      />
+    </View>
+  </View>
+  <Spinner
+    visible={loading}
+    textStyle={{ color: colors.white }}
+    overlayColor="rgba(0,0,0,0.5)"
+  />
+</ScreenTemplate>
+```
+
+```javascript
+const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+  },
+  textInput: {
+    backgroundColor: 'transparent',
+    color: colors.black,
+    padding: 5,
+    fontSize: fontSize.large,
+    borderWidth: 1,
+    borderColor: colors.bluePrimary,
+    flex: 1,
+    borderRadius: 5
+  },
+  buttonContainer: {
+    flex: 0.5,
+    paddingHorizontal: 5,
+    justifyContent: 'center'
+  },
+  image: {
+    width: 100,
+    height: 100,
+  },
+  text: {
+    color: colors.black,
+    fontSize: fontSize.large,
+    fontWeight: "bold",
+  },
+})
+```
+
+あとはいい感じにUIを記述します。
+
+## まとめ
+
+Open AI APIを使って非常に簡単に画像生成AIを使うことができました。React Nativeの場合は`react-native-url-polyfill`が必要なところがポイントです。
+
+---
