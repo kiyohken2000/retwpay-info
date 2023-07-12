@@ -1,0 +1,74 @@
+---
+title: React Nativeで文字列のサイズを調べる
+tags: [    ]
+date: 2023-07-13
+path: blog/2023-07-13
+cover: ./img.jpg
+excerpt: Measuring Strings Size in React Native.
+keywords:
+  - 開発
+  - コード
+  - code
+  - expo
+  - reactnative
+---
+import { Link } from 'gatsby';
+
+## iOSのプッシュ通知は4KBまでのメタデータしか送信できない
+
+React Nativeのアプリ運用中に、プッシュ通知が受け取れたり受け取れなかったりする現象に遭遇しました。特に送信するデータが大きい場合に発生するとのこと。調べたところiOSの最大ペイロードサイズは4096バイトまでということでした。
+
+```
+For all other remote notifications, the maximum payload size is 4 KB (4096 bytes).
+```
+
+[公式ドキュメント](https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/generating_a_remote_notification)
+
+## ペイロードのサイズを調べる
+
+というわけで、送信しようとしているデータのサイズを調べるコードを書いて確認しました。
+
+**与えられた文字列が何キロバイトかを調べる関数**
+
+```javascript
+const getKilobyteSize = ({str}) => {
+  const byteLength = new Blob([str]).size;
+  const kilobytes = (byteLength / 1024).toFixed(2);
+  return `${kilobytes}KB`;
+};
+```
+
+### 結果
+
+**文字列を与えた場合**
+
+```javascript
+const str = "Hello, こんにちは!";
+const kilobyteSize = getKilobyteSize({str: str});
+console.log({str, kilobyteSize}); // {"kilobyteSize": "0.02KB", "str": "Hello, こんにちは!"}
+```
+
+**オブジェクトを与えた場合**
+
+```javascript
+const obj = {
+  name: 'name1',
+  age: 15,
+}
+const kilobyteSize = getKilobyteSize({str: obj});
+console.log({obj, kilobyteSize}); // {"kilobyteSize": "0.01KB", "obj": {"age": 15, "name": "name1"}}
+```
+
+**配列を与えた場合**
+
+```javascript
+const array = ['name1', 'name2', 'name3']
+const kilobyteSize = getKilobyteSize({str: array});
+console.log({array, kilobyteSize}); // {"array": ["name1", "name2", "name3"], "kilobyteSize": "0.02KB"}
+```
+
+## まとめ
+
+文字列に限らず何でも測定できる模様。上述した不具合自体はやはり4KBを超えていたのが原因でした。余計なデータをペイロードに含めないようにして解決しました。
+
+---
