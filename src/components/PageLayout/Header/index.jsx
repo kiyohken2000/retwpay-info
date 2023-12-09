@@ -24,7 +24,7 @@ export default () => {
   return (
     <>
     <Helmet>
-    <meta property="og:image" content="https://retwpay.ml/avatar.jpg" />
+    <meta property="og:image" content="https://capsaicin.site/avatar.jpg" />
     </Helmet>
       <div className={style.circleMenu} role="button" tabIndex="0" onKeyDown={toggleMenu} onClick={toggleMenu}>
         <div className={`${style.hamburger} ${menu ? style.menuIcon : null}`}>

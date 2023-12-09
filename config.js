@@ -1,6 +1,6 @@
 module.exports = {
   pathPrefix: '',
-  siteUrl: 'https://retwpay.ml/',
+  siteUrl: 'https://capsaicin.site/',
   siteTitle: 't.shirakura blog',
   siteDescription: 't.shirakura tech blog',
   author: 'votepurchase',

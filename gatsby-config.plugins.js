@@ -13,7 +13,7 @@ module.exports = [
   {
     resolve: `gatsby-plugin-react-helmet-canonical-urls`,
     options: {
-      siteUrl: `https://retwpay.ml`,
+      siteUrl: `https://capsaicin.site`,
     },
   },
   {
@@ -200,7 +200,7 @@ module.exports = [
           `,
           output: '/rss.xml',
           title: `t.shirakura tech blog`,
-          site_url: `https://retwpay.ml/`,
+          site_url: `https://capsaicin.site`,
         },
       ],
     },
