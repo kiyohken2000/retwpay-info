@@ -1,0 +1,86 @@
+---
+title: ExpoでHTTP通信を許可する
+tags: [    ]
+date: 2024-04-04
+path: blog/2024-04-04
+cover: ./img.png
+excerpt: HTTP connection on Expo App.
+keywords:
+  - 開発
+  - コード
+  - code
+  - expo
+  - reactnative
+---
+import { Link } from 'gatsby';
+
+## HTTP通信を行う(HTTPSではなくHTTP)
+
+### Androidの場合
+
+Androidで**http**なリモート画像のロードやWebViewでURLを開く場合は`expo-build-properties`を使用します。
+
+```
+npx expo install expo-build-propertiesc
+```
+
+その後`app.json`に以下を追加します。
+
+```
+{
+  "expo": {
+    ...省略
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": true
+          }
+        }
+      ]
+    ]
+  }
+}
+```
+
+### iOSの場合
+
+これまではiOSでは特別な設定は必要なくhttpのURLをWebViewで開けていたのですが、Expo SDK 50にアップグレードしたところエラーが表示されるようになりました。
+
+下記のようなエラーが表示されます。
+
+```
+NSURLErrorDomain
+The resource could not be loaded because the App Transport Security policy requires the use of a secure connection.
+```
+
+iOSの場合はこのエラーを解消するために`app.json`の`infoPlist`に以下を追加します。
+
+```
+{
+  "expo": {
+    ...省略
+    "ios": {
+      "infoPlist": {
+        "NSAppTransportSecurity": {
+          "NSAllowsArbitraryLoads": false,
+          "NSExceptionDomains": {
+            "mydomain.jp": {
+              "NSExceptionAllowsInsecureHTTPLoads": true
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+`mydomain.jp`の部分はhttp通信を許可するドメインに置き換えます。
+
+## まとめ
+
+Expo GOアプリでの開発中はhttpリクエストのエラーは出ません。`eas build`して内部配布やストア配布を行った際に上記の設定を行わないとOSによってhttp通信をブロックされるようです。
+
+---
