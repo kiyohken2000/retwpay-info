@@ -1,0 +1,171 @@
+---
+title: React Native ExpoでApple Privacy Manifestsに対応する
+tags: [    ]
+date: 2024-04-17
+path: blog/2024-04-17
+cover: ./img.png
+excerpt: Apple Privacy Manifests.
+keywords:
+  - 開発
+  - コード
+  - code
+  - expo
+  - reactnative
+---
+import { Link } from 'gatsby';
+
+## Apple Privacy Manifests
+
+### 警告メール
+
+2024/03/13以降、Privacy Manifestsを記述していないアプリをApp Storeに提出した際に下記のメールが届くようになりました。
+
+```
+Hello,
+
+We noticed one or more issues with a recent submission for App Store review for the following app:
+
+ガチ有能AI助手
+Version 1.0.13
+Build 14
+Although submission for App Store review was successful, you may want to correct the following issues in your next submission for App Store review. Once you've corrected the issues, upload a new binary to App Store Connect.
+
+ITMS-91053: Missing API declaration - Your app’s code in the “AI” file references one or more APIs that require reasons, including the following API categories: NSPrivacyAccessedAPICategoryDiskSpace. While no action is required at this time, starting May 1, 2024, when you upload a new app or app update, you must include a NSPrivacyAccessedAPITypes array in your app’s privacy manifest to provide approved reasons for these APIs used by your app’s code. For more details about this policy, including a list of required reason APIs and approved reasons for usage, visit: https://developer.apple.com/documentation/bundleresources/privacy_manifest_files/describing_use_of_required_reason_api.
+
+ITMS-91053: Missing API declaration - Your app’s code in the “AI” file references one or more APIs that require reasons, including the following API categories: NSPrivacyAccessedAPICategoryFileTimestamp. While no action is required at this time, starting May 1, 2024, when you upload a new app or app update, you must include a NSPrivacyAccessedAPITypes array in your app’s privacy manifest to provide approved reasons for these APIs used by your app’s code. For more details about this policy, including a list of required reason APIs and approved reasons for usage, visit: https://developer.apple.com/documentation/bundleresources/privacy_manifest_files/describing_use_of_required_reason_api.
+
+ITMS-91053: Missing API declaration - Your app’s code in the “AI” file references one or more APIs that require reasons, including the following API categories: NSPrivacyAccessedAPICategorySystemBootTime. While no action is required at this time, starting May 1, 2024, when you upload a new app or app update, you must include a NSPrivacyAccessedAPITypes array in your app’s privacy manifest to provide approved reasons for these APIs used by your app’s code. For more details about this policy, including a list of required reason APIs and approved reasons for usage, visit: https://developer.apple.com/documentation/bundleresources/privacy_manifest_files/describing_use_of_required_reason_api.
+
+ITMS-91053: Missing API declaration - Your app’s code in the “AI” file references one or more APIs that require reasons, including the following API categories: NSPrivacyAccessedAPICategoryUserDefaults. While no action is required at this time, starting May 1, 2024, when you upload a new app or app update, you must include a NSPrivacyAccessedAPITypes array in your app’s privacy manifest to provide approved reasons for these APIs used by your app’s code. For more details about this policy, including a list of required reason APIs and approved reasons for usage, visit: https://developer.apple.com/documentation/bundleresources/privacy_manifest_files/describing_use_of_required_reason_api.
+
+Apple Developer Relations
+```
+
+Appleの周知によるとPrivacy Manifests未記載の場合は2024/05/01以降の提出ではリジェクトされるとのこと。
+
+- [App Storeへの提出におけるプライバシー要件のアップデート](https://developer.apple.com/jp/news/?id=3d8a9yyh)
+
+<br/>
+
+## Expoの対応
+
+Expoでは2024/04/17に公開された**expoのバージョン50.0.17**においてPrivacy Manifestsに対応されています。
+
+- [Expo app.json Apple Privacy Manifest](https://gist.github.com/catalinmiron/d2cabb835088d0342bc48030464ee615)
+
+<br/>
+
+こんな感じで`app.json`に記述します。
+
+```
+{
+  "expo": {
+    "scheme": "your_scheme",
+    ...
+    "plugins": [...],
+    "ios": {
+      ...
+      "privacyManifests": {
+        "NSPrivacyAccessedAPITypes": [
+          {
+            "NSPrivacyAccessedAPIType": "NSPrivacyAccessedAPICategoryFileTimestamp",
+            "NSPrivacyAccessedAPITypeReasons": [
+              "C617.1"
+            ]
+          },
+          {
+            "NSPrivacyAccessedAPIType": "NSPrivacyAccessedAPICategorySystemBootTime",
+            "NSPrivacyAccessedAPITypeReasons": [
+              "35F9.1"
+            ]
+          },
+          {
+            "NSPrivacyAccessedAPIType": "NSPrivacyAccessedAPICategoryDiskSpace",
+            "NSPrivacyAccessedAPITypeReasons": [
+              "E174.1"
+            ]
+          },
+          {
+            "NSPrivacyAccessedAPIType": "NSPrivacyAccessedAPICategoryUserDefaults",
+            "NSPrivacyAccessedAPITypeReasons": [
+              "CA92.1"
+            ]
+          }
+        ]
+      }
+    },
+    "android": {
+      ...
+    },
+  }
+}
+```
+
+## NSPrivacyAccessedAPITypeReasons
+
+`NSPrivacyAccessedAPITypeReasons`の内容は[公式ページ](https://developer.apple.com/documentation/bundleresources/privacy_manifest_files/describing_use_of_required_reason_api)にまとめられています。
+
+以下は内容とそれをGoogle翻訳したものです。
+
+### NSPrivacyAccessedAPICategoryFileTimestamp
+
+- DDA9.1
+  - Declare this reason to display file timestamps to the person using the device. Information accessed for this reason, or any derived information, may not be sent off-device.
+  - デバイスを使用している人にファイルのタイムスタンプを表示するには、この理由を宣言します。 この理由でアクセスされた情報、または派生した情報は、デバイス外に送信することはできません。
+- C617.1
+  - Declare this reason to access the timestamps, size, or other metadata of files inside the app container, app group container, or the app’s CloudKit container.
+  - アプリ コンテナ、アプリ グループ コンテナ、またはアプリの CloudKit コンテナ内のファイルのタイムスタンプ、サイズ、またはその他のメタデータにアクセスするには、この理由を宣言します。
+- 3B52.1
+  - Declare this reason to access the timestamps, size, or other metadata of files or directories that the user specifically granted access to, such as using a document picker view controller.
+  - ドキュメント ピッカー ビュー コントローラーを使用するなど、ユーザーが特別にアクセスを許可したファイルまたはディレクトリのタイムスタンプ、サイズ、またはその他のメタデータにアクセスするには、この理由を宣言します。
+- 0A2A.1
+  - Declare this reason if your third-party SDK is providing a wrapper function around file timestamp API(s) for the app to use, and you only access the file timestamp APIs when the app calls your wrapper function. This reason may only be declared by third-party SDKs. This reason may not be declared if your third-party SDK was created primarily to wrap required reason API(s).Information accessed for this reason, or any derived information, may not be used for your third-party SDK’s own purposes or sent off-device by your third-party SDK.
+  - サードパーティ SDK がアプリが使用するファイル タイムスタンプ API のラッパー関数を提供しており、アプリがラッパー関数を呼び出すときにのみファイル タイムスタンプ API にアクセスする場合は、この理由を宣言します。 この理由は、サードパーティ SDK によってのみ宣言される場合があります。 サードパーティ SDK が主に必要な理由 API をラップするために作成された場合、この理由は宣言されない場合があります。この理由でアクセスされた情報、または派生情報は、サードパーティ SDK 自体の目的に使用したり送信したりすることはできません。 -サードパーティ SDK によるデバイス。
+
+### NSPrivacyAccessedAPICategorySystemBootTime
+
+- 35F9.1
+  - Declare this reason to access the system boot time in order to measure the amount of time that has elapsed between events that occurred within the app or to perform calculations to enable timers.Information accessed for this reason, or any derived information, may not be sent off-device. There is an exception for information about the amount of time that has elapsed between events that occurred within the app, which may be sent off-device.
+  - アプリ内で発生したイベント間の経過時間を測定するため、またはタイマーを有効にするための計算を実行するために、システムの起動時間にアクセスするためにこの理由を宣言します。この理由でアクセスされた情報、または派生した情報は送信されない場合があります。 オフデバイス。 アプリ内で発生したイベント間の経過時間に関する情報には例外があり、デバイス外に送信される場合があります。
+- 8FFB.1
+  - Declare this reason to access the system boot time to calculate absolute timestamps for events that occurred within your app, such as events related to the UIKit or AVFAudio frameworks. Absolute timestamps for events that occurred within your app may be sent off-device. System boot time accessed for this reason, or any other information derived from system boot time, may not be sent off-device.
+  - UIKit または AVFAudio フレームワークに関連するイベントなど、アプリ内で発生したイベントの絶対タイムスタンプを計算するためにシステムの起動時間にアクセスするこの理由を宣言します。 アプリ内で発生したイベントの絶対タイムスタンプがデバイス外に送信される場合があります。 この理由でアクセスされたシステム起動時間、またはシステム起動時間から得られるその他の情報は、デバイス外に送信されない場合があります。
+- 3D61.1
+  - Declare this reason to include system boot time information in an optional bug report that the person using the device chooses to submit. The system boot time information must be prominently displayed to the person as part of the report. Information accessed for this reason, or any derived information, may be sent off-device only after the user affirmatively chooses to submit the specific bug report including system boot time information, and only for the purpose of investigating or responding to the bug report.
+  - デバイスの使用者が送信することを選択したオプションのバグ レポートにシステム起動時間の情報を含めるには、この理由を宣言します。 システムの起動時間の情報は、レポートの一部として目立つように表示される必要があります。 この理由でアクセスされた情報、または派生した情報は、ユーザーがシステム起動時間情報を含む特定のバグ レポートを送信することを積極的に選択した場合に限り、バグ レポートの調査または対応を目的としてのみ、デバイス外に送信される場合があります。
+
+### NSPrivacyAccessedAPICategoryDiskSpace
+
+- 85F4.1
+  - Declare this reason to display disk space information to the person using the device. Disk space may be displayed in units of information (such as bytes) or units of time combined with a media type (such as minutes of HD video). Information accessed for this reason, or any derived information, may not be sent off-device. There is an exception that allows the app to send disk space information over the local network to another device operated by the same person only for the purpose of displaying disk space information on that device; this exception only applies if the user has provided explicit permission to send disk space information, and the information may not be sent over the Internet.
+  - デバイスの使用者にディスク容量情報を表示するには、この理由を宣言します。 ディスク容量は、情報単位 (バイトなど) またはメディア タイプと組み合わせた時間単位 (HD ビデオの分単位など) で表示されます。 この理由でアクセスされた情報、または派生した情報は、デバイス外に送信することはできません。 例外として、アプリは、そのデバイス上のディスク容量情報を表示する目的にのみ、ローカル ネットワークを介して、同じ人が操作する別のデバイスにディスク容量情報を送信できます。 この例外は、ユーザーがディスク容量情報の送信を明示的に許可した場合にのみ適用され、情報はインターネット経由で送信できません。
+- E174.1
+  - Declare this reason to check whether there is sufficient disk space to write files, or to check whether the disk space is low so that the app can delete files when the disk space is low. The app must behave differently based on disk space in a way that is observable to users. Information accessed for this reason, or any derived information, may not be sent off-device. There is an exception that allows the app to avoid downloading files from a server when disk space is insufficient.
+  - ファイルを書き込むのに十分なディスク領域があるかどうかを確認するため、またはディスク領域が不足しているときにアプリがファイルを削除できるようにディスク領域が不足しているかどうかを確認するために、この理由を宣言します。 アプリは、ユーザーが確認できる方法で、ディスク容量に基づいて異なる動作を行う必要があります。 この理由でアクセスされた情報、または派生した情報は、デバイス外に送信することはできません。 ディスク容量が不十分な場合、アプリがサーバーからのファイルのダウンロードを回避できる例外があります。
+- 7D9E.1
+  - Declare this reason to include disk space information in an optional bug report that the person using the device chooses to submit. The disk space information must be prominently displayed to the person as part of the report. Information accessed for this reason, or any derived information, may be sent off-device only after the user affirmatively chooses to submit the specific bug report including disk space information, and only for the purpose of investigating or responding to the bug report.
+  - デバイスの使用者が送信することを選択したオプションのバグ レポートにディスク容量情報を含めるには、この理由を宣言します。 ディスク容量情報は、レポートの一部としてユーザーに目立つように表示する必要があります。 この理由でアクセスされた情報、または派生した情報は、ユーザーがディスク容量情報を含む特定のバグ レポートを送信することを積極的に選択した場合に限り、バグ レポートの調査または対応を目的としてのみ、デバイス外に送信される場合があります。
+- B728.1
+  - Declare this reason if your app is a health research app, and you access this API category to detect and inform research participants about low disk space impacting the research data collection. Your app must comply with App Store Review Guideline §5.1.3. Your app must not offer any functionality other than providing information about and allowing people to participate in health research.
+  - アプリが健康調査アプリであり、調査データ収集に影響を与えるディスク容量不足を検出して調査参加者に通知するためにこの API カテゴリにアクセスする場合は、この理由を宣言します。 アプリは App Store レビュー ガイドライン §5.1.3 に準拠する必要があります。 アプリは、健康研究に関する情報を提供し、人々が健康研究に参加できるようにすること以外の機能を提供してはなりません。
+
+### NSPrivacyAccessedAPICategoryUserDefaults
+
+- CA92.1
+  - Declare this reason to access user defaults to read and write information that is only accessible to the app itself. This reason does not permit reading information that was written by other apps or the system, or writing information that can be accessed by other apps.
+  - ユーザーのデフォルトにアクセスして、アプリ自体のみがアクセスできる情報の読み取りおよび書き込みを行うこの理由を宣言します。 このため、他のアプリやシステムによって書き込まれた情報の読み取り、または他のアプリからアクセスできる情報の書き込みは許可されません。
+- 1C8F.1
+  - Declare this reason to access user defaults to read and write information that is only accessible to the apps, app extensions, and App Clips that are members of the same App Group as the app itself. This reason does not permit reading information that was written by apps, app extensions, or App Clips outside the same App Group or by the system. Your app is not responsible if the system provides information from the global domain because a key is not present in your requested domain while your app is attempting to read information that apps, app extensions, or App Clips in your app’s App Group write. This reason also does not permit writing information that can be accessed by apps, app extensions, or App Clips outside the same App Group.
+  - ユーザーのデフォルトにアクセスするこの理由を宣言して、アプリ自体と同じアプリ グループのメンバーであるアプリ、アプリ拡張機能、およびアプリ クリップにのみアクセスできる情報を読み書きします。 このため、同じアプリ グループ外のアプリ、アプリ拡張機能、またはアプリ クリップによって、またはシステムによって書き込まれた情報を読み取ることはできません。 アプリ、アプリ拡張機能、またはアプリのアプリ グループ内のアプリ クリップが書き込む情報をアプリが読み取ろうとしているときに、要求されたドメインにキーが存在しないため、システムがグローバル ドメインから情報を提供した場合、アプリは責任を負いません。 この理由により、同じアプリ グループ外のアプリ、アプリ拡張機能、または App Clip からアクセスできる情報を書き込むこともできません。
+- C56D.1
+  - Declare this reason if your third-party SDK is providing a wrapper function around user defaults API(s) for the app to use, and you only access the user defaults APIs when the app calls your wrapper function. This reason may only be declared by third-party SDKs. This reason may not be declared if your third-party SDK was created primarily to wrap required reason API(s). Information accessed for this reason, or any derived information, may not be used for your third-party SDK’s own purposes or sent off-device by your third-party SDK.
+  - サードパーティ SDK がアプリで使用するユーザー デフォルト API のラッパー関数を提供しており、アプリがラッパー関数を呼び出すときにのみユーザー デフォルト API にアクセスする場合は、この理由を宣言します。 この理由は、サードパーティ SDK によってのみ宣言される場合があります。 サードパーティ SDK が主に必要な理由 API をラップするために作成された場合、この理由は宣言されない可能性があります。 この理由でアクセスされた情報、または派生した情報は、サードパーティ SDK 自体の目的に使用したり、サードパーティ SDK によってデバイス外に送信したりすることはできません。
+- AC6B.1
+  - Declare this reason to access user defaults to read the com.apple.configuration.managed key to retrieve the managed app configuration set by MDM, or to set the com.apple.feedback.managed key to store feedback information to be queried over MDM, as described in the Apple Mobile Device Management Protocol Reference documentation.
+  - この理由を宣言して、ユーザーのデフォルトにアクセスして com.apple.configuration.managed キーを読み取り、MDM によって設定されたマネージド アプリの構成を取得するか、または com.apple.フィードバック.managed キーを設定して MDM 経由でクエリされるフィードバック情報を保存します。 Apple Mobile Device Management Protocol Reference ドキュメントで説明されているとおりです。
+
+## まとめ
+
+早速[ガチ有能AI助手](https://apps.apple.com/jp/app/id6474574029)の`app.json`に`privacyManifests`を記述したところ、App Storeに提出しても警告メールが届かなくなりました。
+
+---
