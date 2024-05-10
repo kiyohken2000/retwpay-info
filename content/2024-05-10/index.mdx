@@ -37,7 +37,7 @@ import { Link } from 'gatsby';
 
 ## 機能の説明
 
-まずは動画生成機能の使い方を紹介します。動画で見たい方は[YouTube](https://youtu.be/I4YRV8o10hw)に使い方動画をアップロードしていますのでご覧ください。
+まずは画像生成機能の使い方を紹介します。動画で見たい方は[YouTube](https://youtu.be/I4YRV8o10hw)に使い方動画をアップロードしていますのでご覧ください。
 
 ### プロンプト作成機能
 
@@ -65,7 +65,7 @@ import { Link } from 'gatsby';
 
 ![](./img2.jpg)
 
-プロンプト中の**rating**を**safe**としていますが、**explicit**に変更することでRealistic Vision以外のモデルではR18画像が生成されます。ご興味がありましたらご自身でお試しください。Realistic Visionではセンシティブな画像は黒塗りになります。
+プロンプト中の**rating**を**safe**としていますが、**explicit**に変更することでRealistic Vision以外のモデルではR18画像が生成されます。ご興味がありましたらご自身でお試しください。Realistic Visionではセンシティブな画像は黒塗りになります。あと版権キャラも出ます。
 
 また、鉛筆アイコンの中の**画像生成設定**を選択すると各モデルごとのネガティブプロンプトを設定できます。手入力もできますが、黄色い星アイコンをタップして推奨ネガティブプロンプトを入力することもできます。
 
@@ -89,6 +89,10 @@ import { Link } from 'gatsby';
 ![左からAnimagine、Pony Diffusion、PVC、ChilloutMix。同じプロンプトでもモデルによって違う結果になることがわかる](./img3.jpg)
 
 ここまでが画像生成機能の使い方の紹介となります。
+
+あと、プロンプトに入力すると版権キャラも出ます。
+
+![](./img8.jpg)
 
 ## Huggingface Inference API serverless
 
