@@ -14,7 +14,7 @@ import { Link } from 'gatsby';
 
 const { Content } = Layout;
 const {
-  facebook, github, instagram, twitter,
+  facebook, github, instagram, twitter, youtube,
 } = Config.social;
 
 const DomContent = () => (
@@ -32,6 +32,7 @@ const DomContent = () => (
       <div className="centerAlign box">
         <a href={twitter} target="_blank" label="button" rel="noopener noreferrer"><FA name="twitter" /></a>
         <a href={github} target="_blank" label="button" rel="noopener noreferrer"><FA name="github" /></a>
+        <a href={youtube} target="_blank" label="button" rel="noopener noreferrer"><FA name="youtube" /></a>
       </div>
       <ul className={`box ${style.badge} contactBlock`}>
         <li className={`${style.contactBlockItem}`}>
