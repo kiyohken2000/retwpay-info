@@ -1,0 +1,65 @@
+---
+title: Expo 52が公開されました
+tags: [    ]
+date: 2024-11-13
+path: blog/2024-11-13
+cover: ./img.png
+excerpt: Expo 52 is available.
+keywords:
+  - 開発
+  - コード
+  - code
+  - react native
+  - expo
+---
+import { Link } from 'gatsby';
+
+## Expo SDK 52
+
+Expo SDK 52が公開されました。
+
+- [Expo SDK 52](https://expo.dev/changelog/2024/11-12-sdk-52)
+
+<br/>
+
+詳しい説明は公式のブログポストを参照いただくとして、ハイライトは
+
+- React Navigation v7のサポート
+- New Architectureのサポート
+
+<br/>
+
+といったところでしょうか。
+
+## アップグレード方法
+
+いつも通り[自分のボイラープレート](https://github.com/kiyohken2000/ReactNative-Expo-Firebase-Boilerplate-v2)をアップグレードしてみます。
+
+まずはeas-cliの更新
+
+```
+npm install -g eas-cli
+```
+
+expoの更新
+
+```
+yarn add expo
+```
+
+関連ライブラリの更新
+
+```
+npx expo install --fix
+```
+
+`React Native Skia`の新バージョンがnode version 18.17.0に対応してなかったのnode20系に切り替えました。
+
+## アップグレードした結果
+
+特に大きな問題はありませんでしたが私の場合は以下の修正が必要でした。
+
+- `expo-barcode-scanner`が使えなくなったため、`expo-camera`を使うように変更
+- `zIndex: -1`に設定したコンポーネントが非表示になったため正の整数で重なり合いを調整(`zIndex: -1`にしていたコンポーネントを`zIndex: 1`に、上にかぶせたいコンポーネントを`zIndex: 2`にするなど)
+
+---
