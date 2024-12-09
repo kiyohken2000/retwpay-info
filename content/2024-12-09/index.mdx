@@ -1,0 +1,36 @@
+---
+title: ガチ有能AI助手画像ビューアー
+tags: [    ]
+date: 2024-12-09
+path: blog/2024-12-09
+cover: ./img.png
+excerpt: Gachi AI Viewer
+keywords:
+  - 開発
+  - コード
+  - code
+  - react native
+  - expo
+---
+import { Link } from 'gatsby';
+
+## ガチ有能AI助手画像ビューアー
+
+初回リリースからそろそろ1年が経つガチ有能AI助手ですが、アプリ内で生成した画像はすべて自動的にアップロードされるようにしています。生成された画像は[ガチ有能AI助手画像ビューアー](https://gachiai.xyz)にて一覧ができます。生成された画像とともに、使用したモデル、プロンプトを確認することもできます。
+
+**NSFW画像が大量にあるので閲覧にはご注意ください**
+
+## 使用技術
+
+- Firebase Hosting
+- Firebase Firestore
+- XServerドメイン
+- Algolia
+- React
+- React Native for Web
+
+<br/>
+
+プロンプトを検索する機能を実装したかったのでAlgoliaも使ってみました。検索ワードが入力されるたびに検索クエリを投げるようにしているので結構課金が発生しています。費用を度外視すればAlgoliaは便利でした。
+
+---
