@@ -1,0 +1,186 @@
+---
+title: useEffectでありがちなミスと回避策
+tags: [    ]
+date: 2025-01-16
+path: blog/2025-01-16
+cover: ./img.png
+excerpt: Avoiding unnecessary re-renders in React.
+keywords:
+  - 開発
+  - コード
+  - code
+  - react native
+  - expo
+---
+import { Link } from 'gatsby';
+
+## 例1
+
+**ダメな例**
+
+```javascript
+// 🔴 Can we guarantee the last request will set the response?
+function RaceConditionExample() {
+  const [counter, setCounter] = useState(0);
+  const [response, setResponse] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const request = async (requestId) => {
+      setIsLoading(true);
+      await sleep(Math.random() * 3000);
+      setResponse(requestId);
+      setIsLoading(false);
+    };
+    request(counter);
+  }, [counter]);
+
+  const handleClick = () => {
+    setCounter((prev) => ++prev);
+  };
+
+  return <>//....
+      <button onClick={handleClick}>Increment</button> //...
+    </>;
+}
+```
+
+
+**良い例**
+
+```javascript
+// ✅ Handling the racing condition by clean-up function
+useEffect(() => {
+  let ignore = false;
+  const request = async (requestId) => {
+    setIsLoading(true);
+    await sleep(Math.random() * 3000);
+    if (!ignore) {
+      setResponse(requestId);
+      setIsLoading(false);
+    }
+  };
+  request(counter);
+
+  return () => {
+    ignore = true;
+  };
+}, [counter]);
+```
+
+## 例2
+
+**ダメな例**
+
+```javascript
+function Parent() {
+  const [someState, setSomeState] = useState();
+  return <Child onChange={(...) => setSomeState(...)} />
+}
+
+function Child({ onChange }) {
+  const [isOn, setIsOn] = useState(false);
+
+  useEffect(() => {
+    // 🚨 Will trigger an extra render
+    onChange(isOn);
+  }, [isOn, onChange]);
+
+  function handleClick() {
+    // Will trigger the first render after clicking
+    setIsOn(!isOn);
+  }
+
+  return <button onClick={handleClick}>Toggle</button>;
+}
+```
+
+**良い例**
+
+```javascript
+function Parent() {
+  const [someState, setSomeState] = useState();
+  return <Child onChange={(...) => setSomeState(...)} />
+}
+
+function Child({ onChange }) {
+  const [isOn, setIsOn] = useState(false);
+
+  // ✅ Good: Perform all updates during the event that caused them
+  function handleClick() {
+    const newValue = !isOn;
+    setIsOn(newValue);
+    onChange(newValue);
+  }
+
+  return <button onClick={handleClick}>Toggle</button>;
+}
+```
+
+## 例3
+
+**ダメな例**
+
+```javascript
+function Parent() {
+  const [data, setData] = useState(null);
+  
+  return <Child onFetched={setData} />;
+}
+
+// 🔴 Avoid: Passing data to the parent in an Effect
+function Child({ onFetched }) {
+  const data = useFetchData();
+
+  useEffect(() => {
+    if (data) {
+      // 🇮🇹 Making spaghetti? 
+      onFetched(data);
+    }
+  }, [onFetched, data]);
+
+  return <>{JSON.stringify(data)}</>;
+}
+```
+
+**良い例1**
+
+```javascript
+// Suggetion #1 - pass fetch logic to higer component
+function Parent() {
+  const data = useFetchData();
+
+  // ✅ Good: Passing data down to the child
+  return <Child data={data} />;
+}
+
+function Child({ data }) {
+  return <>{JSON.stringify(data)}</>;
+}
+```
+
+**良い例2**
+
+```javascript
+// Suggetion #2 - pass onSuccess/onError handlers to the children component
+function Parent() {
+  function handleSuccess = (data) => { 
+      // some logic
+  }
+  function handleError = (error) => { 
+      // some logic
+      toast(error.messasge)
+  }
+  // ✅ Good: Passing data down to the child
+  return <Child onSuccess={handleSuccess} onError={handleError} />;
+}
+
+function Child({ onSuccess, onError }) {
+  // ✅ Good:The hook invoke the handler on done, no other effects involved
+  const mutate = useMutateData({ onSuccess, onError }); 
+
+  return ...;
+}
+```
+
+---
