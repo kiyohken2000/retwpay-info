@@ -73,6 +73,8 @@
     "react-dom": "^16.14.0"
   },
   "devDependencies": {
+    "@types/react": "^16.14.0",
+    "@types/react-dom": "^16.9.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-loader": "^2.2.1",
