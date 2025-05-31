@@ -3,9 +3,6 @@ import { Layout, Row, Col } from 'antd';
 import Header from '../../components/PageLayout/Header';
 import SidebarWrapper from '../../components/PageLayout/Sidebar';
 import SEO from '../../components/Seo';
-import Intro from '../../components/Intro';
-import BuyRequest from '../../components/requestbuy';
-import BuyProfile from '../../components/buyprofile';
 
 const Buy = () => (
   <Layout className="outerPadding">
@@ -25,7 +22,6 @@ const Buy = () => (
           <details>
             <summary><b>はじめに</b></summary>
             <br/>
-              <Intro />
             </details>
           <h3>リツイートの買い方には二通りの方法があります</h3>
           <ol>
@@ -33,7 +29,6 @@ const Buy = () => (
               <details>
                 <summary><b>リツイートを売りたいユーザーのリストからRTを依頼する</b></summary>
                 <br/>
-                  <BuyRequest />
               </details>
             </li>
 
@@ -41,7 +36,6 @@ const Buy = () => (
               <details>
                 <summary><b>プロフィールを作ってRTを売りたいユーザーからの請負連絡を待つ</b></summary>
                 <br/>
-                  <BuyProfile />
                 </details>
             </li>
           </ol>

@@ -3,9 +3,6 @@ import { Layout, Row, Col } from 'antd';
 import Header from '../../components/PageLayout/Header';
 import SidebarWrapper from '../../components/PageLayout/Sidebar';
 import SEO from '../../components/Seo';
-import Intro from '../../components/Intro';
-import SellRequest from '../../components/requestsell';
-import SellProfile from '../../components/sellprofile';
 
 const Sell = () => (
   <Layout className="outerPadding">
@@ -24,7 +21,6 @@ const Sell = () => (
       <details>
           <summary><b>はじめに</b></summary>
           <br/>
-            <Intro />
         </details>
       <div className="marginTopTitle">
           <h3>リツイートの売り方には二通りの方法があります</h3>
@@ -33,7 +29,6 @@ const Sell = () => (
               <details>
                 <summary><b>リツイートを買いたいユーザーのリストからRTの請負を伝える</b></summary>
                 <br/>
-                  <SellRequest />
               </details>
             </li>
 
@@ -41,7 +36,6 @@ const Sell = () => (
               <details>
                 <summary><b>プロフィールを作ってRTを買いたいユーザーからの依頼を待つ</b></summary>
                 <br/>
-                  <SellProfile />
               </details>
             </li>
           </ol>
