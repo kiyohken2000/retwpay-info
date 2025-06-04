@@ -132,6 +132,7 @@ module.exports = [
       javascriptEnabled: true,
     },
   },
+  /*
   {
     resolve: 'gatsby-plugin-eslint-v2',
     options: {
@@ -144,6 +145,7 @@ module.exports = [
       },
     },
   },
+  */
   {
     resolve: 'gatsby-plugin-google-gtag',
       options: {
