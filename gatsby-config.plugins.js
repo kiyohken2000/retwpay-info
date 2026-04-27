@@ -30,7 +30,7 @@ module.exports = [
   'gatsby-transformer-sharp',
   'gatsby-plugin-sharp',
   'gatsby-plugin-less',
-  'gatsby-plugin-offline',
+  //'gatsby-plugin-offline',
   {
     resolve: 'gatsby-source-filesystem',
     options: {
