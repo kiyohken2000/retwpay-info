@@ -14,7 +14,6 @@ const SearchResult = props => {
     allMdx( sort: { fields: [frontmatter___date], order: DESC } ) {
       edges {
         node {
-          body
               frontmatter {
                 date(formatString: "YYYY-MM-DD")
                 title

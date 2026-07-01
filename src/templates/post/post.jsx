@@ -82,30 +82,6 @@ export const pageQuery = graphql`
         }
       }
     }
-    allMdx(
-      filter: {
-        frontmatter: { path: { ne: $postPath } }
-        fileAbsolutePath: { regex: "/index.mdx/" }
-      }
-    ) {
-      edges {
-        node {
-          frontmatter {
-            path
-            title
-            tags
-            excerpt
-            cover {
-              childImageSharp {
-                fluid(maxWidth: 600) {
-                  ...GatsbyImageSharpFluid_tracedSVG
-                }
-              }
-            }
-          }
-        }
-      }
-    }
   }
 `;
 
