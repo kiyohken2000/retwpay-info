@@ -17,6 +17,7 @@
     "start": "npm run develop",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
+    "deploy": "gatsby build && wrangler pages deploy public --project-name=retwpay-info",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
   },
   "dependencies": {
@@ -87,7 +88,8 @@
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "prettier": "^1.19.1",
-    "webpack": "^4.44.2"
+    "webpack": "^4.44.2",
+    "wrangler": "^4.106.0"
   },
   "repository": {
     "type": "git",
