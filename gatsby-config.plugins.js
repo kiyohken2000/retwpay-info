@@ -77,21 +77,6 @@ module.exports = [
                   rel: "nofollow"
                 },
             },
-            {
-              resolve: "gatsby-remark-embed-video",
-              options: {
-                width: 650,
-                ratio: 1.77,
-                related: true,
-                noIframeBorder: false,
-                urlOverrides: [
-                  {
-                    id: 'youtube',
-                    embedURL: (videoId) => `https://www.youtube-nocookie.com/embed/${videoId}`,
-                  }
-                ]
-              }
-            },
             'gatsby-remark-prismjs',
         ],
     },
