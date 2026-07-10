@@ -2,7 +2,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
-import { StaticQuery, graphql } from 'gatsby';
+import { useStaticQuery, graphql } from 'gatsby';
+import { getSrc } from 'gatsby-plugin-image';
 /* App imports */
 import Config from '../../../config';
 import Utils from '../../utils/pageUtils';
@@ -11,9 +12,7 @@ const detailsQuery = graphql`
   query DefaultSEOQuery {
     file(name: { eq: "Icon-256" }) {
       childImageSharp {
-        fixed(width: 600) {
-          ...GatsbyImageSharpFixed_noBase64
-        }
+        gatsbyImageData(width: 600, layout: FIXED, placeholder: NONE)
       }
     }
   }
@@ -30,25 +29,22 @@ function SEO({
   translations,
   meta,
 }) {
-  return (
-    <StaticQuery
-      query={detailsQuery}
-      render={(data) => {
-        const metaKeywords = keywords && keywords.length > 0
-          ? { name: 'keywords', content: keywords.join(', ') }
-          : [];
-        const pageUrl = Utils.resolvePageUrl(
-          Config.siteUrl,
-          Config.pathPrefix,
-          path,
-        );
-        const metaImageUrl = Utils.resolveUrl(
-          Config.siteUrl,
-          imageUrl || data.file.childImageSharp.fixed.src,
-        );
+  const data = useStaticQuery(detailsQuery);
+  const metaKeywords = keywords && keywords.length > 0
+    ? { name: 'keywords', content: keywords.join(', ') }
+    : [];
+  const pageUrl = Utils.resolvePageUrl(
+    Config.siteUrl,
+    Config.pathPrefix,
+    path,
+  );
+  const metaImageUrl = Utils.resolveUrl(
+    Config.siteUrl,
+    imageUrl || getSrc(data.file),
+  );
 
-        return (
-          <Helmet
+  return (
+    <Helmet
             title={title} // Page title
             titleTemplate={`%s | ${Config.siteTitle}`}
             meta={
@@ -92,9 +88,6 @@ function SEO({
                   }))
                   : [],
               )}
-          />
-        );
-      }}
     />
   );
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import { graphql, useStaticQuery } from 'gatsby'
-import Typography from '@material-ui/core/Typography'
-import Grid from '@material-ui/core/Grid'
+import Typography from '@mui/material/Typography'
+import Grid from '@mui/material/Grid'
 
 const Footer = () => {
   const data = useStaticQuery(graphql`
@@ -21,8 +21,8 @@ const Footer = () => {
   return (
     <div>
     <p/>
-      <Grid container justify="center">
-        <Typography variant="caption" color='textPrimary'>Powered by {gatsby}, {reactnative} and {firebase} ❤️ {date}</Typography>
+      <Grid container justifyContent="center">
+        <Typography variant="caption" color='text.primary'>Powered by {gatsby}, {reactnative} and {firebase} ❤️ {date}</Typography>
       </Grid>
     </div>
   )

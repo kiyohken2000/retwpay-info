@@ -1,7 +1,7 @@
 import React from 'react'
 import Config from '../../../config'
-import Typography from '@material-ui/core/Typography'
-import Grid from '@material-ui/core/Grid'
+import Typography from '@mui/material/Typography'
+import Grid from '@mui/material/Grid'
 
 import {
     FacebookShareButton,
@@ -22,10 +22,10 @@ const Share = ({ title, path }) => {
   const round = true
   return (
     <div>
-      <Grid container justify="flex-end">
-        <Typography variant="h6" color='textPrimary'>この記事を共有</Typography>
+      <Grid container justifyContent="flex-end">
+        <Typography variant="h6" color='text.primary'>この記事を共有</Typography>
       </Grid>
-      <Grid container justify="flex-end">
+      <Grid container justifyContent="flex-end">
       <Grid item>
         <TwitterShareButton title={title} url={postUrl}>
           <TwitterIcon size={iconSize} round={round} />

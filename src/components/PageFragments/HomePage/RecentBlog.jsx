@@ -1,21 +1,22 @@
 import React from 'react'
 import { Link, graphql, useStaticQuery } from 'gatsby'
-import Grid from '@material-ui/core/Grid'
-import Button from '@material-ui/core/Button'
-import style from '../../PostCard/postCard.module.less'
+import { getSrc } from 'gatsby-plugin-image'
+import Grid from '@mui/material/Grid'
+import Button from '@mui/material/Button'
+import * as style from '../../PostCard/postCard.module.less'
 import moment from 'moment'
 import { Row, Col } from 'antd'
-import Typography from '@material-ui/core/Typography'
+import Typography from '@mui/material/Typography'
 
 const RecentBlog = () => {
   const data = useStaticQuery(
     graphql`
       query {
         allMdx
-          ( 
-          sort: { fields: [frontmatter___date], order: DESC }
+          (
+          sort: { frontmatter: { date: DESC } }
           limit: 3
-          ) 
+          )
         {
         edges {
           node {
@@ -26,9 +27,7 @@ const RecentBlog = () => {
 							path
 							cover {
 								childImageSharp {
-									fluid(maxWidth: 288) {
-										...GatsbyImageSharpFluid_tracedSVG
-									}
+									gatsbyImageData(width: 288, placeholder: BLURRED)
 								}
 							}
               }
@@ -47,14 +46,14 @@ const RecentBlog = () => {
       </Grid>
 			<Row gutter={[20, 20]}>
           {posts.map((post) => (
-						<Col xs={24} sm={24} md={12} lg={8}>
+						<Col xs={24} sm={24} md={12} lg={8} key={post.node.frontmatter.path}>
             	<div>
               	<Link to={`/${post.node.frontmatter.path}`}>
 									<div className={style.postCard}>
 										<div
           						className={style.postCardImg}
           						style={{
-            					backgroundImage: `url(${post.node.frontmatter ? post.node.frontmatter.cover.childImageSharp.fluid.src : ''})`,
+            					backgroundImage: `url(${post.node.frontmatter ? getSrc(post.node.frontmatter.cover) : ''})`,
           						}}
         						/>
                		<div className={style.mrTp20}>
@@ -63,14 +62,14 @@ const RecentBlog = () => {
           					</p>
                 	</div>
 										<h3>{post.node.frontmatter ? post.node.frontmatter.title : ''}</h3>
-          					<Typography variant="caption" color='textPrimary'>{post.node.frontmatter ? post.node.frontmatter.excerpt : ''}</Typography>
+          					<Typography variant="caption" color='text.primary'>{post.node.frontmatter ? post.node.frontmatter.excerpt : ''}</Typography>
 									</div>
               	</Link>
             	</div>
 						</Col>
           ))}
 			</Row>
-			<Grid container justify="center">
+			<Grid container justifyContent="center">
 				<Link to="/blog">
         	<Button variant="contained" color="primary">もっと読む</Button>
 				</Link>

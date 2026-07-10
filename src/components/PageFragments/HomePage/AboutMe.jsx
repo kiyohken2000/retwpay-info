@@ -2,7 +2,7 @@ import React from 'react';
 import { Row, Col } from 'antd';
 import AboutTile from '../../AbouTile';
 import { stripTags, domHtml } from '../../../utils/stripTags';
-import Grid from '@material-ui/core/Grid';
+import Grid from '@mui/material/Grid';
 
 import SEO from '../../Seo';
 

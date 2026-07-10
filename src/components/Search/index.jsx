@@ -2,16 +2,16 @@ import React, { useState, useEffect } from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import { Link } from "gatsby"
 import TextHighlighter from "./highlight"
-import TextField from '@material-ui/core/TextField';
-import Card from '@material-ui/core/Card';
-import Divider from '@material-ui/core/Divider';
-import Typography from '@material-ui/core/Typography';
+import TextField from '@mui/material/TextField';
+import Card from '@mui/material/Card';
+import Divider from '@mui/material/Divider';
+import Typography from '@mui/material/Typography';
 
 const SearchResult = props => {
   // 全記事データ取得 //
   const tempData = useStaticQuery(graphql`
   query SearchData {
-    allMdx( sort: { fields: [frontmatter___date], order: DESC } ) {
+    allMdx( sort: { frontmatter: { date: DESC } } ) {
       edges {
         node {
               frontmatter {
@@ -63,7 +63,7 @@ const SearchResult = props => {
               <li key={e.slug}>
                 <Link to={`/${e.path}`}>
                   <Card style={{backgroundColor: "#F2F2F2"}}>
-                    <Typography variant="body1" gutterBottom="true">
+                    <Typography variant="body1" gutterBottom>
                       <TextHighlighter str={e.title} includes={props.value} />
                     </Typography>
                   </Card>

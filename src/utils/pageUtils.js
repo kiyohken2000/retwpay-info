@@ -65,11 +65,11 @@ const Utils = {
     // Get posts in the same folder of provided post
       // eslint-disable-next-line implicit-arrow-linebreak
       (
-        node.fileAbsolutePath.split('/').slice(-2, -1)[0]
-          === post.fileAbsolutePath.split('/').slice(-2, -1)[0]
+        node.internal.contentFilePath.split('/').slice(-2, -1)[0]
+          === post.internal.contentFilePath.split('/').slice(-2, -1)[0]
       ))
     .map(({ node }) => {
-      const lang = node.fileAbsolutePath.split('.').slice(-2, -1)[0];
+      const lang = node.internal.contentFilePath.split('.').slice(-2, -1)[0];
       return {
         hreflang: lang.slice(-5) !== 'index' ? lang : Config.defaultLanguage,
         path: Utils.resolvePageUrl(node.frontmatter.path),

@@ -2,7 +2,7 @@
 /* Vendor imports */
 import React from 'react';
 
-import Grid from '@material-ui/core/Grid';
+import Grid from '@mui/material/Grid';
 
 const Intro = () => (
   <div>
@@ -14,7 +14,7 @@ const Intro = () => (
             <li>RT/宣伝ツイートの販売/購入を希望するユーザーを一覧すること</li>
             <li>アプリユーザーがリストされているユーザーに声をかけるときのテンプレートを作成することです</li>
           </ol>
-    <Grid container justify="center">
+    <Grid container justifyContent="center">
       <Grid item sm={6} md={6}><img src="../retwpay_buy_ss.jpg" width="63%" height="auto" /></Grid>
       <Grid item sm={6} md={6}><img src="../retwpay_sell_ss.jpg" width="63%" height="auto" /></Grid>
     </Grid>

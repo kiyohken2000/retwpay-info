@@ -3,7 +3,7 @@ import { Layout, Row, Col } from 'antd';
 import Header from '../../components/PageLayout/Header';
 import SidebarWrapper from '../../components/PageLayout/Sidebar';
 import SEO from '../../components/Seo';
-import Grid from '@material-ui/core/Grid';
+import Grid from '@mui/material/Grid';
 
 const Contact = () => (
   <Layout className="outerPadding">
