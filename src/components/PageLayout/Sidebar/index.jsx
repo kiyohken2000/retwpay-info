@@ -19,7 +19,9 @@ const {
 
 const DomContent = () => (
   <aside>
-    <div className={style.profileAvatar} />
+    <Link to="/" aria-label="トップページへ">
+      <div className={style.profileAvatar} />
+    </Link>
     <div className={`${style.name} centerAlign`}>
       <div className={`${style.boxName} centerAlign`}>
         <h2>

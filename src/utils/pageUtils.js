@@ -15,7 +15,10 @@ const Utils = {
           += (resolvedUrl === '' ? '' : '/') + urlPath.replace(/^\/|\/$/g, '');
     }
 
-    resolvedUrl = resolvedUrl[0] !== '/' ? `/${resolvedUrl}` : resolvedUrl;
+    // Absolute urls (e.g. joined from Config.siteUrl) must not get a leading slash
+    if (!/^https?:\/\//.test(resolvedUrl) && resolvedUrl[0] !== '/') {
+      resolvedUrl = `/${resolvedUrl}`;
+    }
     return resolvedUrl;
   }, ''),
   /**

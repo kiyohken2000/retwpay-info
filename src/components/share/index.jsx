@@ -26,7 +26,7 @@ const Share = ({ title, path }) => {
         <Typography variant="h6" color='text.primary'>この記事を共有</Typography>
       </Grid>
       <Grid container justifyContent="flex-end">
-      <Grid item>
+      <Grid item sx={{ display: 'flex', gap: '10px' }}>
         <TwitterShareButton title={title} url={postUrl}>
           <TwitterIcon size={iconSize} round={round} />
         </TwitterShareButton>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Layout } from 'antd';
 import { graphql } from 'gatsby';
-import { GatsbyImage, getImage } from 'gatsby-plugin-image';
+import { GatsbyImage, getImage, getSrc } from 'gatsby-plugin-image';
 import Header from '../../components/PageLayout/Header';
 import SidebarWrapper from '../../components/PageLayout/Sidebar';
 import SEO from '../../components/Seo';
@@ -35,6 +35,8 @@ const Post = ({ data, pageContext, children }) => {
           title={title}
           description={excerpt}
           path={path}
+          contentType="article"
+          imageUrl={getSrc(cover)}
           keywords={['Retwpay']}
         />
         <Header />

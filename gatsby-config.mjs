@@ -71,7 +71,7 @@ const plugins = [
           resolve: 'gatsby-remark-images-medium-zoom',
           options: {
             margin: 24,
-            background: '#BADA55',
+            background: 'rgba(0, 0, 0, 0.85)',
             scrollOffset: 40,
           },
         },
