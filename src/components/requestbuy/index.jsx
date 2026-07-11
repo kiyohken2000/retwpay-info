@@ -2,7 +2,7 @@
 /* Vendor imports */
 import React from 'react';
 
-import Grid from '@material-ui/core/Grid';
+import Grid from '@mui/material/Grid';
 import { Link } from 'gatsby';
 
 const BuyRequest = () => (
@@ -11,14 +11,14 @@ const BuyRequest = () => (
     <div>
     <p>"ようこそ"画面の"RTを買う"ボタン、もしくは左上ハンバーガーメニュー内の"buy"ボタンからRTを買う画面を開きます</p>
     </div>
-    <Grid container justify="center">
+    <Grid container justifyContent="center">
       <Grid item sm={6} md={6}><img src="../retwpay_buy1.png" width="50%" height="auto" /></Grid>
       <Grid item sm={6} md={6}><img src="../retwpay_buy2.png" width="50%" height="auto" /></Grid>
     </Grid>
     <br/>
     <h3>Step.1 - RTを依頼したいユーザーを決めます</h3>
     <p><b>アプリユーザーはRTを買う側です。リストに表示されるのはRTを売りたいユーザーです</b></p>
-    <Grid container justify="center" alignItems="center">
+    <Grid container justifyContent="center" alignItems="center">
       <Grid item sm={6} md={5}><img src="../retwpay_rtbuy_list.jpg" width="80%" height="auto" /></Grid>
       <Grid item sm={6} md={6}>
         <ol>
@@ -35,7 +35,7 @@ const BuyRequest = () => (
     </Grid>
     <br/>
     <h3>Step.2 - テンプレートフォームを編集する</h3>
-    <Grid container justify="center" alignItems="center">
+    <Grid container justifyContent="center" alignItems="center">
       <Grid item sm={6} md={5}><img src="../retwpay_rtbuy_form.jpg" width="80%" height="auto" /></Grid>
       <Grid item sm={6} md={6}>
         <ol>
@@ -51,7 +51,7 @@ const BuyRequest = () => (
     </Grid>
     <br/>
     <h3>Step.3 - コピーしたフォームをTwitterでツイートします</h3>
-    <Grid container justify="center" alignItems="center">
+    <Grid container justifyContent="center" alignItems="center">
       <Grid item sm={6} md={5}><img src="../retwpay_buy18.jpg" width="80%" height="auto" /></Grid>
       <Grid item sm={6} md={6}>
         <p>ツイッタークライアントに移動します。Step2でコピーしたテンプレートをツイートして交渉を開始します</p>

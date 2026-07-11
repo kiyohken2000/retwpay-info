@@ -3,7 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
-import Img from 'gatsby-image';
+import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import {
   Layout, Row, Col,
 } from 'antd';
@@ -14,14 +14,13 @@ import PostCard from '../../components/PostCard';
 import SidebarWrapper from '../../components/PageLayout/Sidebar';
 import Config from '../../../config';
 import Utils from '../../utils/pageUtils';
-import style from './tags.module.less';
+import * as style from './tags.module.less';
 
 const TagPage = ({ data, pageContext }) => {
   const { tag } = pageContext;
   const tagName = Config.tags[tag].name || Utils.capitalize(tag);
   const tagPagePath = Config.pages.tag;
-  const tagImage = data.allFile.edges.find((edge) => edge.node.name === tag).node
-    .childImageSharp.fluid;
+  const tagImage = getImage(data.allFile.edges.find((edge) => edge.node.name === tag).node);
   const posts = data.allMdx.edges;
   return (
     <Layout className="outerPadding">
@@ -40,7 +39,7 @@ const TagPage = ({ data, pageContext }) => {
               {tagName}
             </h1>
             <div className={style.bannerImgContainer}>
-              <Img className={style.bannerImg} fluid={tagImage} alt={tagName} />
+              <GatsbyImage className={style.bannerImg} image={tagImage} alt={tagName} />
             </div>
             <h4 className="textCenter">
               {Config.tags[tag].description}
@@ -71,7 +70,7 @@ TagPage.propTypes = {
           node: PropTypes.shape({
             name: PropTypes.string.isRequired,
             childImageSharp: PropTypes.shape({
-              fluid: PropTypes.object.isRequired,
+              gatsbyImageData: PropTypes.object.isRequired,
             }).isRequired,
           }).isRequired,
         }),
@@ -88,9 +87,9 @@ export const pageQuery = graphql`
     allMdx(
       filter: {
         frontmatter: { tags: { in: [$tag] } }
-        fileAbsolutePath: { regex: "/index.mdx/" }
+        internal: { contentFilePath: { regex: "/index.mdx/" } }
       }
-      sort: { fields: [frontmatter___date], order: DESC }
+      sort: { frontmatter: { date: DESC } }
     ) {
       edges {
         node {
@@ -102,9 +101,7 @@ export const pageQuery = graphql`
             excerpt
             cover {
               childImageSharp {
-                fluid(maxWidth: 600) {
-                  ...GatsbyImageSharpFluid_tracedSVG
-                }
+                gatsbyImageData(width: 600, placeholder: BLURRED)
               }
             }
           }
@@ -116,9 +113,7 @@ export const pageQuery = graphql`
         node {
           name
           childImageSharp {
-            fluid(maxHeight: 600) {
-              ...GatsbyImageSharpFluid_tracedSVG
-            }
+            gatsbyImageData(height: 600, placeholder: BLURRED)
           }
         }
       }

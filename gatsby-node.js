@@ -4,19 +4,23 @@ const path = require('path');
 const config = require('./config');
 const utils = require('./src/utils/pageUtils');
 
+const postTemplate = path.resolve('src/templates/post/post.jsx');
+
 exports.createPages = ({ actions, graphql }) => {
   const { createPage } = actions;
 
   return graphql(`
     {
-      allMdx(sort: {order: DESC, fields: [frontmatter___date]}) {
+      allMdx(sort: { frontmatter: { date: DESC } }) {
         edges {
           node {
             frontmatter {
               path
               tags
             }
-            fileAbsolutePath
+            internal {
+              contentFilePath
+            }
           }
           next {
             frontmatter { title path }
@@ -26,14 +30,14 @@ exports.createPages = ({ actions, graphql }) => {
           }
         }
       }
-    }    
+    }
   `).then((result) => {
     if (result.errors) return Promise.reject(result.errors);
 
     const { allMdx } = result.data;
 
     /* Post pages */
-    allMdx.edges.forEach(({ node }) => {
+    allMdx.edges.forEach(({ node, next, prev }) => {
       // Check path prefix of post
       if (node.frontmatter.path.indexOf(config.pages.blog) !== 0) {
         // eslint-disable-next-line no-throw-literal
@@ -41,18 +45,21 @@ exports.createPages = ({ actions, graphql }) => {
       }
 
       createPage({
-        path: node.frontmatter.path,
-        component: path.resolve('src/templates/post/post.jsx'),
+        path: `/${node.frontmatter.path}`,
+        component: `${postTemplate}?__contentFilePath=${node.internal.contentFilePath}`,
         context: {
           postPath: node.frontmatter.path,
           translations: utils.getRelatedTranslations(node, allMdx.edges),
+          next,
+          prev,
         },
       });
     });
+
     const regexForIndex = /index\.mdx/;
     // Posts in default language, excluded the translated versions
     const defaultPosts = allMdx.edges
-      .filter(({ node: { fileAbsolutePath } }) => fileAbsolutePath.match(regexForIndex));
+      .filter(({ node: { internal: { contentFilePath } } }) => contentFilePath.match(regexForIndex));
 
     /* Tag pages */
     const allTags = [];
@@ -71,21 +78,6 @@ exports.createPages = ({ actions, graphql }) => {
             tag,
           },
         });
-      });
-
-      allMdx.edges.forEach(({node, next, prev}) => {
-        const {frontmatter} = node
-      
-        createPage({
-          path: `/${frontmatter.path}`,
-          component: path.resolve('src/templates/post/post.jsx'),
-          context: {
-            id: node.id,
-            postPath: frontmatter.path,
-            next,
-            prev,
-          },
-        })
       });
 
     return 1;

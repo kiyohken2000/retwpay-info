@@ -8,7 +8,7 @@ import SidebarWrapper from '../../components/PageLayout/Sidebar';
 import PostCard from '../../components/PostCard';
 import SEO from '../../components/Seo';
 
-import RssFeedIcon from '@material-ui/icons/RssFeed';
+import RssFeedIcon from '@mui/icons-material/RssFeed';
 import Search from '../../components/Search';
 
 const Blog = ({ data }) => (
@@ -58,8 +58,8 @@ Blog.propTypes = {
 export const query = graphql`
   {
     allMdx(
-      sort: { fields: [frontmatter___date], order: DESC }
-      filter: { fileAbsolutePath: { regex: "/index.mdx/" } }
+      sort: { frontmatter: { date: DESC } }
+      filter: { internal: { contentFilePath: { regex: "/index.mdx/" } } }
     ) {
       edges {
         node {
@@ -71,9 +71,7 @@ export const query = graphql`
             excerpt
             cover {
               childImageSharp {
-                fluid(maxWidth: 288) {
-                  ...GatsbyImageSharpFluid_tracedSVG
-                }
+                gatsbyImageData(width: 288, placeholder: BLURRED)
               }
             }
           }

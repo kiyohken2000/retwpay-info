@@ -6,7 +6,7 @@ import FA from 'react-fontawesome';
 import FeatherIcon from 'feather-icons-react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { globalHistory } from '@reach/router';
-import style from './sidebar.module.less';
+import * as style from './sidebar.module.less';
 import { useWindowSize } from '../../../utils/hooks';
 import Config from '../../../../config';
 
@@ -19,7 +19,9 @@ const {
 
 const DomContent = () => (
   <aside>
-    <div className={style.profileAvatar} />
+    <Link to="/" aria-label="トップページへ">
+      <div className={style.profileAvatar} />
+    </Link>
     <div className={`${style.name} centerAlign`}>
       <div className={`${style.boxName} centerAlign`}>
         <h2>

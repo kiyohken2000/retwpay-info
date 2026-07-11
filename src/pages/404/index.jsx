@@ -1,8 +1,9 @@
 import React from 'react';
 import { Layout } from 'antd';
 import { Link, graphql } from 'gatsby';
+import { getSrc } from 'gatsby-plugin-image';
 import Header from '../../components/PageLayout/Header';
-import style from './404.module.less';
+import * as style from './404.module.less';
 
 import { Sidebar404 } from '../../components/PageLayout/Sidebar';
 
@@ -10,9 +11,7 @@ export const query = graphql`
   {
     file(base: { eq: "404.png" }) {
       childImageSharp {
-        fluid(maxWidth: 500) {
-          ...GatsbyImageSharpFluid_tracedSVG
-        }
+        gatsbyImageData(width: 500, placeholder: BLURRED)
       }
     }
   }
@@ -26,7 +25,7 @@ export default ({ data }) => (
         <>
           <div className={`${style.sidebar404Img} ${style.boxContent}`}>
             <img
-              src={data.file.childImageSharp.fluid.src}
+              src={getSrc(data.file)}
               width="100%"
               alt="404"
             />

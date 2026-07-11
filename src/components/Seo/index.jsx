@@ -2,7 +2,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
-import { StaticQuery, graphql } from 'gatsby';
+import { useStaticQuery, graphql } from 'gatsby';
+import { getSrc } from 'gatsby-plugin-image';
 /* App imports */
 import Config from '../../../config';
 import Utils from '../../utils/pageUtils';
@@ -11,9 +12,7 @@ const detailsQuery = graphql`
   query DefaultSEOQuery {
     file(name: { eq: "Icon-256" }) {
       childImageSharp {
-        fixed(width: 600) {
-          ...GatsbyImageSharpFixed_noBase64
-        }
+        gatsbyImageData(width: 600, layout: FIXED, placeholder: NONE)
       }
     }
   }
@@ -30,25 +29,22 @@ function SEO({
   translations,
   meta,
 }) {
-  return (
-    <StaticQuery
-      query={detailsQuery}
-      render={(data) => {
-        const metaKeywords = keywords && keywords.length > 0
-          ? { name: 'keywords', content: keywords.join(', ') }
-          : [];
-        const pageUrl = Utils.resolvePageUrl(
-          Config.siteUrl,
-          Config.pathPrefix,
-          path,
-        );
-        const metaImageUrl = Utils.resolveUrl(
-          Config.siteUrl,
-          imageUrl || data.file.childImageSharp.fixed.src,
-        );
+  const data = useStaticQuery(detailsQuery);
+  const metaKeywords = keywords && keywords.length > 0
+    ? { name: 'keywords', content: keywords.join(', ') }
+    : [];
+  const pageUrl = Utils.resolvePageUrl(
+    Config.siteUrl,
+    Config.pathPrefix,
+    path,
+  );
+  const metaImageUrl = Utils.resolveUrl(
+    Config.siteUrl,
+    imageUrl || getSrc(data.file),
+  );
 
-        return (
-          <Helmet
+  return (
+    <Helmet
             title={title} // Page title
             titleTemplate={`%s | ${Config.siteTitle}`}
             meta={
@@ -62,15 +58,15 @@ function SEO({
                 { property: 'og:image', content: metaImageUrl },
                 { property: 'og:image:alt', content: description },
                 { property: 'og:site_name', content: Config.siteTitle },
-                { property: 'og:locale', content: lang || 'en_US' },
+                { property: 'og:locale', content: lang || 'ja_JP' },
                 /* Twitter card */
                 { name: 'twitter:card', content: 'summary_large_image' },
                 { name: 'twitter:title', content: title },
                 { name: 'twitter:description', content: description },
                 { name: 'twitter:image', content: metaImageUrl },
                 { name: 'twitter:image:alt', content: description },
-                { name: 'twitter:site', content: Config.author },
-                { name: 'twitter:creator', content: Config.author },
+                { name: 'twitter:site', content: `@${Config.author}` },
+                { name: 'twitter:creator', content: `@${Config.author}` },
               ]
                 .concat(metaKeywords) // Keywords
                 .concat(meta || []) // Other provided metadata
@@ -92,9 +88,6 @@ function SEO({
                   }))
                   : [],
               )}
-          />
-        );
-      }}
     />
   );
 }
@@ -122,7 +115,7 @@ SEO.propTypes = {
 };
 
 SEO.defaultProps = {
-  lang: 'en_US',
+  lang: 'ja_JP',
   contentType: 'website',
   imageUrl: null,
   keywords: [],
