@@ -10,9 +10,9 @@ import Utils from '../../utils/pageUtils';
 
 const detailsQuery = graphql`
   query DefaultSEOQuery {
-    file(name: { eq: "Icon-256" }) {
+    file(name: { eq: "og-image" }) {
       childImageSharp {
-        gatsbyImageData(width: 600, layout: FIXED, placeholder: NONE)
+        gatsbyImageData(width: 1200, layout: FIXED, placeholder: NONE)
       }
     }
   }
