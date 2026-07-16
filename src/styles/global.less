@@ -49,6 +49,19 @@ body .ant-layout {
 html[data-theme='dark'] .MuiTypography-root {
   color: var(--text-color);
 }
+/* MUI outlined TextField (blog search) is invisible on dark backgrounds */
+html[data-theme='dark'] .MuiOutlinedInput-root {
+  color: var(--text-strong);
+}
+html[data-theme='dark'] .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline {
+  border-color: rgba(255, 255, 255, 0.35);
+}
+html[data-theme='dark'] .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+  border-color: rgba(255, 255, 255, 0.6);
+}
+html[data-theme='dark'] .MuiInputLabel-root {
+  color: var(--text-secondary);
+}
 html[data-theme='dark'] .ant-input,
 html[data-theme='dark'] .ant-input-affix-wrapper {
   background-color: var(--bg-muted);
