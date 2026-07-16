@@ -10,5 +10,7 @@
     flex-wrap: wrap;
 }
 .whiteBg(){
-    background-color: var(--bg-content)
+    // !important: content areas are antd Layouts, so the global
+    // `body .ant-layout` page-background override outranks this class
+    background-color: var(--bg-content) !important
 }
