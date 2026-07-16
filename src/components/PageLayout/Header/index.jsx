@@ -22,7 +22,6 @@ export default () => {
   };
   return (
     <>
-      <ThemeToggle />
       <div className={style.circleMenu} role="button" tabIndex="0" onKeyDown={toggleMenu} onClick={toggleMenu}>
         <div className={`${style.hamburger} ${menu ? style.menuIcon : null}`}>
           <div className={style.line} />
@@ -42,6 +41,9 @@ export default () => {
               <Link to="/blog" onClick={toggleMenu} activeClassName={style.anchorActive}>
                 ブログ
               </Link>
+            </li>
+            <li className={style.navItem}>
+              <ThemeToggle />
             </li>
             {/*
             <li className={style.navItem}>
