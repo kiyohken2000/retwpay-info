@@ -38,7 +38,7 @@ const RecentPosts = () => {
           {posts.map((post) => (
             <div>
               <Link to={`/${post.node.frontmatter.path}`}>
-                <Card style={{backgroundColor: "#F2F2F2"}}>
+                <Card style={{backgroundColor: "var(--bg-muted)"}}>
                   <DescriptionIcon color='primary'/>
                   <Typography variant="subtitle1" color='text.primary'>{post.node.frontmatter.title}</Typography>
                   <Typography variant="caption" color='text.primary'>{post.node.frontmatter.excerpt}</Typography>

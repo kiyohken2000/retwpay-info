@@ -5,6 +5,7 @@ import 'font-awesome/less/font-awesome.less';
 import * as style from './header.module.less';
 import '../../../styles/global.less';
 import { useWindowSize } from '../../../utils/hooks';
+import ThemeToggle from '../../ThemeToggle';
 
 export default () => {
   const [menu, setMenu] = useState(false);
@@ -21,6 +22,7 @@ export default () => {
   };
   return (
     <>
+      <ThemeToggle />
       <div className={style.circleMenu} role="button" tabIndex="0" onKeyDown={toggleMenu} onClick={toggleMenu}>
         <div className={`${style.hamburger} ${menu ? style.menuIcon : null}`}>
           <div className={style.line} />

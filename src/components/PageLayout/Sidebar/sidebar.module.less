@@ -43,8 +43,8 @@
                 padding: .6rem 1rem;
             }
             .badgeGray {
-                background-color: #E9EDF0;
-                color: #44566C;
+                background-color: var(--bg-badge);
+                color: var(--heading-color);
             }
             .boxName{
                 width: 100%;
@@ -52,7 +52,7 @@
             ul{
                 list-style-type: none;
                 a{
-                    color: rgba(0, 0, 0, 0.65);
+                    color: var(--text-color);
                     width: 200px;
                     white-space: nowrap;
                     overflow: hidden;
@@ -61,7 +61,7 @@
                 }
             }
             .contactBlock {
-                color: #44566C;
+                color: var(--heading-color);
                 font-size: .937rem;
                 padding-left: 0;
                 margin-bottom: 1.3rem;
@@ -83,7 +83,7 @@
                 a{
                     padding: .9rem 1rem;
                     text-transform: uppercase;
-                    background-color: #304CFD;
+                    background-color: var(--accent);
                     border-radius: 28px;
                     color: #fff;
                 }
@@ -91,9 +91,9 @@
         }
     }
     a{
-        color: rgba(0, 0, 0, 0.65);
+        color: var(--text-color);
         &:hover{
-            color: rgba(0, 0, 0, 0.65);
+            color: var(--text-color);
         }
         .emailHider{
             font-size: 0.837rem;
