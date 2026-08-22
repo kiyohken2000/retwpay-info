@@ -7,6 +7,7 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
 import remarkGfm from 'remark-gfm';
+import remarkCjkFriendly from 'remark-cjk-friendly';
 import config from './config.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -55,7 +56,11 @@ const plugins = [
     options: {
       extensions: ['.mdx', '.md'],
       mdxOptions: {
-        remarkPlugins: [remarkGfm],
+        // remarkCjkFriendly relaxes CommonMark's flanking rules for CJK text, so
+        // `**強調です。**続き` closes properly instead of rendering literal `**`.
+        // Pinned: it declares micromark ^4 as a peer, but works with the
+        // micromark 3 that MDX v2 uses. Verify before bumping.
+        remarkPlugins: [remarkGfm, remarkCjkFriendly],
       },
       gatsbyRemarkPlugins: [
         {
